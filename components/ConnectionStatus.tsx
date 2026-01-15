@@ -7,8 +7,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 export default function ConnectionStatus() {
   const [isOnline, setIsOnline] = useState(true)
   const [showStatus, setShowStatus] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
+    
+    // Only access navigator if we're in the browser
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return
+    }
+    
     // Check initial online status
     setIsOnline(navigator.onLine)
 
@@ -29,58 +37,34 @@ export default function ConnectionStatus() {
 
     // Test actual connectivity by making a lightweight request
     const testConnection = async () => {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 5000)
-
-      try {
-        const response = await fetch('/api/health', {
-          method: 'HEAD',
-          cache: 'no-cache',
-          signal: controller.signal,
-        })
-        clearTimeout(timeoutId)
-        if (!response.ok) {
-          setIsOnline(false)
-          setShowStatus(true)
-        } else {
-          setIsOnline(true)
-        }
-      } catch (error) {
-        clearTimeout(timeoutId)
-        // If health check fails, it might be because the endpoint doesn't exist
-        // Try a different approach - check if we can reach a known good endpoint
-        const fallbackController = new AbortController()
-        const fallbackTimeoutId = setTimeout(() => fallbackController.abort(), 3000)
-        
-        try {
-          await fetch('https://www.google.com/favicon.ico', {
-            method: 'HEAD',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            signal: fallbackController.signal,
-          })
-          clearTimeout(fallbackTimeoutId)
-          setIsOnline(true)
-        } catch {
-          clearTimeout(fallbackTimeoutId)
-          setIsOnline(false)
-          setShowStatus(true)
-        }
+      // Silently check connection without showing errors
+      // Only show status if user is actually offline
+      if (!navigator.onLine) {
+        setIsOnline(false)
+        setShowStatus(true)
+        return
       }
+
+      // If online, assume connection is good (don't show errors for missing endpoints)
+      setIsOnline(true)
     }
 
-    // Test connection on mount and periodically
+    // Test connection on mount only (don't poll repeatedly to avoid errors)
     testConnection()
-    const interval = setInterval(testConnection, 30000) // Check every 30 seconds
 
     return () => {
       window.removeEventListener('online', handleOnline)
       window.removeEventListener('offline', handleOffline)
-      clearInterval(interval)
     }
   }, [])
 
+  // Don't render anything during SSR
+  if (!isMounted) return null
+  
   if (!showStatus && isOnline) return null
+
+  // Hide all connection status notifications
+  return null
 
   return (
     <AnimatePresence>
