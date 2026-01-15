@@ -6,7 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { fetchCheapestDeals } from '../flights/route';
+import { fetchCheapestDeals } from '@/lib/flights';
 import { extractOriginAndDestination, getIATACode } from '@/lib/iata-codes';
 
 export async function POST(request: NextRequest) {

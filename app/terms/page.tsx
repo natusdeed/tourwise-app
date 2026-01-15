@@ -142,7 +142,7 @@ export default function TermsPage() {
                           transition={{ duration: 0.5, delay: sectionIndex * 0.1 + itemIndex * 0.1 }}
                           className="glass rounded-xl p-5 md:p-6 border border-neon-cyan/10 hover:border-neon-cyan/30 transition-all duration-300"
                         >
-                          {item.subtitle && (
+                          {'subtitle' in item && item.subtitle && (
                             <h3 className="text-lg md:text-xl font-semibold heading-robotic mb-3 text-neon-cyan">
                               {item.subtitle}
                             </h3>

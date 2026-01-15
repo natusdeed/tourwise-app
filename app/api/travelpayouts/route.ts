@@ -7,6 +7,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
+// Mark route as dynamic since it uses searchParams
+export const dynamic = 'force-dynamic';
+
 // Travelpayouts brand program IDs (trs parameter)
 // These are common travel brands available through Travelpayouts
 const TRAVELPAYOUTS_BRANDS: Record<string, number> = {

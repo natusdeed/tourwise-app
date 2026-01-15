@@ -272,7 +272,7 @@ export function clearLocationCache(): void {
  */
 export function verifyIPinfoConfig(): boolean {
   const token = process.env.NEXT_PUBLIC_IPINFO_TOKEN
-  const isConfigured = token && token !== 'your_ipinfo_token_here' && token.trim().length >= 10
+  const isConfigured = !!(token && token !== 'your_ipinfo_token_here' && token.trim().length >= 10)
   
   if (process.env.NODE_ENV === 'development') {
     console.log('[IPinfo] Configuration check:', {

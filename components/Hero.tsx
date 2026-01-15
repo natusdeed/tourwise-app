@@ -7,7 +7,7 @@ import Image from 'next/image'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeSanitize from 'rehype-sanitize'
-import { generatePDF, Resolution } from 'react-to-pdf'
+import generatePDF, { Resolution } from 'react-to-pdf'
 import Script from 'next/script'
 import type { NicheColorScheme } from '@/lib/niche-config'
 import { create3DTextShadow, create3DLightTextShadow } from '@/lib/color-utils'
@@ -666,7 +666,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                             resolution: Resolution.HIGH,
                             page: {
                               format: 'A4',
-                              margin: '10mm',
+                              margin: 10,
                             },
                             canvas: {
                               mimeType: 'image/png',

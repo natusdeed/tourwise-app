@@ -12,9 +12,10 @@ const nextConfig = {
   },
   
   // Enable experimental features for better performance
-  experimental: {
-    optimizeCss: true,
-  },
+  // Note: optimizeCss requires 'critters' package - disabled for now to avoid build errors
+  // experimental: {
+  //   optimizeCss: true,
+  // },
   
   async headers() {
     return [

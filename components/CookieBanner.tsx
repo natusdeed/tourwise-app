@@ -85,7 +85,7 @@ export default function CookieBanner() {
                 </h3>
                 <p className="text-sm md:text-base text-white/70 leading-relaxed mb-4">
                   TourWise AI uses cookies to personalize your trip planning and track affiliate referrals so we can keep our service free.{' '}
-                  By clicking <span className="text-neon-cyan font-semibold">"Accept All"</span>, you agree to our use of cookies.{' '}
+                  By clicking <span className="text-neon-cyan font-semibold">&quot;Accept All&quot;</span>, you agree to our use of cookies.{' '}
                   Read our <Link href="/privacy-policy" className="text-neon-cyan hover:text-electric-blue underline transition-colors">Privacy Policy</Link>.
                 </p>
 

@@ -46,7 +46,7 @@ export default function Error({
           </h1>
           
           <p className="text-white/70 text-lg md:text-xl mb-8 max-w-lg mx-auto">
-            We encountered an unexpected error. Don't worry, we're here to help you get back on track.
+            We encountered an unexpected error. Don&apos;t worry, we&apos;re here to help you get back on track.
           </p>
           
           {process.env.NODE_ENV === 'development' && error.message && (

@@ -195,7 +195,7 @@ export default function PrivacyPolicyPage() {
               <span className="text-gradient">QUESTIONS ABOUT YOUR PRIVACY?</span>
             </h2>
             <p className="text-white/80 text-lg md:text-xl mb-6">
-              We're here to help. Contact us with any privacy-related questions or concerns.
+              We&apos;re here to help. Contact us with any privacy-related questions or concerns.
             </p>
             <a
               href="mailto:don@tourwiseai.com"
