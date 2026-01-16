@@ -1,14 +1,18 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Search, Send, AlertCircle, Sparkles } from 'lucide-react'
-import { useState, FormEvent, useEffect, useRef } from 'react'
+import { Search, Send, AlertCircle, Sparkles, Plane } from 'lucide-react'
+import { useState, FormEvent, useEffect, useRef, lazy, Suspense } from 'react'
 import Image from 'next/image'
-import ReactMarkdown from 'react-markdown'
+import dynamic from 'next/dynamic'
+import Script from 'next/script'
+// Lazy load heavy dependencies to improve initial page load
 import remarkGfm from 'remark-gfm'
 import rehypeSanitize from 'rehype-sanitize'
-import generatePDF, { Resolution } from 'react-to-pdf'
-import Script from 'next/script'
+const ReactMarkdown = dynamic(() => import('react-markdown'), { 
+  ssr: false,
+  loading: () => <div className="text-white/70 text-sm">Loading content...</div>
+})
 import type { NicheColorScheme } from '@/lib/niche-config'
 import { create3DTextShadow, create3DLightTextShadow } from '@/lib/color-utils'
 import { extractOriginAndDestination, getIATACode, isCityRecognized } from '@/lib/iata-codes'
@@ -305,8 +309,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               fill
               priority
               quality={85}
-              className="object-cover"
-              style={{ objectPosition: 'center' }}
+              className="object-cover header-banner-mobile"
               sizes="100vw"
             />
           </div>
@@ -315,20 +318,49 @@ export default function Hero({ title, subtitle, placeholder, description, colors
 
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
         {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 md:mb-8 heading-robotic px-2"
-        >
-          <span className="text-gradient">
-            {title}
-          </span>
-          <br />
-          <span className="text-gradient">
-            {subtitle}
-          </span>
-        </motion.h1>
+        <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 md:mb-8">
+          {/* Plane Icon - Above title on mobile only */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="mb-4 md:hidden"
+          >
+            <motion.div
+              animate={{ 
+                y: [0, -8, 0],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 3,
+                ease: 'easeInOut',
+                repeat: Infinity,
+                repeatType: 'loop'
+              }}
+              className="text-white"
+              style={{ 
+                filter: 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.7)) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3))',
+              }}
+            >
+              <Plane className="h-16 w-16" style={{ color: colors.primary }} />
+            </motion.div>
+          </motion.div>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold heading-robotic px-2 text-center"
+          >
+            <span className="text-gradient">
+              {title}
+            </span>
+            <br />
+            <span className="text-gradient">
+              {subtitle}
+            </span>
+          </motion.h1>
+        </div>
 
         {/* Search Bar */}
         <motion.div
@@ -376,7 +408,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                       ? 'ACCESSING LIVE MARKET DATA...' 
                       : isLoading 
                         ? 'THINKING...' 
-                        : 'SEARCH'}
+                        : 'PLAN TRIP'}
                   </span>
                   {isLoading ? (
                     <Sparkles className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
@@ -491,10 +523,11 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 {/* Itinerary Content */}
                 <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                   <div className="prose prose-invert prose-headings:text-white prose-p:text-white/90 prose-strong:text-white prose-ul:text-white/90 prose-li:text-white/90 prose-a:text-cyan-400 hover:prose-a:text-cyan-300 max-w-none">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeSanitize]}
-                      components={{
+                    <Suspense fallback={<div className="text-white/70 text-sm p-4">Loading content...</div>}>
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeSanitize]}
+                        components={{
                         h1: ({ children }) => (
                           <h1 className="text-2xl font-bold mb-4 mt-6 first:mt-0" style={{ color: colors.primary }}>
                             {children}
@@ -532,6 +565,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                     >
                       {itinerary}
                     </ReactMarkdown>
+                    </Suspense>
                   </div>
                 </div>
 
@@ -661,6 +695,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                     onClick={async () => {
                       if (itineraryRef.current) {
                         try {
+                          const generatePDF = (await import('react-to-pdf')).default
+                          const { Resolution } = await import('react-to-pdf')
                           await generatePDF(itineraryRef, {
                             filename: 'TourWise-Itinerary.pdf',
                             resolution: Resolution.HIGH,

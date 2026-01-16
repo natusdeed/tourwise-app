@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
 import type { NicheFeature, NicheColorScheme } from '@/lib/niche-config'
 import { getIconByName } from '@/lib/icon-map'
 import { create3DTextShadow, create3DLightTextShadow, hexToRgba } from '@/lib/color-utils'
@@ -19,15 +20,24 @@ export default function FeatureGrid({
   sectionTitle = 'POWERFUL FEATURES',
   sectionDescription = 'Everything you need to plan the perfect trip, powered by cutting-edge AI'
 }: FeatureGridProps) {
+  // Prevent hydration mismatches by ensuring animations only activate on client
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    // Set mounted state on client side only to prevent hydration mismatches
+    setIsMounted(true)
+  }, [])
+
   return (
     <section id="features" className="relative py-3 md:py-5 lg:py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          // Prevent hydration mismatches: use consistent initial state, animations activate after mount
+          initial={{ opacity: isMounted ? 0 : 1, y: isMounted ? 30 : 0 }}
+          whileInView={isMounted ? { opacity: 1, y: 0 } : undefined}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={isMounted ? { duration: 0.6 } : { duration: 0 }}
           className="text-center mb-8 md:mb-12 lg:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold heading-robotic mb-2 md:mb-2 px-2">
@@ -47,11 +57,12 @@ export default function FeatureGrid({
             return (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                // Prevent hydration mismatches: use consistent initial state, animations activate after mount
+                initial={{ opacity: isMounted ? 0 : 1, y: isMounted ? 50 : 0 }}
+                whileInView={isMounted ? { opacity: 1, y: 0 } : undefined}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                whileHover={{ y: -0.3, scale: 1.001 }}
+                transition={isMounted ? { duration: 0.6, delay: index * 0.2 } : { duration: 0 }}
+                whileHover={isMounted ? { y: -0.3, scale: 1.001 } : undefined}
                 className="relative group"
               >
                 <div 

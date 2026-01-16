@@ -5,11 +5,16 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { useState, useEffect, lazy, Suspense } from 'react'
 import dynamic from 'next/dynamic'
-import Hero from '@/components/Hero'
+import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
 
-// Lazy load heavy components to improve initial page load
+// Lazy load heavy components to improve initial page load  
+const Hero = dynamic(() => import('@/components/Hero'), {
+  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="text-white/70">Loading...</div></div>,
+  ssr: true, // Enable SSR for Hero component
+})
+
 const FeatureGrid = dynamic(() => import('@/components/FeatureGrid'), {
   loading: () => <div className="min-h-[400px]" />,
   ssr: true,
@@ -92,8 +97,102 @@ export default function Home() {
     },
   ]
 
+  // FAQ Schema for Agentic Search - answers common travel planning prompts
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How do I plan a budget trip with AI?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'TourWise AI helps you plan budget trips by analyzing your destination, travel dates, and budget constraints. Our AI-driven itineraries automatically find the best flight deals, affordable accommodations, and cost-effective activities. Simply tell our AI your budget and travel preferences, and it will create a personalized itinerary that maximizes value while staying within your budget.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What is a smart travel planner?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'A smart travel planner is an AI-powered platform like TourWise AI that uses artificial intelligence to create hyper-personalized travel itineraries. It provides real-time flight tracking, finds the best hotel deals, and offers intelligent local detection to help you discover hidden gems. Smart travel planners automate the entire planning process, saving you time and ensuring you get the best travel experience.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How does AI-driven itinerary planning work?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'AI-driven itinerary planning uses advanced artificial intelligence to analyze your travel preferences, budget, dates, and interests. TourWise AI processes this information to automatically generate a complete travel itinerary including flights, hotels, activities, and local recommendations. The AI learns from millions of travel data points to suggest the best options tailored specifically to you.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can I track flight prices in real-time?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes! TourWise AI offers real-time flight tracking that monitors prices across thousands of airlines. Our system sends you alerts when prices drop, helping you book flights at the best possible rates. The real-time tracking feature continuously scans for deals and notifies you immediately when your desired routes become available at lower prices.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'What makes TourWise AI the best smart travel planner?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'TourWise AI stands out as the best smart travel planner because it combines AI-driven itineraries, real-time flight tracking, and hyper-personalized planning in one platform. Our AI understands your unique travel style and automatically creates complete itineraries that solve common travel planning headaches. We offer free access to advanced AI travel planning tools that typically cost hundreds of dollars.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How do I create a travel itinerary with AI?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Creating a travel itinerary with TourWise AI is simple: just describe your trip in natural language (e.g., "I want to go to Tokyo for 5 days, budget is $2k"). Our AI analyzes your request and generates a complete itinerary including flights, hotels, daily activities, restaurant recommendations, and local tips. The entire process takes seconds, and you can refine your itinerary based on the AI\'s suggestions.',
+        },
+      },
+    ],
+  }
+
+  // BreadcrumbList Schema for site hierarchy understanding
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://tourwiseai.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Features',
+        item: 'https://tourwiseai.com#features',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Itineraries',
+        item: 'https://tourwiseai.com#itineraries',
+      },
+    ],
+  }
+
   return (
     <main className="relative min-h-screen">
+      {/* FAQ Schema for Agentic Search - helps AI models understand common questions */}
+      <Script
+        id="faq-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      {/* BreadcrumbList Schema for site hierarchy */}
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <ConnectionStatus />
       
       <motion.div

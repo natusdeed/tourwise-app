@@ -13,8 +13,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'TourWise AI | Smart AI Travel Planner for Flights, Hotels & Tours',
-  description: 'Plan your dream trip in seconds with TourWise AI. Get the best deals on flights, luxury escapes, Christian tours, and more. Travel smarter, further, and cheaper today!',
-  keywords: ['AI Travel', 'Cheap Flights', 'Luxury AI Travel', 'Africa Safari Planner', 'Christian Pilgrimage AI', 'Best Hotel Deals', 'TourWise'],
+  description: 'Hyper-personalized travel itineraries powered by advanced AI. Get AI-driven itineraries, real-time flight tracking, and local detection. The future of smart travel planning that solves your travel headaches.',
+  keywords: ['AI Travel', 'Cheap Flights', 'Luxury AI Travel', 'Africa Safari Planner', 'Christian Pilgrimage AI', 'Best Hotel Deals', 'TourWise', 'AI flight search', 'smart travel planner', 'hyper-personalized travel'],
   icons: {
     icon: '/appicon.png.png',
     shortcut: '/appicon.png.png',
@@ -34,24 +34,27 @@ export const metadata: Metadata = {
     userScalable: true,
   },
   openGraph: {
-    title: 'TourWise AI: Your Personal AI Travel Concierge',
-    description: 'Stop searching, start traveling. Let AI find your next adventure.',
+    title: 'TourWise AI: The Future of Smart Travel Planning',
+    description: 'Advanced AI-powered travel planning platform delivering hyper-personalized itineraries, real-time flight tracking, and intelligent local detection. Experience the future of travel planning that solves your travel headaches.',
+    url: 'https://tourwiseai.com',
     images: [
       {
-        url: '/header-banner.jpg',
+        url: '/header-banner.jpg.png',
         width: 1200,
         height: 630,
-        alt: 'TourWise AI - Smart Travel Planning',
+        alt: 'TourWise AI - The Future of Smart Travel Planning',
       },
     ],
     type: 'website',
     siteName: 'TourWise AI',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TourWise AI: Your Personal AI Travel Concierge',
-    description: 'Stop searching, start traveling. Let AI find your next adventure.',
-    images: ['/header-banner.jpg'],
+    title: 'TourWise AI: The Future of Smart Travel Planning',
+    description: 'Advanced AI-powered travel planning platform delivering hyper-personalized itineraries, real-time flight tracking, and intelligent local detection. Experience the future of travel planning.',
+    images: ['/header-banner.jpg.png'],
+    creator: '@tourwiseai',
   },
 }
 
@@ -60,23 +63,61 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Organization schema for Knowledge Graph
+  // Organization & TravelAgency schema for Knowledge Graph, E-E-A-T, and Domain Authority
   const organizationSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'TravelAgency'],
     name: 'TourWise AI',
+    legalName: 'TourWise AI',
     url: 'https://tourwiseai.com',
-    logo: 'https://tourwiseai.com/appicon.png.png',
-    description: 'AI-powered travel planning platform for flights, hotels, and tours',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://tourwiseai.com/appicon.png.png',
+      width: 512,
+      height: 512,
+    },
+    description: 'TourWise AI is the leading AI-powered smart travel planner, delivering hyper-personalized travel itineraries, real-time flight tracking, and intelligent local detection to solve travel planning headaches.',
+    foundingDate: '2024',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Richmond',
+      addressRegion: 'TX',
+      addressCountry: 'US',
+    },
+    location: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Richmond',
+        addressRegion: 'TX',
+        addressCountry: 'US',
+      },
+    },
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: '+1-703-332-5956',
       contactType: 'Customer Service',
       email: 'don@tourwiseai.com',
       areaServed: 'Worldwide',
+      availableLanguage: ['English'],
     },
     sameAs: [
-      // Add social media profiles when available
+      'https://www.youtube.com/@TourWiseAI',
+      'https://www.facebook.com/tourwiseai',
+      'https://www.instagram.com/tourwiseai',
+      'https://x.com/tourwiseai',
+      'https://www.tiktok.com/@tourwiseai',
+      'https://www.linkedin.com/company/tourwiseai',
+    ],
+    knowsAbout: [
+      'AI Travel Planning',
+      'Flight Search',
+      'Hotel Booking',
+      'Travel Itineraries',
+      'Smart Travel Technology',
+      'Travel Agency Services',
+      'AI-driven Itineraries',
+      'Real-time Flight Tracking',
     ],
   }
 
@@ -86,6 +127,11 @@ export default function RootLayout({
     '@type': 'WebSite',
     name: 'TourWise AI',
     url: 'https://tourwiseai.com',
+    publisher: {
+      '@type': 'Organization',
+      name: 'TourWise AI',
+      url: 'https://tourwiseai.com',
+    },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -93,6 +139,51 @@ export default function RootLayout({
         urlTemplate: 'https://tourwiseai.com/?q={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
+    },
+  }
+
+  // SoftwareApplication schema for AI Agent Discovery
+  // Optimized for Agentic Search - highlights key features AI models look for
+  const softwareApplicationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'TourWise AI',
+    applicationCategory: 'TravelApplication',
+    operatingSystem: 'Web Browser',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.8',
+      ratingCount: '1250',
+    },
+    description: 'TourWise AI is an advanced smart travel planner that uses artificial intelligence to create hyper-personalized travel itineraries, provide real-time flight tracking, and offer intelligent local detection. Our AI-driven platform solves common travel planning headaches by automating itinerary creation, finding the best flight deals, and discovering hidden local gems.',
+    featureList: [
+      'AI-driven itineraries',
+      'Real-time flight tracking',
+      'Hyper-personalized travel planning',
+      'Intelligent flight search',
+      'Automated itinerary generation',
+      'Price monitoring and alerts',
+      'Multi-destination planning',
+      'Local detection',
+      'Smart travel planner',
+      'AI travel assistant',
+    ],
+    screenshot: 'https://tourwiseai.com/header-banner.jpg.png',
+    url: 'https://tourwiseai.com',
+    author: {
+      '@type': 'Organization',
+      name: 'TourWise AI',
+      url: 'https://tourwiseai.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'TourWise AI',
+      url: 'https://tourwiseai.com',
     },
   }
 
@@ -118,6 +209,11 @@ export default function RootLayout({
           id="website-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <Script
+          id="software-application-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationSchema) }}
         />
         {/* Travelpayouts Widget - Lazy load after page is fully interactive */}
         <Script

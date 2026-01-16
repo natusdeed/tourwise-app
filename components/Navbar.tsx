@@ -8,8 +8,19 @@ import { usePathname, useRouter } from 'next/navigation'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
+
+  // Detect mobile screen size for optimized plane animation
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -110,40 +121,48 @@ export default function Navbar() {
                 <Sparkles className="h-8 w-8 md:h-10 md:w-10" />
               </motion.div>
               
-              {/* Enhanced Text Logo - Clear and Sharp */}
-              <span className="text-3xl md:text-5xl lg:text-6xl font-bold heading-robotic relative z-10">
-                {/* Gradient overlay - 100% visible, no lighting effects */}
-                <span 
-                  className="relative"
-                  style={{
-                    background: 'linear-gradient(135deg, #00FFFF 0%, #32A8DD 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                    display: 'inline-block'
-                  }}
+              {/* Logo container with AI badge above */}
+              <div className="flex flex-col items-start relative">
+                {/* AI Badge - Above the text */}
+                <motion.span
+                  whileHover={{ scale: 1.1 }}
+                  className="text-xs md:text-sm font-bold heading-robotic bg-gradient-to-r from-neon-cyan to-electric-blue text-black px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-neon-cyan/50 shadow-lg shadow-cyan-500/50 mb-0.5 md:mb-1"
                 >
-                  TOURWISE
+                  AI
+                </motion.span>
+                
+                {/* Enhanced Text Logo - Clear and Sharp */}
+                <span className="text-3xl md:text-5xl lg:text-6xl font-bold heading-robotic relative z-10">
+                  {/* Gradient overlay - 100% visible, no lighting effects */}
+                  <span 
+                    className="relative"
+                    style={{
+                      background: 'linear-gradient(135deg, #00FFFF 0%, #32A8DD 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      display: 'inline-block'
+                    }}
+                  >
+                    TOURWISE
+                  </span>
                 </span>
-              </span>
-              
-              {/* AI Badge */}
-              <motion.span
-                whileHover={{ scale: 1.1 }}
-                className="text-sm md:text-base font-bold heading-robotic bg-gradient-to-r from-neon-cyan to-electric-blue text-black px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-neon-cyan/50 shadow-lg shadow-cyan-500/50"
-              >
-                AI
-              </motion.span>
+              </div>
             </Link>
           </motion.div>
 
           {/* Realistic plane flying between logo and Home button with smooth U-turns (doesn't affect layout or clicks) */}
-          <div className="hidden md:flex items-center pointer-events-none absolute left-1/2 top-1/2 -translate-y-1/2">
+          {/* Mobile: raised by 40% (from 10% to 6%) - Optimized for mobile devices */}
+          <div className="flex items-center pointer-events-none absolute left-1/2 md:top-[10%] top-[6%] -translate-y-0">
             <motion.div
               aria-hidden="true"
               className="relative"
               animate={{ 
-                x: ['-280px', '280px', '280px', '-280px'],
+                // Mobile: reduced range to fit screen (120px each way = 240px total on 375px screen)
+                // Desktop: full range (280px each way = 560px total)
+                x: isMobile 
+                  ? ['-120px', '120px', '120px', '-120px']
+                  : ['-280px', '280px', '280px', '-280px'],
                 rotate: [0, 0, 180, 180]
               }}
               transition={{ 
@@ -166,7 +185,7 @@ export default function Navbar() {
               {/* Motion trail effect */}
               <div className="absolute right-full top-1/2 -translate-y-1/2 h-[2px] w-24 bg-gradient-to-l from-white/40 via-white/20 to-transparent blur-sm" />
               
-              {/* Plane with realistic glow */}
+              {/* Plane with realistic glow - Optimized size for mobile */}
               <motion.div
                 animate={{ 
                   scale: [1, 1.02, 1]
@@ -183,7 +202,7 @@ export default function Navbar() {
                   transformStyle: 'preserve-3d'
                 }}
               >
-                <Plane className="h-16 w-16" />
+                <Plane className="h-12 w-12 md:h-16 md:w-16" />
               </motion.div>
             </motion.div>
           </div>
