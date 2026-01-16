@@ -319,33 +319,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
         {/* Main Headline */}
         <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 md:mb-8">
-          {/* Plane Icon - Above title on mobile only */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="mb-4 md:hidden"
-          >
-            <motion.div
-              animate={{ 
-                y: [0, -8, 0],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ 
-                duration: 3,
-                ease: 'easeInOut',
-                repeat: Infinity,
-                repeatType: 'loop'
-              }}
-              className="text-white"
-              style={{ 
-                filter: 'drop-shadow(0 0 16px rgba(255, 255, 255, 0.7)) drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3))',
-              }}
-            >
-              <Plane className="h-16 w-16" style={{ color: colors.primary }} />
-            </motion.div>
-          </motion.div>
-          
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
