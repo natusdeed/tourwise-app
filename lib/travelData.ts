@@ -26,8 +26,10 @@ export interface CountryInfo {
     mapLink?: string;
   }[];
   updates: {
+    id: string;
     date: string;
     title: string;
+    summary: string;
     type: 'Critical' | 'Info';
   }[];
 }
@@ -164,13 +166,24 @@ Citizens of ECOWAS member states can enter Nigeria without a visa for stays up t
     ],
     updates: [
       {
+        id: 'nigeria-critical-visa-suspension-2026-01-15',
+        date: '2026-01-15',
+        title: '🇺🇸 US Suspends Immigrant Visas (Green Cards)',
+        summary: 'The US State Department has paused all Immigrant Visa processing for Nigerian nationals effective Jan 21, 2026, due to new public charge screening rules. Tourist and Student visas are technically exempt from this specific order but expect extreme delays. Official source: https://travel.state.gov/content/travel/en/News/visas-news.html',
+        type: 'Critical',
+      },
+      {
+        id: '1',
         date: '2026-01-15',
         title: 'New passport application portal launched',
+        summary: 'Nigeria Immigration Service has launched a new online portal for passport applications. The new system offers improved user experience and faster processing times.',
         type: 'Info',
       },
       {
+        id: '2',
         date: '2026-01-10',
         title: 'Visa processing times updated - expect delays during peak season',
+        summary: 'Due to increased travel demand, visa processing times may be extended by 3-5 business days during peak seasons. Applicants are advised to apply well in advance.',
         type: 'Info',
       },
     ],
@@ -363,18 +376,24 @@ Common reasons for denial:
     ],
     updates: [
       {
+        id: '3',
         date: '2026-01-20',
         title: 'New passport processing times announced - expect 6-9 weeks for routine service',
+        summary: 'The U.S. Department of State has updated standard passport processing times. Routine service now takes 6-9 weeks, while expedited service takes 2-3 weeks. Additional fees apply for expedited processing.',
         type: 'Info',
       },
       {
+        id: '4',
         date: '2026-01-12',
         title: 'ESTA requirements updated - mandatory for all VWP travelers',
+        summary: 'Effective immediately, all travelers from Visa Waiver Program countries must have a valid ESTA authorization before boarding flights to the United States. ESTA applications should be submitted at least 72 hours before travel.',
         type: 'Critical',
       },
       {
+        id: '5',
         date: '2026-01-05',
         title: 'Visa interview wait times reduced in major cities',
+        summary: 'Good news for visa applicants: wait times for interview appointments have been reduced in major U.S. cities including New York, Los Angeles, and Chicago. Book your appointment early to secure preferred dates.',
         type: 'Info',
       },
     ],
@@ -401,7 +420,22 @@ Common reasons for denial:
         address: 'Embassy details coming soon',
       },
     ],
-    updates: [],
+    updates: [
+      {
+        id: 'ghana-critical-visa-suspension-2026-01-15',
+        date: '2026-01-15',
+        title: '🇺🇸 US Suspends Immigrant Visas (Green Cards)',
+        summary: 'The US State Department has paused all Immigrant Visa processing for Ghanaian nationals effective Jan 21, 2026, due to new public charge screening rules. Tourist and Student visas are technically exempt from this specific order but expect extreme delays. Official source: https://travel.state.gov/content/travel/en/News/visas-news.html',
+        type: 'Critical',
+      },
+      {
+        id: '6',
+        date: '2026-01-18',
+        title: 'Passport application process streamlined',
+        summary: 'Ghana Immigration Service has simplified the passport application process with new online features. Applicants can now track their application status in real-time.',
+        type: 'Info',
+      },
+    ],
   },
   uk: {
     name: 'United Kingdom',
@@ -424,7 +458,15 @@ Common reasons for denial:
         address: 'Embassy details coming soon',
       },
     ],
-    updates: [],
+    updates: [
+      {
+        id: '7',
+        date: '2026-01-14',
+        title: 'Brexit-related visa changes now in effect',
+        summary: 'Updated visa requirements for EU citizens traveling to the UK are now fully implemented. Travelers should review new documentation requirements before booking trips.',
+        type: 'Critical',
+      },
+    ],
   },
   canada: {
     name: 'Canada',
@@ -447,7 +489,15 @@ Common reasons for denial:
         address: 'Embassy details coming soon',
       },
     ],
-    updates: [],
+    updates: [
+      {
+        id: '8',
+        date: '2026-01-16',
+        title: 'eTA system update - faster processing',
+        summary: 'Canada\'s Electronic Travel Authorization (eTA) system has been updated with faster processing times. Most applications are now approved within minutes instead of hours.',
+        type: 'Info',
+      },
+    ],
   },
 };
 
@@ -470,4 +520,51 @@ export function getAllCountries(): CountryInfo[] {
  */
 export function isValidCountry(slug: string): boolean {
   return slug.toLowerCase() in COUNTRY_DATA;
+}
+
+/**
+ * Travel Alert Interface
+ */
+export interface TravelAlert {
+  id: string;
+  date: string;
+  title: string;
+  summary: string;
+  type: 'Critical' | 'Info';
+  countryName: string;
+  countrySlug: string;
+  countryFlag: string;
+}
+
+/**
+ * Get all travel alerts from all countries, sorted by date (newest first)
+ */
+export function getAllAlerts(): TravelAlert[] {
+  const alerts: TravelAlert[] = [];
+  
+  // Loop through all countries
+  Object.values(COUNTRY_DATA).forEach((country) => {
+    // Collect all updates from this country
+    country.updates.forEach((update) => {
+      alerts.push({
+        id: update.id,
+        date: update.date,
+        title: update.title,
+        summary: update.summary,
+        type: update.type,
+        countryName: country.name,
+        countrySlug: country.slug,
+        countryFlag: country.flagEmoji,
+      });
+    });
+  });
+  
+  // Sort by date (newest first)
+  alerts.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA; // Descending order (newest first)
+  });
+  
+  return alerts;
 }

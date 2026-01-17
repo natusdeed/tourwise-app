@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Menu, X, Sparkles, ChevronDown, FileText, Plane, Building2 } from 'lucide-react'
+import { Menu, X, Sparkles, ChevronDown, FileText, Plane, Building2, AlertTriangle } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -93,6 +93,7 @@ export default function Navbar() {
     { name: 'Passport Guides', href: '/passports', icon: FileText },
     { name: 'Visa Requirements', href: '/visas', icon: Plane },
     { name: 'Embassy Locator', href: '/embassies', icon: Building2 },
+    { name: '⚠️ Latest Alerts', href: '/alerts', icon: AlertTriangle },
   ]
 
   return (
@@ -237,6 +238,7 @@ export default function Navbar() {
                 >
                   {travelDocsLinks.map((link, index) => {
                     const Icon = link.icon
+                    const isLast = index === travelDocsLinks.length - 1
                     return (
                       <Link
                         key={link.name}
@@ -245,10 +247,12 @@ export default function Navbar() {
                           setIsTravelDocsOpen(false)
                           setIsMenuOpen(false)
                         }}
-                        className="flex items-center gap-3 px-4 py-3 text-white hover:bg-neon-cyan/20 hover:text-neon-cyan transition-all duration-200 border-b border-white/5 last:border-b-0"
+                        className={`flex items-center gap-3 px-4 py-3 text-white hover:bg-neon-cyan/20 hover:text-neon-cyan transition-all duration-200 border-b border-white/5 ${
+                          isLast ? 'last:border-b-0 bg-red-500/10 hover:bg-red-500/20' : ''
+                        } ${isLast ? 'border-t-2 border-red-500/40' : ''}`}
                       >
-                        <Icon className="h-5 w-5 flex-shrink-0" />
-                        <span className="font-semibold">{link.name}</span>
+                        <Icon className={`h-5 w-5 flex-shrink-0 ${isLast ? 'text-red-400' : ''}`} />
+                        <span className={`font-semibold ${isLast ? 'text-red-400' : ''}`}>{link.name}</span>
                       </Link>
                     )
                   })}
@@ -330,8 +334,9 @@ export default function Navbar() {
                   className="overflow-hidden"
                 >
                   <div className="bg-white/5 border-l-2 border-neon-cyan/30 mt-1">
-                    {travelDocsLinks.map((link) => {
+                    {travelDocsLinks.map((link, index) => {
                       const Icon = link.icon
+                      const isLast = index === travelDocsLinks.length - 1
                       return (
                         <Link
                           key={link.name}
@@ -340,7 +345,11 @@ export default function Navbar() {
                             setIsMenuOpen(false)
                             setIsMobileDocsOpen(false)
                           }}
-                          className="flex items-center gap-3 min-h-[44px] text-base heading-robotic font-bold text-white/90 hover:text-neon-cyan hover:bg-white/10 transition-all duration-200 py-3 pl-8 pr-4"
+                          className={`flex items-center gap-3 min-h-[44px] text-base heading-robotic font-bold hover:bg-white/10 transition-all duration-200 py-3 pl-8 pr-4 ${
+                            isLast 
+                              ? 'text-red-400 hover:text-red-300 bg-red-500/10 border-t-2 border-red-500/40' 
+                              : 'text-white/90 hover:text-neon-cyan'
+                          }`}
                         >
                           <Icon className="h-5 w-5 flex-shrink-0" />
                           <span>{link.name}</span>
