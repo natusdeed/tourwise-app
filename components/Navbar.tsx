@@ -9,6 +9,7 @@ import { usePathname, useRouter } from 'next/navigation'
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isTravelDocsOpen, setIsTravelDocsOpen] = useState(false)
+  const [isMobileDocsOpen, setIsMobileDocsOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
   const travelDocsRef = useRef<HTMLDivElement>(null)
@@ -16,8 +17,6 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Features', href: '#features' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
   ]
 
   const scrollToFeatures = () => {
@@ -91,9 +90,9 @@ export default function Navbar() {
   }, [isTravelDocsOpen])
 
   const travelDocsLinks = [
-    { name: 'Passports', href: '/passports', icon: FileText },
-    { name: 'Visas', href: '/visas', icon: Plane },
-    { name: 'Embassies', href: '/embassies', icon: Building2 },
+    { name: 'Passport Guides', href: '/passports', icon: FileText },
+    { name: 'Visa Requirements', href: '/visas', icon: Plane },
+    { name: 'Embassy Locator', href: '/embassies', icon: Building2 },
   ]
 
   return (
@@ -101,7 +100,7 @@ export default function Navbar() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className="fixed top-0 left-0 right-0 z-50 border-b border-neon-cyan/20 relative overflow-hidden"
+      className="fixed top-0 left-0 right-0 z-[100] border-b border-neon-cyan/20 overflow-visible"
       style={{ 
         background: 'rgba(8, 12, 24, 0.85)',
         backdropFilter: 'blur(20px)',
@@ -167,7 +166,7 @@ export default function Navbar() {
 
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 lg:space-x-10" style={{ marginLeft: '20px' }}>
+          <div className="hidden md:flex items-center space-x-10 lg:space-x-12" style={{ marginLeft: '20px' }}>
             {navLinks.map((link, index) => (
               link.name === 'Features' ? (
                 <motion.a
@@ -209,9 +208,12 @@ export default function Navbar() {
               className="relative"
             >
               <button
+                type="button"
                 onClick={() => setIsTravelDocsOpen(!isTravelDocsOpen)}
                 onMouseEnter={() => setIsTravelDocsOpen(true)}
                 className="flex items-center gap-1.5 text-base lg:text-lg heading-robotic font-bold text-white hover:text-[#00FFFF] transition-all duration-300 cursor-pointer hover:scale-110"
+                aria-expanded={isTravelDocsOpen}
+                aria-haspopup="true"
               >
                 Travel Docs
                 <ChevronDown 
@@ -221,12 +223,17 @@ export default function Navbar() {
               
               {isTravelDocsOpen && (
                 <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                   onMouseLeave={() => setIsTravelDocsOpen(false)}
-                  className="absolute top-full right-0 mt-2 w-56 glass-strong rounded-lg border border-neon-cyan/20 shadow-xl overflow-hidden z-50"
+                  className="absolute top-full right-0 mt-2 min-w-[200px] w-64 glass-strong rounded-lg border border-gray-700 shadow-xl overflow-hidden z-[100]"
+                  style={{
+                    background: 'rgba(17, 24, 39, 0.98)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                  }}
                 >
                   {travelDocsLinks.map((link, index) => {
                     const Icon = link.icon
@@ -238,9 +245,9 @@ export default function Navbar() {
                           setIsTravelDocsOpen(false)
                           setIsMenuOpen(false)
                         }}
-                        className="flex items-center gap-3 px-4 py-3 text-white hover:bg-neon-cyan/10 hover:text-neon-cyan transition-all duration-200"
+                        className="flex items-center gap-3 px-4 py-3 text-white hover:bg-neon-cyan/20 hover:text-neon-cyan transition-all duration-200 border-b border-white/5 last:border-b-0"
                       >
-                        <Icon className="h-5 w-5" />
+                        <Icon className="h-5 w-5 flex-shrink-0" />
                         <span className="font-semibold">{link.name}</span>
                       </Link>
                     )
@@ -270,7 +277,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 space-y-5"
+            className="md:hidden py-4 space-y-2 overflow-x-hidden"
           >
             {navLinks.map((link) => (
               link.name === 'Features' ? (
@@ -278,7 +285,7 @@ export default function Navbar() {
                   key={link.name}
                   href="/#features"
                   onClick={handleFeaturesClick}
-                  className="block text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-2"
+                  className="block min-h-[44px] flex items-center text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-3 px-4"
                 >
                   {link.name}
                 </a>
@@ -287,30 +294,62 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-2"
+                  className="block min-h-[44px] flex items-center text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-3 px-4"
                 >
                   {link.name}
                 </Link>
               ) : null
             ))}
             
-            {/* Mobile Travel Docs Section */}
+            {/* Mobile Travel Docs Section - Accordion Style */}
             <div className="pt-2 border-t border-white/10">
-              <div className="text-sm font-semibold text-white/70 mb-3 px-1">TRAVEL DOCS</div>
-              {travelDocsLinks.map((link) => {
-                const Icon = link.icon
-                return (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-2"
-                  >
-                    <Icon className="h-5 w-5" />
-                    {link.name}
-                  </Link>
-                )
-              })}
+              {/* Toggle Button */}
+              <button
+                type="button"
+                onClick={() => setIsMobileDocsOpen(!isMobileDocsOpen)}
+                className="w-full flex items-center justify-between min-h-[44px] text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-3 px-4"
+                aria-expanded={isMobileDocsOpen}
+                aria-haspopup="true"
+              >
+                <span className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 flex-shrink-0" />
+                  Travel Docs
+                </span>
+                <ChevronDown 
+                  className={`h-4 w-4 transition-transform duration-200 ${isMobileDocsOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              {/* Accordion Content */}
+              {isMobileDocsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="bg-white/5 border-l-2 border-neon-cyan/30 mt-1">
+                    {travelDocsLinks.map((link) => {
+                      const Icon = link.icon
+                      return (
+                        <Link
+                          key={link.name}
+                          href={link.href}
+                          onClick={() => {
+                            setIsMenuOpen(false)
+                            setIsMobileDocsOpen(false)
+                          }}
+                          className="flex items-center gap-3 min-h-[44px] text-base heading-robotic font-bold text-white/90 hover:text-neon-cyan hover:bg-white/10 transition-all duration-200 py-3 pl-8 pr-4"
+                        >
+                          <Icon className="h-5 w-5 flex-shrink-0" />
+                          <span>{link.name}</span>
+                        </Link>
+                      )
+                    })}
+                  </div>
+                </motion.div>
+              )}
             </div>
           </motion.div>
         )}

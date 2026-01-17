@@ -78,16 +78,28 @@ export default function Footer() {
                 </ul>
               </div>
 
-              {/* About Section */}
+              {/* About & Contact Section */}
               <div className="text-center md:text-left">
-                <h4 className="text-white font-semibold mb-4 text-sm heading-robotic">ABOUT</h4>
-                <Link 
-                  href="/about"
-                  className="text-white/60 hover:text-neon-cyan text-xs md:text-sm transition-colors duration-200 inline-block mb-2"
-                >
-                  About TourWise AI
-                </Link>
-                <p className="text-white/60 text-xs md:text-sm leading-relaxed mt-3">
+                <h4 className="text-white font-semibold mb-4 text-sm heading-robotic">COMPANY</h4>
+                <ul className="space-y-3">
+                  <li>
+                    <Link
+                      href="/about"
+                      className="text-white/60 hover:text-neon-cyan text-xs md:text-sm transition-colors duration-200"
+                    >
+                      About Us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="text-white/60 hover:text-neon-cyan text-xs md:text-sm transition-colors duration-200"
+                    >
+                      Contact
+                    </Link>
+                  </li>
+                </ul>
+                <p className="text-white/60 text-xs md:text-sm leading-relaxed mt-4">
                   Plan Smart. Travel Further.
                 </p>
               </div>
