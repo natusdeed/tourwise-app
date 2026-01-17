@@ -1,11 +1,13 @@
 /**
  * Sitemap Generation Utility
  * 
- * Generates sitemap for all pages, destinations, and blog posts
+ * Generates sitemap for all pages, destinations, blog posts, and travel docs
+ * All-Access SEO Strategy - ensures comprehensive coverage for all search engines and AI crawlers
  */
 
 import { getAllVerticals } from './verticals';
 import { getAllContentItems } from './content';
+import { getAllCountries } from './travelData';
 
 export interface SitemapUrl {
   loc: string;
@@ -20,12 +22,62 @@ export interface SitemapUrl {
 export async function generateSitemapUrls(baseUrl: string = 'https://tourwiseai.com'): Promise<SitemapUrl[]> {
   const urls: SitemapUrl[] = [];
 
-  // Homepage
+  // Homepage - Priority 1.0
   urls.push({
     loc: baseUrl,
     changefreq: 'daily',
     priority: 1.0,
   });
+
+  // Base Routes - Priority 0.8, weekly frequency
+  const baseRoutes = [
+    { path: '/about', changefreq: 'weekly' as const },
+    { path: '/contact', changefreq: 'weekly' as const },
+  ];
+
+  for (const route of baseRoutes) {
+    urls.push({
+      loc: `${baseUrl}${route.path}`,
+      changefreq: route.changefreq,
+      priority: 0.8,
+    });
+  }
+
+  // Travel Docs Indexes - Priority 0.8, weekly frequency
+  const travelDocRoutes = ['/passports', '/visas', '/embassies'];
+  for (const route of travelDocRoutes) {
+    urls.push({
+      loc: `${baseUrl}${route}`,
+      changefreq: 'weekly',
+      priority: 0.8,
+    });
+  }
+
+  // Dynamic Country Pages from travelData
+  // Passports, Visas, and Embassies for each country
+  const countries = getAllCountries();
+  for (const country of countries) {
+    // Passport pages
+    urls.push({
+      loc: `${baseUrl}/passports/${country.slug}`,
+      changefreq: 'weekly',
+      priority: 0.8,
+    });
+
+    // Visa pages
+    urls.push({
+      loc: `${baseUrl}/visas/${country.slug}`,
+      changefreq: 'weekly',
+      priority: 0.8,
+    });
+
+    // Embassy pages
+    urls.push({
+      loc: `${baseUrl}/embassies/${country.slug}`,
+      changefreq: 'weekly',
+      priority: 0.8,
+    });
+  }
 
   // Vertical pages
   const verticals = getAllVerticals();

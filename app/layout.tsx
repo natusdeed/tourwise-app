@@ -12,6 +12,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tourwiseai.com'),
   title: 'TourWise AI | Smart AI Travel Planner for Flights, Hotels & Tours',
   description: 'Hyper-personalized travel itineraries powered by advanced AI. Get AI-driven itineraries, real-time flight tracking, and local detection. The future of smart travel planning that solves your travel headaches.',
   keywords: ['AI Travel', 'Cheap Flights', 'Luxury AI Travel', 'Africa Safari Planner', 'Christian Pilgrimage AI', 'Best Hotel Deals', 'TourWise', 'AI flight search', 'smart travel planner', 'hyper-personalized travel'],
@@ -19,6 +20,15 @@ export const metadata: Metadata = {
     icon: '/appicon.png.png',
     shortcut: '/appicon.png.png',
     apple: '/appicon.png.png',
+  },
+  appleWebApp: {
+    title: 'Tour Wise AI',
+    capable: true,
+    statusBarStyle: 'default',
+  },
+  verification: {
+    google: '...', // TODO: Add your Google Search Console verification code
+    yandex: '...', // TODO: Add your Yandex Webmaster verification code
   },
   robots: {
     index: true,
