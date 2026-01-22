@@ -240,7 +240,7 @@ export default function DealsSection({ colors }: DealsSectionProps) {
             </span>
           </h2>
           <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto px-2 font-medium leading-relaxed">
-            Don't miss out—book now to secure these unbeatable prices before they're gone
+            Don&apos;t miss out—book now to secure these unbeatable prices before they&apos;re gone
           </p>
         </motion.div>
 

@@ -134,7 +134,7 @@ export function TestimonialsSection() {
 
               {/* Testimonial Text */}
               <p className="testimonial-text text-white/90 text-sm md:text-base leading-relaxed mb-4 italic">
-                "{testimonial.text}"
+                &quot;{testimonial.text}&quot;
               </p>
 
               {/* Trip Tag */}

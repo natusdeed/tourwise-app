@@ -94,7 +94,7 @@ export default function Testimonial({
                 borderLeft: `3px solid ${colors.primary}40`,
               }}
             >
-              "{quote}"
+              &quot;{quote}&quot;
             </p>
 
             {/* Author Info */}

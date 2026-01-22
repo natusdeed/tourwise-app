@@ -54,7 +54,7 @@ export const initGA4 = async (measurementId?: string) => {
   }
 
   // Check if already initialized to prevent duplicate initialization
-  if (window.gtag && window.dataLayer?.length > 0) {
+  if (typeof window.gtag === 'function' && window.dataLayer?.length > 0) {
     // Check if this measurement ID is already configured
     const isConfigured = window.dataLayer.some((item: any) => 
       item[0] === 'config' && item[1] === ga4Id

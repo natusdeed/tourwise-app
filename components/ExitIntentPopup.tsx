@@ -167,7 +167,7 @@ export default function ExitIntentPopup() {
 
                 {/* Heading */}
                 <h3 className="text-2xl md:text-3xl font-bold heading-robotic text-center mb-3">
-                  <span className="text-gradient">Wait! Don't Miss Out 🎁</span>
+                  <span className="text-gradient">Wait! Don&apos;t Miss Out 🎁</span>
                 </h3>
                 
                 {/* Description */}

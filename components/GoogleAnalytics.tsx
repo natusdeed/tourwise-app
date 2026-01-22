@@ -39,7 +39,7 @@ export default function GoogleAnalytics({
 
   // Initialize scroll tracking after GA4 is loaded
   useEffect(() => {
-    if (shouldLoad && typeof window !== 'undefined' && window.gtag) {
+    if (shouldLoad && typeof window !== 'undefined' && typeof window.gtag === 'function') {
       // Small delay to ensure GA4 is fully initialized
       const timer = setTimeout(() => {
         const cleanup = initScrollTracking()
