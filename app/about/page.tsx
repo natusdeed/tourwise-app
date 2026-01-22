@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { Target, Eye, Zap, Globe, Brain, Shield, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Footer from '@/components/Footer'
+import Testimonial from '@/components/Testimonial'
+import SEO from '@/components/SEO'
 
 export default function AboutPage() {
   const missionFeatures = [
@@ -65,6 +67,11 @@ export default function AboutPage() {
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
+      <SEO
+        title="About TourWise AI - Our Mission & Vision"
+        description="Learn about TourWise AI, the leading AI-powered travel planning platform. Discover our mission to make travel planning accessible, our cutting-edge AI technology, and our vision for the future of smart travel."
+        canonical="https://tourwiseai.com/about"
+      />
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />
       
@@ -253,6 +260,30 @@ export default function AboutPage() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="relative py-12 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold heading-robotic mb-12 text-center">
+              <span className="text-gradient">WHAT TRAVELERS SAY</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              <Testimonial
+                quote="Saved me 10+ hours of planning. The AI knew exactly what I wanted!"
+                author="Sarah M."
+                avatar="/user-avatar.jpg"
+                verified={true}
+              />
             </div>
           </motion.div>
         </div>

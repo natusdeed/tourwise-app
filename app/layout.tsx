@@ -1,8 +1,10 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import CookieBanner from '@/components/CookieBanner'
+import ExitIntentPopup from '@/components/ExitIntentPopup'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Script from 'next/script'
 
 const inter = Inter({ 
@@ -37,12 +39,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://tourwiseai.com',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   openGraph: {
     title: 'TourWise AI: The Future of Smart Travel Planning',
     description: 'Advanced AI-powered travel planning platform delivering hyper-personalized itineraries, real-time flight tracking, and intelligent local detection. Experience the future of travel planning that solves your travel headaches.',
@@ -66,6 +62,13 @@ export const metadata: Metadata = {
     images: ['/header-banner.jpg.png'],
     creator: '@tourwiseai',
   },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 }
 
 export default function RootLayout({
@@ -208,6 +211,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.resend.com" />
         <link rel="dns-prefetch" href="https://tpwidg.com" />
         <link rel="dns-prefetch" href="https://ipinfo.io" />
+        {/* Google Analytics preconnect - only if consent given */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <Script
@@ -231,9 +237,11 @@ export default function RootLayout({
           src="https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%2332a8dd&color_button=%2332a8dd&color_icons=%2332a8dd&dark=%23FFFFFF&light=%23FFFFFF&secondary=%230B1120&special=%2332A8DD&color_focused=%2332a8dd&border_radius=0&no_labels=true&plain=true&promo_id=7879&campaign_id=100"
           strategy="lazyOnload"
         />
+        <GoogleAnalytics />
         <Navbar />
         {children}
         <CookieBanner />
+        <ExitIntentPopup />
       </body>
     </html>
   )

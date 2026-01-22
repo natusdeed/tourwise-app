@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Star } from 'lucide-react'
 import { useState, useEffect, lazy, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
@@ -30,6 +30,11 @@ const Footer = dynamic(() => import('@/components/Footer'), {
   ssr: true,
 })
 
+const EmailCapture = dynamic(() => import('@/components/EmailCapture'), {
+  loading: () => <div className="min-h-[400px]" />,
+  ssr: true,
+})
+
 const LegalModal = dynamic(() => import('@/components/LegalModal'), {
   ssr: false,
 })
@@ -38,7 +43,6 @@ export default function Home() {
   // Use state to ensure verticals are only loaded on client side
   const [verticals, setVerticals] = useState<VerticalConfig[]>([])
   const [isClient, setIsClient] = useState(false)
-  const [email, setEmail] = useState('')
   const [showPrivacyModal, setShowPrivacyModal] = useState(false)
 
   useEffect(() => {
@@ -63,6 +67,19 @@ export default function Home() {
     }
     return imageMap[slug] || ''
   }
+
+  // Get stats for vertical cards
+  const getVerticalStats = (slug: string): { tours: string; rating: string; isPopular: boolean } => {
+    const statsMap: Record<string, { tours: string; rating: string; isPopular: boolean }> = {
+      'africa': { tours: '2,340+ tours available', rating: '4.8', isPopular: true },
+      'christian-travel': { tours: '1,850+ tours available', rating: '4.9', isPopular: false },
+      'luxury': { tours: '3,200+ tours available', rating: '4.9', isPopular: true },
+      'usa-tours': { tours: '4,500+ tours available', rating: '4.7', isPopular: true },
+      'budget': { tours: '2,100+ tours available', rating: '4.6', isPopular: false },
+      'island-retreats': { tours: '1,900+ tours available', rating: '4.8', isPopular: false },
+    }
+    return statsMap[slug] || { tours: '1,000+ tours available', rating: '4.5', isPopular: false }
+  }
   
   // Default theme for homepage (original neon-cyan theme)
   const defaultColors = {
@@ -75,23 +92,29 @@ export default function Home() {
 
   const defaultFeatures = [
     {
-      icon: 'Sparkles',
-      title: 'AI ITINERARIES',
-      description: 'Get personalized travel plans crafted by advanced AI that understands your preferences, budget, and travel style.',
+      icon: 'BrainCircuit',
+      title: 'Your Perfect Itinerary in Minutes, Not Hours',
+      description: 'Our advanced AI learns your travel style, budget, and preferences to craft personalized day-by-day plans. Say goodbye to endless research and hello to stress-free planning.',
+      stat: '⚡ Average planning time: Just 2 minutes',
+      cta: 'See How It Works',
       color: 'from-[#00FFFF] to-[#32A8DD]',
       image: '/feature-ai.jpg.png',
     },
     {
-      icon: 'Plane',
-      title: 'FLIGHT SCANNING',
-      description: 'Real-time flight price monitoring and alerts. We scan thousands of airlines to find you the best deals instantly.',
+      icon: 'PlaneDeparture',
+      title: 'Find the Cheapest Flights—Automatically',
+      description: 'We scan 500+ airlines in real-time to find you unbeatable prices. Get instant price drop alerts and never overpay for flights again.',
+      stat: '💰 Travelers save an average of $347 per trip',
+      cta: 'Start Saving Now',
       color: 'from-[#32A8DD] to-[#00FFFF]',
       image: '/feature-flight.jpg.png',
     },
     {
       icon: 'Hotel',
-      title: 'HOTEL DEALS',
-      description: 'Discover hidden gems and exclusive hotel deals. Our AI compares prices across all major booking platforms.',
+      title: 'Exclusive Hotel Deals Up to 50% Off',
+      description: 'Unlock member-only rates and secret deals from our premium partner hotels worldwide. Luxury stays at budget-friendly prices.',
+      stat: '🏨 Access to 15,000+ properties globally',
+      cta: 'Browse Hotel Deals',
       color: 'from-[#00FFFF] via-[#32A8DD] to-[#00FFFF]',
       image: '/feature-hotel.jpg.png',
     },
@@ -202,16 +225,16 @@ export default function Home() {
       >
         {/* Default Hero for Homepage */}
         <Hero
-          title="PLAN YOUR PERFECT TRIP"
-          subtitle="WITH AI"
+          title="Your Dream Trip, Planned by AI in 60 Seconds"
+          subtitle="Stop wasting hours on research. Get personalized itineraries, exclusive deals, and hidden local gems—all in one click."
           placeholder="I want to go to Tokyo for 5 days, budget is $2k..."
-          description="Let AI craft your dream itinerary, find the best flights, and discover hidden gems"
+          description="Experience the future of travel planning. Our AI crafts your perfect itinerary, finds unbeatable flight deals, and reveals hidden gems you'd never discover alone."
           colors={defaultColors}
           backgroundImage="/header-banner.jpg.png"
         />
 
         {/* Trust Partners Section */}
-        <section className="relative py-3 md:py-3 lg:py-4 px-4 sm:px-6 lg:px-8 bg-black/30 backdrop-blur-sm">
+        <section className="relative py-3 md:py-3 lg:py-4 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -220,21 +243,21 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <p className="text-white/50 text-xs md:text-sm heading-robotic mb-4 md:mb-6 lg:mb-8 tracking-wider">
-                TRUSTED BY TRAVELERS WORLDWIDE
+              <p className="text-white text-xs md:text-sm heading-robotic mb-4 md:mb-6 lg:mb-8 tracking-wider font-semibold">
+                ✈️ TRUSTED BY 15,000+ TRAVELERS WORLDWIDE
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12 grayscale-[0.3] hover:grayscale-0 transition-all duration-500">
                 {/* Expedia Logo Placeholder */}
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white/70 text-lg md:text-xl font-bold">Expedia</span>
+                  <span className="text-white text-lg md:text-xl font-bold">Expedia</span>
                 </div>
                 {/* Booking.com Logo Placeholder */}
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white/70 text-lg md:text-xl font-bold">Booking.com</span>
+                  <span className="text-white text-lg md:text-xl font-bold">Booking.com</span>
                 </div>
                 {/* TripAdvisor Logo Placeholder */}
                 <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white/70 text-lg md:text-xl font-bold">TripAdvisor</span>
+                  <span className="text-white text-lg md:text-xl font-bold">TripAdvisor</span>
                 </div>
               </div>
             </motion.div>
@@ -253,32 +276,29 @@ export default function Home() {
               className="text-center mb-3 md:mb-4"
             >
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold heading-robotic mb-3 md:mb-4 px-2">
-                <span className="text-gradient">EXPLORE TRAVEL VERTICALS</span>
+                <span className="text-gradient">Discover Your Perfect Travel Style</span>
               </h2>
-              <p className="text-white text-xs sm:text-sm md:text-base max-w-2xl mx-auto px-2">
-                Choose your travel style and discover expert guides, destinations, and itineraries tailored to your interests
+              <p className="text-white/90 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2 leading-relaxed">
+                Choose your adventure and unlock expert guides, curated destinations, and personalized itineraries designed for your unique travel style
               </p>
             </motion.div>
 
             {/* Vertical Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-2 md:mb-3">
-              {isClient && verticals.length > 0 && verticals.map((vertical, index) => (
-                <motion.div
-                  key={vertical.slug}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.15 }}
-                  whileHover={{ y: -0.3, scale: 1.001 }}
-                  className="relative group"
-                >
-                  <a 
-                    href="https://www.aviasales.com/search?marker=692947"
-                    target="_blank"
-                    rel="noopener noreferrer"
+              {isClient && verticals.length > 0 && verticals.map((vertical, index) => {
+                const stats = getVerticalStats(vertical.slug)
+                return (
+                  <motion.div
+                    key={vertical.slug}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.15 }}
+                    whileHover={{ y: -0.3, scale: 1.001 }}
+                    className="relative group"
                   >
                     <div 
-                      className="glass-strong overflow-hidden border border-glow-hover h-full flex flex-col transition-all duration-300 cursor-pointer"
+                      className="vertical-card glass-strong overflow-hidden border border-glow-hover h-full flex flex-col transition-all duration-300"
                       style={{ 
                         borderColor: `${vertical.colors.primary}20`,
                         borderRadius: '12px',
@@ -286,57 +306,96 @@ export default function Home() {
                         height: '100%'
                       }}
                     >
-                      {/* Card Header Image with Gradient Overlay */}
+                      {/* Card Image */}
                       <div className="relative w-full h-[160px] sm:h-[180px] overflow-hidden">
                         <Image
                           src={getVerticalImage(vertical.slug)}
                           alt={vertical.shortName}
                           fill
-                          className="object-cover"
+                          className="object-cover group-hover:scale-110 transition-transform duration-300"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           loading="lazy"
                           placeholder="blur"
                           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                         />
-                        {/* Optimized Gradient Overlay for text readability */}
+                        {/* Gradient Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/9 to-black/15" />
                         
-                        {/* Title Overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <h3 className="relative text-xl md:text-2xl font-bold heading-robotic text-white z-10 px-4 text-center">
-                            {vertical.shortName}
-                          </h3>
-                        </div>
-                        
-                        {/* Scanline Effect on Hover */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-3 transition-opacity">
-                          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/4 to-transparent animate-pulse" />
-                        </div>
+                        {/* Popular Badge */}
+                        {stats.isPopular && (
+                          <span 
+                            className="badge-popular absolute top-3 right-3 px-3 py-1 text-xs font-bold heading-robotic rounded-full backdrop-blur-sm border"
+                            style={{ 
+                              backgroundColor: `${vertical.colors.primary}20`,
+                              borderColor: vertical.colors.primary,
+                              color: vertical.colors.primary
+                            }}
+                          >
+                            Most Popular
+                          </span>
+                        )}
                       </div>
 
                       {/* Content Section */}
                       <div className="p-4 sm:p-6 md:p-8 flex flex-col flex-grow">
+                        {/* Title */}
+                        <h3 className="text-xl md:text-2xl font-bold heading-robotic text-white mb-3">
+                          {vertical.shortName}
+                        </h3>
+
                         {/* Description */}
-                        <p className="text-white text-sm md:text-base mb-4 flex-grow">
+                        <p className="text-white/80 text-sm md:text-base mb-4 flex-grow">
                           {vertical.description}
                         </p>
 
-                        {/* CTA */}
-                        <div 
-                          className="flex items-center gap-2 group-hover:gap-[2.035px] transition-all duration-300 relative min-h-[48px] py-2" 
-                          style={{ color: vertical.colors.primary }}
-                        >
-                          <span className="text-sm heading-robotic font-bold group-hover:drop-shadow-[0_0_1.2px_currentColor] transition-all group-hover:scale-[1.0036] inline-block">EXPLORE NOW</span>
-                          <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-[0.1px] group-hover:scale-[1.0036] transition-transform group-hover:drop-shadow-[0_0_1.2px_currentColor]" />
-                          {/* Glow effect on hover */}
-                          <div 
-                            className="absolute inset-0 opacity-0 group-hover:opacity-3 transition-opacity duration-300 blur-xl pointer-events-none"
-                            style={{ 
-                              backgroundColor: vertical.colors.primary,
-                              filter: `blur(12px) drop-shadow(0 0 20px ${vertical.colors.primary})`
-                            }}
-                          />
+                        {/* Card Stats */}
+                        <div className="card-stats flex items-center justify-between mb-4 text-sm text-white/70">
+                          <span>{stats.tours}</span>
+                          <span className="rating flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            {stats.rating}
+                          </span>
                         </div>
+
+                        {/* CTA Button */}
+                        <a 
+                          href="https://www.aviasales.com/search?marker=692947"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cta-secondary w-full"
+                          onClick={() => {
+                            if (typeof window !== 'undefined' && window.gtag) {
+                              window.gtag('event', 'cta_click', {
+                                cta_name: `vertical_${vertical.slug}`,
+                                cta_location: 'vertical_card'
+                              })
+                              window.gtag('event', 'affiliate_click', {
+                                link_name: `vertical_${vertical.slug}`,
+                                destination: 'https://www.aviasales.com/search?marker=692947'
+                              })
+                            }
+                          }}
+                        >
+                          <button
+                            className="cta-secondary w-full px-4 py-3 text-sm md:text-base font-semibold heading-robotic rounded-lg flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 border min-h-[48px] min-w-[48px]"
+                            style={{
+                              backgroundColor: 'transparent',
+                              borderColor: `${vertical.colors.primary}40`,
+                              color: vertical.colors.primary
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = `${vertical.colors.primary}20`
+                              e.currentTarget.style.borderColor = vertical.colors.primary
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = 'transparent'
+                              e.currentTarget.style.borderColor = `${vertical.colors.primary}40`
+                            }}
+                          >
+                            <span>Find {vertical.shortName.replace(' Tours', '').replace('Travel', '')} Deals</span>
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                          </button>
+                        </a>
                       </div>
 
                       {/* Hover Glow */}
@@ -351,9 +410,9 @@ export default function Home() {
                         />
                       </div>
                     </div>
-                  </a>
-                </motion.div>
-              ))}
+                  </motion.div>
+                )
+              })}
               {isClient && verticals.length === 0 && (
                 <div className="col-span-full text-center text-white/50 py-8">
                   Loading verticals...
@@ -373,67 +432,8 @@ export default function Home() {
 
         <ToolsSection />
         
-        {/* Newsletter Signup Section */}
-        <section id="signup" className="relative py-3 md:py-4 lg:py-5 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-black/60 via-black/80 to-black/60 border-y border-white/10">
-          <div className="max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              {/* Title */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold heading-robotic mb-4 md:mb-6">
-                <span className="text-gradient">GET SECRET TRAVEL DEALS</span>
-              </h2>
-              
-              {/* Description */}
-              <p className="text-white/90 text-base sm:text-lg md:text-xl mb-3 md:mb-3 max-w-2xl mx-auto leading-relaxed">
-                Join 5,000+ travelers getting AI-powered flight and hotel deals delivered to their inbox.
-              </p>
-              
-              {/* Email Form */}
-              <form 
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  // Handle form submission here
-                  console.log('Email submitted:', email)
-                }}
-                className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto mb-4"
-              >
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  className="flex-1 px-4 py-3 md:py-4 bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-neon-cyan focus:ring-2 focus:ring-neon-cyan/50 transition-all duration-300 text-sm md:text-base"
-                />
-                <button
-                  type="submit"
-                  className="px-6 md:px-8 py-3 md:py-4 bg-[#00BFFF] hover:bg-[#0099CC] text-white font-bold heading-robotic rounded-lg transition-all duration-300 transform hover:scale-[1.005] hover:shadow-[0_0_2px_rgba(0,191,255,0.06)] border-2 border-[#00BFFF]/50 hover:border-[#00BFFF] text-sm md:text-base whitespace-nowrap"
-                  style={{
-                    boxShadow: '0 0 15px rgba(0, 191, 255, 0.4)',
-                  }}
-                >
-                  JOIN NOW
-                </button>
-              </form>
-              
-              {/* Privacy Policy Link */}
-              <p className="text-white/60 text-xs md:text-sm mt-4">
-                By signing up, you agree to our{' '}
-                <button
-                  onClick={() => setShowPrivacyModal(true)}
-                  className="text-neon-cyan hover:text-[#00FFFF] underline transition-colors duration-200"
-                >
-                  Privacy Policy
-                </button>
-              </p>
-            </motion.div>
-          </div>
-        </section>
+        {/* Email Capture Section - Enhanced Newsletter Signup */}
+        <EmailCapture colors={defaultColors} />
         
         {/* Footer */}
         <Footer />

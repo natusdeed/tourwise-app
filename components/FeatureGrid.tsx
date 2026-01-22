@@ -3,12 +3,14 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { ArrowRight } from 'lucide-react'
 import type { NicheFeature, NicheColorScheme } from '@/lib/niche-config'
 import { getIconByName } from '@/lib/icon-map'
 import { create3DTextShadow, create3DLightTextShadow, hexToRgba } from '@/lib/color-utils'
+import { trackCTA } from '@/utils/analytics'
 
 interface FeatureGridProps {
-  features: (NicheFeature & { image?: string })[]
+  features: (NicheFeature & { image?: string; stat?: string; cta?: string })[]
   colors: NicheColorScheme
   sectionTitle?: string
   sectionDescription?: string
@@ -40,12 +42,12 @@ export default function FeatureGrid({
           transition={isMounted ? { duration: 0.6 } : { duration: 0 }}
           className="text-center mb-8 md:mb-12 lg:mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold heading-robotic mb-2 md:mb-2 px-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold heading-robotic mb-2 md:mb-2 px-2 leading-tight">
             <span className="text-gradient">
               {sectionTitle}
             </span>
           </h2>
-          <p className="text-white/70 text-xs sm:text-sm md:text-base max-w-2xl mx-auto px-2">
+          <p className="text-white/80 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2 leading-relaxed font-medium">
             {sectionDescription}
           </p>
         </motion.div>
@@ -79,6 +81,9 @@ export default function FeatureGrid({
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                       />
                       {/* Dark Gradient Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-b from-black/18 via-black/12 to-black/18" />
@@ -118,9 +123,40 @@ export default function FeatureGrid({
                     </h3>
 
                     {/* Description */}
-                    <p className="text-white/27 text-sm md:text-base leading-relaxed flex-grow">
+                    <p className="text-white/27 text-sm md:text-base leading-relaxed mb-4">
                       {feature.description}
                     </p>
+
+                    {/* Stat */}
+                    {feature.stat && (
+                      <p className="text-white/60 text-xs sm:text-sm mb-4 font-medium">
+                        {feature.stat}
+                      </p>
+                    )}
+
+                    {/* CTA Button */}
+                    {feature.cta && (
+                      <button
+                        onClick={() => trackCTA(`feature_${feature.title.toLowerCase().replace(/\s+/g, '_')}`, 'feature_grid')}
+                        className="mt-auto px-4 py-2 text-sm font-semibold heading-robotic rounded-lg flex items-center justify-center gap-2 border transition-all duration-300 group/btn min-h-[44px] min-w-[44px]"
+                        style={{
+                          backgroundColor: 'transparent',
+                          borderColor: `${colors.primary}40`,
+                          color: colors.primary
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = `${colors.primary}20`
+                          e.currentTarget.style.borderColor = colors.primary
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent'
+                          e.currentTarget.style.borderColor = `${colors.primary}40`
+                        }}
+                      >
+                        <span>{feature.cta}</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </button>
+                    )}
                   </div>
 
                   {/* Hover Glow Effect - Neon Border */}

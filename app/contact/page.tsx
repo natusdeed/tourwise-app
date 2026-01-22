@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Mail, Send, MapPin, Phone, Clock, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import Footer from '@/components/Footer'
+import SEO from '@/components/SEO'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -110,6 +111,11 @@ export default function ContactPage() {
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
+      <SEO
+        title="Contact TourWise AI - Get in Touch"
+        description="Contact TourWise AI for support, partnerships, or inquiries. We're here to help you plan your perfect trip. Reach out via email, phone, or our contact form."
+        canonical="https://tourwiseai.com/contact"
+      />
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />
       

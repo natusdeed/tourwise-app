@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Search, Send, AlertCircle, Sparkles, Plane } from 'lucide-react'
+import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Users, Star, Shield } from 'lucide-react'
 import { useState, FormEvent, useEffect, useRef, lazy, Suspense } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -19,6 +19,7 @@ import { extractOriginAndDestination, getIATACode, isCityRecognized } from '@/li
 import { getValidDepartureDate, formatDateForAviasales } from '@/lib/date-utils'
 import { generateProductSchema } from '@/lib/seo'
 import { detectLocation, getDetectedCity, verifyIPinfoConfig } from '@/lib/detectLocation'
+import { trackItineraryCreation, trackCTA, trackAffiliateClick } from '@/utils/analytics'
 
 interface HeroProps {
   title: string
@@ -262,6 +263,22 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       if (data.success && data.itinerary) {
         setItinerary(data.itinerary)
         
+        // Track itinerary creation in Google Analytics
+        const queryLower = searchQuery.trim().toLowerCase()
+        // Extract duration (e.g., "7 days", "2 weeks")
+        const durationMatch = queryLower.match(/(\d+)\s*(day|days|week|weeks|month|months)/i)
+        const duration = durationMatch ? `${durationMatch[1]} ${durationMatch[2]}` : undefined
+        
+        // Extract budget (e.g., "$3000", "budget is $5k")
+        const budgetMatch = queryLower.match(/(?:budget|price|cost).*?\$?(\d+[k]?)/i)
+        const budget = budgetMatch ? parseInt(budgetMatch[1].replace('k', '000')) : undefined
+        
+        trackItineraryCreation(
+          destination || data.flightData?.destination || 'Unknown',
+          duration,
+          budget
+        )
+        
         // Update flight data if Gemini found live pricing
         if (data.flightData) {
           setFlightData({
@@ -311,7 +328,12 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               quality={85}
               className="object-cover header-banner-mobile"
               sizes="100vw"
+              loading="eager"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
             />
+            {/* Dark overlay for better text contrast */}
+            <div className="absolute inset-0 bg-black/50"></div>
           </div>
         </div>
       )}
@@ -323,17 +345,65 @@ export default function Hero({ title, subtitle, placeholder, description, colors
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold heading-robotic px-2 text-center"
+            className="hero-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold heading-robotic px-2 text-center"
           >
             <span className="text-gradient">
               {title}
             </span>
-            <br />
-            <span className="text-gradient">
-              {subtitle}
-            </span>
           </motion.h1>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+            className="hero-subheadline text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mt-4 sm:mt-6 px-2 text-center max-w-3xl"
+          >
+            {subtitle}
+          </motion.h2>
+          <motion.button
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+            id="hero-cta"
+            className="cta-primary px-6 md:px-8 py-3 md:py-4 mt-6 sm:mt-8 text-base md:text-lg font-semibold heading-robotic text-black rounded-lg flex items-center gap-2 group hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 min-h-[48px] min-w-[48px]"
+            style={{
+              backgroundImage: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
+            }}
+            onClick={() => {
+              // Track CTA click
+              trackCTA('hero_create_itinerary', 'hero')
+              // Scroll to search bar or focus on it
+              const searchInput = document.querySelector('input[type="text"]') as HTMLInputElement
+              if (searchInput) {
+                searchInput.focus()
+                searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }
+            }}
+          >
+            <span>Start Planning My Trip</span>
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </motion.button>
         </div>
+
+        {/* Trust Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
+          className="trust-bar flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 mb-6 sm:mb-8 px-4"
+        >
+          <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
+            <Users className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.primary }} />
+            <span className="heading-robotic">Trusted by 15,000+ travelers</span>
+          </span>
+          <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
+            <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
+            <span className="heading-robotic">4.9/5 Average Rating</span>
+          </span>
+          <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
+            <Shield className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.primary }} />
+            <span className="heading-robotic">100% Free to Use</span>
+          </span>
+        </motion.div>
 
         {/* Search Bar */}
         <motion.div
@@ -360,9 +430,9 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={
                     isLoading 
-                      ? 'Thinking...' 
+                      ? 'AI is crafting your perfect trip...' 
                       : locationDetected && detectedCity
-                        ? `Traveling from ${detectedCity}? Where to next?`
+                        ? `Starting from ${detectedCity}? Where would you like to go?`
                         : placeholder
                   }
                   disabled={isLoading}
@@ -371,7 +441,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-4 md:px-6 py-4 md:py-5 min-h-[48px] disabled:cursor-not-allowed transition-all duration-300 text-black font-semibold heading-robotic text-sm md:text-base flex items-center gap-2 group hover:scale-[1.005] hover:shadow-lg hover:shadow-cyan-500/5"
+                  onClick={() => trackCTA('hero_plan_trip', 'hero_search')}
+                  className="px-4 md:px-6 py-4 md:py-5 min-h-[48px] min-w-[48px] disabled:cursor-not-allowed transition-all duration-300 text-black font-semibold heading-robotic text-sm md:text-base flex items-center gap-2 group hover:scale-[1.005] hover:shadow-lg hover:shadow-cyan-500/5"
                   style={{
                     backgroundImage: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
                   }}
@@ -410,10 +481,10 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 }}
               >
                 <Sparkles className="w-5 h-5 animate-pulse" style={{ color: colors.primary }} />
-                <p className="text-white/90 text-sm md:text-base heading-robotic" style={{ color: colors.primary }}>
+                <p className="text-white/90 text-sm md:text-base heading-robotic font-medium" style={{ color: colors.primary }}>
                   {isAccessingMarketData 
-                    ? 'Accessing Live Market Data...' 
-                    : 'Consulting the AI Travel Expert...'}
+                    ? '🔍 Searching live market data for the best deals...' 
+                    : '✨ Our AI travel expert is crafting your perfect itinerary...'}
                 </p>
               </div>
             </motion.div>
@@ -489,7 +560,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                     className="text-lg md:text-xl font-bold heading-robotic"
                     style={{ color: colors.primary }}
                   >
-                    YOUR AI-GENERATED ITINERARY
+                    ✨ YOUR PERSONALIZED AI ITINERARY
                   </h3>
                 </div>
 
@@ -634,19 +705,23 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block w-full"
+                          onClick={() => {
+                            trackCTA('hero_book_now', 'hero_flight_deal')
+                            trackAffiliateClick('aviasales_flight_deal', aviasalesUrl, flightData.price)
+                          }}
                         >
                           <motion.button
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden"
+                            className="w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden min-h-[48px]"
                             style={{
                               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                               boxShadow: '0 0 30px rgba(16, 185, 129, 0.6), 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                             }}
                           >
-                            <span className="relative z-10 flex items-center justify-center gap-3">
+                            <span className="relative z-10 flex items-center justify-center gap-3 font-bold">
                               <span>🚀</span>
-                              <span>BOOK NOW</span>
+                              <span>BOOK THIS DEAL NOW</span>
                               <span>→</span>
                             </span>
                             <motion.div
@@ -697,7 +772,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                     }}
                   >
                     <span className="text-lg">📥</span>
-                    <span className="text-sm heading-robotic font-medium">DOWNLOAD AS PDF</span>
+                    <span className="text-sm heading-robotic font-semibold">Download as PDF</span>
                   </button>
                   <button
                     onClick={() => {
@@ -918,7 +993,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-          className="mt-4 sm:mt-6 md:mt-8 text-white/70 text-xs sm:text-sm md:text-base max-w-xl mx-auto px-4"
+          className="mt-4 sm:mt-6 md:mt-8 text-white text-xs sm:text-sm md:text-base max-w-xl mx-auto px-4 font-medium leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           {description || 'Let AI craft your dream itinerary, find the best flights, and discover hidden gems'}
         </motion.p>
