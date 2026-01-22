@@ -315,7 +315,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-4 sm:pt-5 md:pt-6 pb-3 sm:pb-3">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-3 sm:pb-3">
       {/* Background Image */}
       {backgroundImage && (
         <div className="absolute inset-0 z-0">
