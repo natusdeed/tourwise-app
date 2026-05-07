@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Fewer resolved modules per page (smaller dev compiles)
+  experimental: {
+    optimizePackageImports: ['lucide-react', 'framer-motion'],
+  },
+
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],

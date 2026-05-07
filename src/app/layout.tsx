@@ -4,7 +4,6 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import CookieBanner from '@/components/CookieBanner'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Script from 'next/script'
 
 const inter = Inter({ 
@@ -76,6 +75,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID
+
   // Organization & TravelAgency schema for Knowledge Graph, E-E-A-T, and Domain Authority
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -214,6 +215,20 @@ export default function RootLayout({
         {/* Google Analytics preconnect - only if consent given */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        {gaId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">{`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gaId}');
+            `}</Script>
+          </>
+        ) : null}
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <Script
@@ -237,7 +252,6 @@ export default function RootLayout({
           src="https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%2332a8dd&color_button=%2332a8dd&color_icons=%2332a8dd&dark=%23FFFFFF&light=%23FFFFFF&secondary=%230B1120&special=%2332A8DD&color_focused=%2332a8dd&border_radius=0&no_labels=true&plain=true&promo_id=7879&campaign_id=100"
           strategy="lazyOnload"
         />
-        <GoogleAnalytics />
         <Navbar />
         {children}
         <CookieBanner />

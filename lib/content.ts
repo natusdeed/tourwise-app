@@ -37,7 +37,10 @@ export interface ContentItem {
 /**
  * Get content directory path
  */
-function getContentDirectory(type: 'destinations' | 'blog' | 'guides'): string {
+function getContentDirectory(type: 'destinations' | 'blog' | 'guides' | 'posts'): string {
+  if (type === 'posts') {
+    return path.join(process.cwd(), 'content', 'posts');
+  }
   return path.join(process.cwd(), 'content', type);
 }
 
@@ -45,7 +48,7 @@ function getContentDirectory(type: 'destinations' | 'blog' | 'guides'): string {
  * Read all markdown files from a directory
  */
 export async function getContentFiles(
-  type: 'destinations' | 'blog' | 'guides',
+  type: 'destinations' | 'blog' | 'guides' | 'posts',
   vertical?: string
 ): Promise<string[]> {
   const contentDir = getContentDirectory(type);
@@ -58,6 +61,11 @@ export async function getContentFiles(
   
   // Filter for markdown files
   files = files.filter(file => file.endsWith('.md') || file.endsWith('.mdx'));
+
+  // Site-wide posts hub (content/posts): do not partition by vertical
+  if (type === 'posts') {
+    return files;
+  }
   
   // Filter by vertical if specified
   if (vertical) {
@@ -80,7 +88,7 @@ export async function getContentFiles(
  * Read and parse a single content file
  */
 export async function getContentItem(
-  type: 'destinations' | 'blog' | 'guides',
+  type: 'destinations' | 'blog' | 'guides' | 'posts',
   slug: string,
   vertical?: string
 ): Promise<ContentItem | null> {
@@ -121,7 +129,7 @@ export async function getContentItem(
  * Get all content items from a directory
  */
 export async function getAllContentItems(
-  type: 'destinations' | 'blog' | 'guides',
+  type: 'destinations' | 'blog' | 'guides' | 'posts',
   vertical?: string,
   limit?: number
 ): Promise<ContentItem[]> {
@@ -165,7 +173,7 @@ export async function getAllContentItems(
  * Get content items by tag
  */
 export async function getContentByTag(
-  type: 'destinations' | 'blog' | 'guides',
+  type: 'destinations' | 'blog' | 'guides' | 'posts',
   tag: string,
   vertical?: string
 ): Promise<ContentItem[]> {
@@ -180,10 +188,12 @@ export async function getContentByTag(
  */
 export async function getRelatedContent(
   currentItem: ContentItem,
-  type: 'destinations' | 'blog' | 'guides',
+  type: 'destinations' | 'blog' | 'guides' | 'posts',
   limit: number = 3
 ): Promise<ContentItem[]> {
-  const allItems = await getAllContentItems(type, currentItem.frontmatter.vertical);
+  const vertical =
+    type === 'posts' ? undefined : currentItem.frontmatter.vertical;
+  const allItems = await getAllContentItems(type, vertical);
   
   // Filter out current item
   const otherItems = allItems.filter(item => item.slug !== currentItem.slug);

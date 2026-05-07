@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { ArrowRight, Star } from 'lucide-react'
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
@@ -17,22 +17,22 @@ const Hero = dynamic(() => import('@/components/Hero'), {
 
 const FeatureGrid = dynamic(() => import('@/components/FeatureGrid'), {
   loading: () => <div className="min-h-[400px]" />,
-  ssr: true,
+  ssr: false,
 })
 
 const ToolsSection = dynamic(() => import('@/components/ToolsSection'), {
   loading: () => <div className="min-h-[300px]" />,
-  ssr: true,
+  ssr: false,
 })
 
 const Footer = dynamic(() => import('@/components/Footer'), {
   loading: () => <div className="min-h-[200px]" />,
-  ssr: true,
+  ssr: false,
 })
 
 const EmailCapture = dynamic(() => import('@/components/EmailCapture'), {
   loading: () => <div className="min-h-[400px]" />,
-  ssr: true,
+  ssr: false,
 })
 
 const LegalModal = dynamic(() => import('@/components/LegalModal'), {
