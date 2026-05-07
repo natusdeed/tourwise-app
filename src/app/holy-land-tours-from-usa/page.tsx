@@ -3,10 +3,10 @@ import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '../../components/AffiliateDisclosure'
 import AffiliateLink from '../../components/AffiliateLink'
+import ComparisonTable from '../../components/ComparisonTable'
 import FAQAccordion from '../../components/FAQAccordion'
 import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
-import { generateBestAffiliateLink } from '../../lib/affiliate'
 import { breadcrumbListSchema, faqPageSchema, touristTripSchema } from '../../lib/schema'
 
 export const metadata: Metadata = {
@@ -28,9 +28,33 @@ const faqs = [
       'NYC/IAD/ATL/MIA/FRA or IST combos are common depending on carriers. Aim for overnight eastbound hops to steal a workable arrival day.',
   },
   {
-    question: 'How many “big” sites per day is realistic?',
+    question: 'How many "big" sites per day is realistic?',
     answer:
       'Two major blocks plus meals is generous. Add buffer for security lines, midday heat, and Sabbath or liturgical closures.',
+  },
+]
+
+const comparisonColumns = [
+  { key: 'focus', label: 'Operator Focus' },
+  { key: 'bestFor', label: 'Best For' },
+  { key: 'watchout', label: 'Watch Out For' },
+]
+
+const comparisonRows = [
+  {
+    focus: 'Pilgrimage-heavy itineraries',
+    bestFor: 'First-time faith travelers who want detailed biblical context',
+    watchout: 'Can feel rushed if your group also wants slower reflection time',
+  },
+  {
+    focus: 'Mixed pilgrimage + local culture',
+    bestFor: 'Families balancing sacred sites, food, and manageable transfer days',
+    watchout: 'Optional add-ons can inflate final package cost',
+  },
+  {
+    focus: 'Small-group boutique pacing',
+    bestFor: 'Travelers who prefer fewer sites per day and deeper time on location',
+    watchout: 'Higher per-person pricing and fewer departure dates',
   },
 ]
 
@@ -46,21 +70,17 @@ export default function HolyLandToursPage() {
     description:
       'Flight-first planning for American travelers considering guided Holy Land pilgrimages.',
     itinerary: [
-      { name: 'Arrival & grounding day', description: 'Jet lag buffer near Tel Aviv or Amman' },
+      { name: 'Arrival and grounding day', description: 'Jet lag buffer near Tel Aviv or Amman' },
       { name: 'Jerusalem old city', description: 'Via Dolorosa, Holy Sepulchre, Western Wall' },
       { name: 'Galilee loop', description: 'Nazareth, Sea of Galilee, Jordan River baptismal sites' },
     ],
   })
 
-  const deepLink =
-    generateBestAffiliateLink({ destination: 'Jerusalem', category: 'tour' }) ||
-    'https://www.viator.com'
-
   const faqJson = faqPageSchema(faqs)
 
   return (
-    <main className="relative min-h-screen pt-20 md:pt-24 pb-28">
-      <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />
+    <main className="relative min-h-screen pt-20 pb-28 md:pt-24">
+      <div className="pointer-events-none fixed inset-0 grid-background opacity-30" />
       <Script
         id="holy-land-breadcrumb"
         type="application/ld+json"
@@ -77,49 +97,78 @@ export default function HolyLandToursPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJson) }}
       />
 
-      <section className="relative px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <p className="text-xs tracking-[0.25em] uppercase text-neon-cyan heading-robotic">
+      <section className="relative px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+        <div className="mx-auto max-w-4xl space-y-6">
+          <p className="heading-robotic text-xs uppercase tracking-[0.25em] text-neon-cyan">
             Holy Land • USA departures
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold heading-robotic">
+          <h1 className="heading-robotic text-4xl font-bold md:text-5xl">
             <span className="text-gradient">Holy Land tours from the USA</span>
           </h1>
           <p className="text-lg text-white/75">
             Start with your flight arc, add two buffer days, then lock a tour spine. Affiliates help us
-            keep tools free—prices stay the same for you.
+            keep tools free while prices stay the same for you.
           </p>
           <AffiliateDisclosure />
-          <div className="glass-strong border border-white/10 rounded-xl p-6 space-y-4">
-            <h2 className="text-xl font-semibold text-white heading-robotic">Quick planning loop</h2>
-            <ol className="list-decimal list-inside space-y-2 text-white/75">
+
+          <div className="glass-strong space-y-4 rounded-xl border border-white/10 p-6">
+            <h2 className="heading-robotic text-xl font-semibold text-white">Quick planning loop</h2>
+            <ol className="list-inside list-decimal space-y-2 text-white/75">
               <li>Pick guided vs DIY and your must-see triangle (Jerusalem / Galilee / Bethlehem).</li>
-              <li>Book long-haul first; add travel insurance while stateside.</li>
-              <li>Stack walking shoes, sun layers, and a respectful modesty kit.</li>
+              <li>Book long-haul first, then lock insurance and transfer backups while still stateside.</li>
+              <li>Pack walking shoes, sun layers, hydration strategy, and a modesty-ready day kit.</li>
             </ol>
-            <AffiliateLink
-              href={deepLink}
-              trackingLabel="holy_land_tours_search"
-              className="inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
-            >
-              Compare Holy Land experiences
-            </AffiliateLink>
+            <div className="flex flex-wrap gap-3">
+              <AffiliateLink
+                program="viator"
+                path="/Jerusalem/d921-ttd"
+                subid="faith-holyland-primary-viator"
+              >
+                Compare Holy Land experiences
+              </AffiliateLink>
+              <AffiliateLink
+                program="getYourGuide"
+                path="/s/?q=Jerusalem"
+                subid="faith-holyland-primary-gyg"
+              >
+                Explore guided day tours
+              </AffiliateLink>
+            </div>
           </div>
-          <LeadMagnetForm
-            magnetId="holy-land-prep"
-            title="Holy Land trip prep sheet"
-            description="One-page PDF: documents, modesty notes, and a 10-day pacing sketch."
+
+          <ComparisonTable
+            title="How to pick your operator style"
+            columns={comparisonColumns}
+            rows={comparisonRows}
+            caption="Operator style comparison for Holy Land tours from the USA."
           />
+
+          <section className="glass-strong space-y-4 rounded-xl border border-white/10 p-6">
+            <h2 className="heading-robotic text-xl font-semibold text-white">Sample 12-day pacing</h2>
+            <p className="text-white/75">
+              Keep each day realistic: two major site blocks, one transition block, and evening recovery
+              time. This protects energy for your highest-priority biblical sites.
+            </p>
+            <ul className="list-inside list-disc space-y-2 text-white/75">
+              <li>Days 1-2: arrival, rest, and orientation setup.</li>
+              <li>Days 3-5: Jerusalem and Old City priority sequence.</li>
+              <li>Days 6-8: Bethlehem, Jordan Valley, and Dead Sea corridor.</li>
+              <li>Days 9-10: Galilee loop with lighter evening commitments.</li>
+              <li>Days 11-12: flex day, contingency, and departure staging.</li>
+            </ul>
+          </section>
+
+          <LeadMagnetForm
+            magnetId="holy-land-12-day"
+            title="Get the Free 12-Day Holy Land Itinerary PDF"
+            description="We send the PDF to your inbox instantly so you can compare operators with a clear framework."
+          />
+
           <FAQAccordion items={faqs} withJsonLd={false} title="Holy Land FAQ" />
         </div>
       </section>
 
-      <StickyTripCTA
-        title="Lock flights before the tour deposit deadline"
-        subtitle="Use our affiliate flow to compare carriers, then return to your operator."
-        href="/api/affiliate?category=flight&destination=Tel%20Aviv"
-        ctaLabel="Open flight affiliate link"
-      />
+      <StickyTripCTA destination="Holy Land" />
       <Footer />
     </main>
   )

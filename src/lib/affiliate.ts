@@ -2,7 +2,7 @@
  * Faith-travel and pillar-page helpers layered on shared affiliate utilities.
  */
 
-import { generateAffiliateLink, generateBestAffiliateLink } from '@/lib/affiliates';
+import { generateAffiliateLink, generateBestAffiliateLink } from '../../lib/affiliates';
 
 export const SHORT_AFFILIATE_DISCLOSURE =
   'When you buy through links on TourWise AI, we may earn a commission at no extra cost to you. See our Affiliate Disclosure for details.';

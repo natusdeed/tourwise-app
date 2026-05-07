@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowRight, Star } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
@@ -232,6 +233,96 @@ export default function Home() {
           colors={defaultColors}
           backgroundImage="/header-banner.jpg.png"
         />
+
+        <section className="relative py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-8 md:mb-10"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold heading-robotic mb-4 px-2">
+                <span className="text-gradient">Planning a Faith-Based Trip?</span>
+              </h2>
+              <p className="text-white/85 text-sm sm:text-base md:text-lg max-w-4xl mx-auto px-2 leading-relaxed">
+                TourWise AI now includes faith-based travel guides for Christian travelers, church groups, and pilgrims planning meaningful routes through the Holy Land, Camino de Santiago, and Christian Rome.
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-8">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+                className="h-full"
+              >
+                <Link href="/holy-land-tours-from-usa" className="block h-full">
+                  <div className="vertical-card glass-strong border border-glow-hover rounded-xl p-6 md:p-7 h-full transition-all duration-300 hover:-translate-y-0.5">
+                    <h3 className="text-xl md:text-2xl font-bold heading-robotic text-white mb-3">
+                      Holy Land Tours from USA
+                    </h3>
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed">
+                      Compare Christian Holy Land tour operators, routes, prices, group sizes, and what to know before booking Israel.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="h-full"
+              >
+                <Link href="/camino-de-santiago-planner" className="block h-full">
+                  <div className="vertical-card glass-strong border border-glow-hover rounded-xl p-6 md:p-7 h-full transition-all duration-300 hover:-translate-y-0.5">
+                    <h3 className="text-xl md:text-2xl font-bold heading-robotic text-white mb-3">
+                      Camino de Santiago Planner
+                    </h3>
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed">
+                      Compare Camino routes, daily walking pace, places to stay, and beginner-friendly planning tips.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+                className="h-full"
+              >
+                <Link href="/vatican-rome-christian-itinerary" className="block h-full">
+                  <div className="vertical-card glass-strong border border-glow-hover rounded-xl p-6 md:p-7 h-full transition-all duration-300 hover:-translate-y-0.5">
+                    <h3 className="text-xl md:text-2xl font-bold heading-robotic text-white mb-3">
+                      Christian Rome & Vatican
+                    </h3>
+                    <p className="text-white/80 text-sm md:text-base leading-relaxed">
+                      Plan a 5-day Rome and Vatican pilgrimage with ticket tips, Christian sites, catacombs, Assisi, and day trip ideas.
+                    </p>
+                  </div>
+                </Link>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center"
+            >
+              <Link href="/faith-travel" className="cta-secondary px-6 py-3 heading-robotic rounded-lg border border-glow-hover text-white/95 hover:text-white transition-colors duration-300">
+                Explore All Faith Travel Guides
+              </Link>
+            </motion.div>
+          </div>
+        </section>
 
         {/* Trust Partners Section */}
         <section className="relative py-3 md:py-3 lg:py-4 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm">
