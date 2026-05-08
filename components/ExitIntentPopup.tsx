@@ -73,12 +73,12 @@ export default function ExitIntentPopup() {
         body: JSON.stringify({
           name: 'Exit Intent Subscriber',
           email: email.trim(),
-          message: 'Exit intent popup signup - 10% discount claim',
+          message: 'Exit intent popup signup - free travel planning guide request',
         }),
       })
 
       if (!response.ok) {
-        let errorMsg = 'Failed to claim discount. Please try again.'
+        let errorMsg = 'Could not send the guide. Please try again.'
         try {
           const errorData = await response.json()
           errorMsg = errorData.error || errorMsg
@@ -99,7 +99,7 @@ export default function ExitIntentPopup() {
           setShow(false)
         }, 3000)
       } else {
-        throw new Error(data.error || 'Failed to claim discount')
+        throw new Error(data.error || 'Could not send the guide. Please try again.')
       }
     } catch (error) {
       console.error('Error submitting email:', error)
@@ -167,12 +167,12 @@ export default function ExitIntentPopup() {
 
                 {/* Heading */}
                 <h3 className="text-2xl md:text-3xl font-bold heading-robotic text-center mb-3">
-                  <span className="text-gradient">Wait! Don&apos;t Miss Out 🎁</span>
+                  <span className="text-gradient">Plan Smarter Before You Book 🎁</span>
                 </h3>
                 
                 {/* Description */}
                 <p className="text-white/90 text-center text-base md:text-lg mb-6">
-                  Get <span className="font-bold text-neon-cyan">10% off</span> your first booking + our free travel planning guide
+                  Get our free AI travel planning guide with trip tips, destination ideas, and smarter ways to compare flights, stays, tours, and travel essentials.
                 </p>
 
                 {/* Form */}
@@ -212,7 +212,7 @@ export default function ExitIntentPopup() {
                       className="text-center"
                     >
                       <p className="text-green-400 text-sm font-medium mb-2">
-                        ✓ Success! Check your email for your discount code.
+                        ✓ Success! Check your email for your free travel planning guide.
                       </p>
                     </motion.div>
                   )}
@@ -229,9 +229,9 @@ export default function ExitIntentPopup() {
                     {isSubmitting ? (
                       'Processing...'
                     ) : submitStatus === 'success' ? (
-                      '✓ Discount Claimed!'
+                      '✓ Guide Sent!'
                     ) : (
-                      'Claim My Discount'
+                      'Send Me the Free Guide'
                     )}
                   </button>
                 </form>
@@ -239,6 +239,11 @@ export default function ExitIntentPopup() {
                 {/* Privacy Note */}
                 <p className="text-white/50 text-xs text-center mt-4">
                   We respect your privacy. Unsubscribe anytime.
+                </p>
+
+                {/* Affiliate Disclosure */}
+                <p className="text-white/50 text-xs text-center mt-2">
+                  TourWiseAI may earn a commission from some booking links at no extra cost to you.
                 </p>
               </div>
             </div>
