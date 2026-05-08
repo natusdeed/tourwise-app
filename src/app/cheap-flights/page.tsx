@@ -84,6 +84,23 @@ export default function CheapFlightsPage() {
           }),
         }}
       />
+      <Script
+        id="cheap-flights-itemlist"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'Popular routes from Houston',
+            itemListElement: houstonRoutes.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: item.route,
+              url: `https://tourwiseai.com${item.href}`,
+            })),
+          }),
+        }}
+      />
       <section className="relative px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold heading-robotic">
@@ -103,7 +120,7 @@ export default function CheapFlightsPage() {
               href="/ai-travel-planner"
               className="inline-flex rounded-lg border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white/90 transition hover:border-neon-cyan/40 hover:text-neon-cyan"
             >
-              Explore AI Trip Planner
+              Build Itinerary with AI
             </Link>
           </div>
           <AffiliateDisclosure className="mt-6" />

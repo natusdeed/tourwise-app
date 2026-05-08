@@ -84,10 +84,6 @@ export default async function SiteBlogPostPage({ params }: PageProps) {
               Home
             </Link>
             <span aria-hidden>/</span>
-            <Link href="/faith-travel" className="hover:text-white">
-              Faith travel
-            </Link>
-            <span aria-hidden>/</span>
             <Link href="/blog" className="hover:text-white">
               Blog
             </Link>
@@ -140,6 +136,22 @@ export default async function SiteBlogPostPage({ params }: PageProps) {
               </ul>
             </section>
           ) : null}
+          <section className="pt-8 border-t border-white/10">
+            <div className="glass-strong rounded-xl border border-neon-cyan/20 p-5">
+              <h2 className="text-xl font-semibold text-white heading-robotic">Turn this guide into a real trip plan</h2>
+              <p className="text-sm text-white/70 mt-2">
+                Build an itinerary first, then compare flights and travel essentials in one flow.
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link href="/ai-travel-planner" className="inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">
+                  Open AI Planner
+                </Link>
+                <Link href="/cheap-flights" className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/90 hover:border-neon-cyan/40 hover:text-neon-cyan">
+                  Compare Cheap Flights
+                </Link>
+              </div>
+            </div>
+          </section>
         </article>
         <Footer />
       </main>
