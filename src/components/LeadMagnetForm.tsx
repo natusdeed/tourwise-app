@@ -26,7 +26,7 @@ export default function LeadMagnetForm({
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    if (website) return
+    if (website || status === 'loading') return
     setStatus('loading')
     setMessage('')
     try {
@@ -36,13 +36,23 @@ export default function LeadMagnetForm({
         body: JSON.stringify({ email: email.trim(), magnet_id: magnetId }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error || 'Something went wrong')
+      if (!res.ok) {
+        if (res.status === 400) {
+          throw new Error('Please enter a valid email address.')
+        }
+        if (res.status === 500) {
+          throw new Error('We could not send your guide right now. Please try again shortly.')
+        }
+        throw new Error(data.error || 'Something went wrong.')
+      }
       setStatus('success')
       trackEmailSignup(`lead_magnet:${magnetId}`)
       setMessage(data.message || 'Check your inbox for the download link.')
     } catch (err: unknown) {
       setStatus('error')
-      setMessage(err instanceof Error ? err.message : 'Please try again.')
+      setMessage(
+        err instanceof Error ? err.message : 'We hit a temporary issue. Please try again in a moment.'
+      )
     }
   }
 
