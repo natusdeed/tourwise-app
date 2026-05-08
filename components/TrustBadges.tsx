@@ -13,7 +13,7 @@ import { Shield, CheckCircle2, DollarSign, Headphones } from 'lucide-react'
  * Features:
  * - SSL Secure badge
  * - Verified Reviews badge
- * - Money-back guarantee badge
+ * - Multi-partner price comparison badge
  * - 24/7 Support badge
  * - Responsive grid layout
  * - Hover animations
@@ -37,12 +37,12 @@ export function TrustBadges() {
       description: 'Real traveler feedback'
     },
     {
-      id: 'money-back',
+      id: 'compare-deals',
       image: '/badges/money-back.svg',
-      alt: 'Best Price Guarantee',
+      alt: 'Compare Top Travel Deals',
       icon: DollarSign,
-      label: 'Best Price',
-      description: 'Guaranteed lowest rates'
+      label: 'Compare Deals',
+      description: 'Across top partners'
     },
     {
       id: '24-7-support',
