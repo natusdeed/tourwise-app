@@ -9,9 +9,10 @@ export default function AffiliateDisclosure({ className = '', variant = 'inline'
   const body = (
     <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
       <strong className="text-white/90">Affiliate Disclosure:</strong> TourWise AI participates in
-      affiliate programs including Travelpayouts (covering Booking.com, GetYourGuide, Tiqets, Viator, and
-      others) and Amazon Associates. When you click certain links and make a purchase, we may earn a
-      commission at no extra cost to you. This helps keep our AI travel planner free.{' '}
+      Travelpayouts partner programs (flights, tours, transfers, connectivity, insurance, and related
+      travel services). When you click certain links and make a purchase, we may earn a commission at no
+      extra cost to you. Some links may earn us a commission at no extra cost to you. This helps keep our
+      AI travel planner free.{' '}
       <Link href="/affiliate-disclosure" className="text-neon-cyan hover:underline">
         Read our full disclosure
       </Link>

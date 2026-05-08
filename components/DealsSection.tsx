@@ -5,7 +5,9 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { ArrowRight, Clock, Users, Sparkles } from 'lucide-react'
 import type { NicheColorScheme } from '@/lib/niche-config'
-import { trackCTA, trackAffiliateClick } from '@/utils/analytics'
+import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
+import { trackCTA } from '@/utils/analytics'
 
 interface Deal {
   destination: string
@@ -346,16 +348,15 @@ export default function DealsSection({ colors }: DealsSectionProps) {
                   </div>
 
                   {/* CTA Button */}
-                  <button
-                    onClick={() => {
-                      trackCTA('deals_view_deal', `deals_${deal.destination.toLowerCase().replace(/\s+/g, '_')}`)
-                      trackAffiliateClick(`deal_${deal.destination}`, 'https://www.aviasales.com/search?marker=692947', deal.salePrice)
-                      window.open('https://www.aviasales.com/search?marker=692947', '_blank', 'noopener,noreferrer')
-                    }}
+                  <ExternalAffiliateLink
+                    href={AFFILIATE_LINKS.flights.aviasales.url}
+                    trackingLabel={`deal_${deal.destination}`}
+                    analyticsPrice={deal.salePrice}
+                    aria-label={`View travel deal for ${deal.destination} — find cheap flights on Aviasales in a new tab`}
                     className="mt-auto px-4 py-3 rounded-lg font-bold heading-robotic text-sm md:text-base text-white transition-all duration-300 flex items-center justify-center gap-2 group/btn relative overflow-hidden min-h-[48px] min-w-[48px]"
                     style={{
                       background: `linear-gradient(135deg, ${activeColors.primary}, ${activeColors.secondary})`,
-                      boxShadow: `0 0 20px ${activeColors.primary}40`
+                      boxShadow: `0 0 20px ${activeColors.primary}40`,
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.boxShadow = `0 0 30px ${activeColors.primary}80`
@@ -364,6 +365,9 @@ export default function DealsSection({ colors }: DealsSectionProps) {
                     onMouseLeave={(e) => {
                       e.currentTarget.style.boxShadow = `0 0 20px ${activeColors.primary}40`
                       e.currentTarget.style.transform = 'scale(1)'
+                    }}
+                    onClick={() => {
+                      trackCTA('deals_view_deal', `deals_${deal.destination.toLowerCase().replace(/\s+/g, '_')}`)
                     }}
                   >
                     <span className="relative z-10">View Deal</span>
@@ -374,7 +378,7 @@ export default function DealsSection({ colors }: DealsSectionProps) {
                       whileHover={{ x: '100%' }}
                       transition={{ duration: 0.6 }}
                     />
-                  </button>
+                  </ExternalAffiliateLink>
                 </div>
 
                 {/* Hover Glow Effect */}

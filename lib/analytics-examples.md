@@ -36,10 +36,16 @@ import { trackCTA } from '@/utils/analytics'
 ```tsx
 import { trackAffiliateClick } from '@/utils/analytics'
 
+// Use the curated Travelpayouts tp.st short link from src/lib/affiliate-links.ts
+// (no marker / token is ever exposed in the browser).
+import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
+
 <a
-  href="https://www.aviasales.com/search?marker=692947"
+  href={AFFILIATE_LINKS.flights.aviasales.url}
+  target="_blank"
+  rel={AFFILIATE_LINK_REL}
   onClick={() => {
-    trackAffiliateClick('aviasales_flights', 'https://www.aviasales.com', 699)
+    trackAffiliateClick('aviasales_flights', AFFILIATE_LINKS.flights.aviasales.url, 699)
   }}
 >
   View Flight Deals

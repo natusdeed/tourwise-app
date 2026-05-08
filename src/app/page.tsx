@@ -9,6 +9,7 @@ import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
+import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 // Lazy load heavy components to improve initial page load  
 const Hero = dynamic(() => import('@/components/Hero'), {
@@ -23,6 +24,11 @@ const FeatureGrid = dynamic(() => import('@/components/FeatureGrid'), {
 
 const ToolsSection = dynamic(() => import('@/components/ToolsSection'), {
   loading: () => <div className="min-h-[300px]" />,
+  ssr: false,
+})
+
+const TravelDealsSection = dynamic(() => import('@/components/TravelDealsSection'), {
+  loading: () => <div className="min-h-[180px]" />,
   ssr: false,
 })
 
@@ -450,10 +456,11 @@ export default function Home() {
 
                         {/* CTA Button */}
                         <a 
-                          href="https://www.aviasales.com/search?marker=692947"
+                          href={AFFILIATE_LINKS.flights.aviasales.url}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel={AFFILIATE_LINK_REL}
                           className="cta-secondary w-full"
+                          aria-label={`Find cheap flights related to ${vertical.shortName}, opens in a new tab`}
                           onClick={() => {
                             if (typeof window !== 'undefined' && window.gtag) {
                               window.gtag('event', 'cta_click', {
@@ -462,12 +469,12 @@ export default function Home() {
                               })
                               window.gtag('event', 'affiliate_click', {
                                 link_name: `vertical_${vertical.slug}`,
-                                destination: 'https://www.aviasales.com/search?marker=692947'
+                                destination: AFFILIATE_LINKS.flights.aviasales.url
                               })
                             }
                           }}
                         >
-                          <button
+                          <span
                             className="cta-secondary w-full px-4 py-3 text-sm md:text-base font-semibold heading-robotic rounded-lg flex items-center justify-center gap-2 group-hover:gap-3 transition-all duration-300 border min-h-[48px] min-w-[48px]"
                             style={{
                               backgroundColor: 'transparent',
@@ -485,7 +492,7 @@ export default function Home() {
                           >
                             <span>Find {vertical.shortName.replace(' Tours', '').replace('Travel', '')} Deals</span>
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                          </button>
+                          </span>
                         </a>
                       </div>
 
@@ -520,6 +527,8 @@ export default function Home() {
           sectionTitle="POWERFUL FEATURES"
           sectionDescription="Everything you need to plan the perfect trip, powered by cutting-edge AI"
         />
+
+        <TravelDealsSection />
 
         <ToolsSection />
         

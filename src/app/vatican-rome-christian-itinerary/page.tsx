@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '../../components/AffiliateDisclosure'
-import AffiliateLink from '../../components/AffiliateLink'
+import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '../../components/FAQAccordion'
 import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
@@ -145,22 +146,24 @@ export default function VaticanRomePage() {
               </p>
               <ul className="list-disc list-inside space-y-1 text-white/75">
                 <li>
-                  <AffiliateLink
-                    program="tiqets"
-                    path="/en/rome-vatican-museums-tickets/"
-                    subid="faith-vatican-tiqets-museums"
+                  <ExternalAffiliateLink
+                    href={AFFILIATE_LINKS.tours.tiqets.url}
+                    trackingLabel="faith-vatican-tiqets-museums"
+                    className="text-neon-cyan underline underline-offset-2 hover:text-white/90"
+                    aria-label="Attractions and tickets for Vatican Museums on Tiqets in a new tab"
                   >
                     Vatican Museums tickets
-                  </AffiliateLink>
+                  </ExternalAffiliateLink>
                 </li>
                 <li>
-                  <AffiliateLink
-                    program="tiqets"
-                    path="/en/rome-sistine-chapel-tickets/"
-                    subid="faith-vatican-tiqets-sistine"
+                  <ExternalAffiliateLink
+                    href={AFFILIATE_LINKS.tours.tiqets.url}
+                    trackingLabel="faith-vatican-tiqets-sistine"
+                    className="text-neon-cyan underline underline-offset-2 hover:text-white/90"
+                    aria-label="Attractions and tickets including Sistine Chapel on Tiqets in a new tab"
                   >
                     Sistine Chapel tickets
-                  </AffiliateLink>
+                  </ExternalAffiliateLink>
                 </li>
               </ul>
             </div>
@@ -174,13 +177,14 @@ export default function VaticanRomePage() {
                 reflection, and unhurried site visits.
               </p>
               <p className="text-white/75">
-                <AffiliateLink
-                  program="getYourGuide"
-                  path="/rome-l33/christian-rome-tour/"
-                  subid="faith-vatican-gyg-christianrome"
+                <ExternalAffiliateLink
+                  href={AFFILIATE_LINKS.tours.wegotrip.url}
+                  trackingLabel="faith-vatican-wegotrip-christianrome"
+                  className="text-neon-cyan underline underline-offset-2 hover:text-white/90"
+                  aria-label="Audio and city tours including Christian Rome on Wegotrip in a new tab"
                 >
                   Christian Rome guided tour
-                </AffiliateLink>
+                </ExternalAffiliateLink>
               </p>
             </div>
 
@@ -193,13 +197,14 @@ export default function VaticanRomePage() {
                 afternoon, and a slower evening in Trastevere.
               </p>
               <p className="text-white/75">
-                <AffiliateLink
-                  program="getYourGuide"
-                  path="/rome-l33/catacombs-tour/"
-                  subid="faith-vatican-gyg-catacombs"
+                <ExternalAffiliateLink
+                  href={AFFILIATE_LINKS.tours.klook.url}
+                  trackingLabel="faith-vatican-klook-catacombs"
+                  className="text-neon-cyan underline underline-offset-2 hover:text-white/90"
+                  aria-label="Book activities including Rome catacombs tours on Klook in a new tab"
                 >
                   Rome catacombs tour
-                </AffiliateLink>
+                </ExternalAffiliateLink>
               </p>
             </div>
 
@@ -210,13 +215,14 @@ export default function VaticanRomePage() {
                 plan realistic, and prioritize key Franciscan sites.
               </p>
               <p className="text-white/75">
-                <AffiliateLink
-                  program="getYourGuide"
-                  path="/assisi-l4461/"
-                  subid="faith-vatican-gyg-assisi"
+                <ExternalAffiliateLink
+                  href={AFFILIATE_LINKS.tours.klook.url}
+                  trackingLabel="faith-vatican-klook-assisi"
+                  className="text-neon-cyan underline underline-offset-2 hover:text-white/90"
+                  aria-label="Book day trips including Assisi on Klook in a new tab"
                 >
                   Assisi day trip options
-                </AffiliateLink>
+                </ExternalAffiliateLink>
               </p>
             </div>
 
@@ -295,32 +301,12 @@ export default function VaticanRomePage() {
             </p>
             <ul className="list-disc list-inside space-y-1 text-white/75">
               <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/hotel/it/rome-cavalieri.html"
-                  subid="faith-vatican-hotel-cavalieri"
-                >
-                  Rome Cavalieri
-                </AffiliateLink>
+                Rome Cavalieri — compare on your preferred hotel site after you lock travel dates.
               </li>
               <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/hotel/it/residenza-paolo-vi.html"
-                  subid="faith-vatican-hotel-paolov"
-                >
-                  Residenza Paolo VI
-                </AffiliateLink>
+                Residenza Paolo VI — consider proximity to the Vatican and early entry needs.
               </li>
-              <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/hotel/it/borgo-pio.html"
-                  subid="faith-vatican-hotel-borgiopio"
-                >
-                  Borgo Pio hotel options
-                </AffiliateLink>
-              </li>
+              <li>Borgo Pio area — walkable to St. Peter&apos;s; check reviews and cancellation terms.</li>
             </ul>
           </section>
 

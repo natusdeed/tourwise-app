@@ -16,10 +16,15 @@ const ReactMarkdown = dynamic(() => import('react-markdown'), {
 import type { NicheColorScheme } from '@/lib/niche-config'
 import { create3DTextShadow, create3DLightTextShadow } from '@/lib/color-utils'
 import { extractOriginAndDestination, getIATACode, isCityRecognized } from '@/lib/iata-codes'
-import { getValidDepartureDate, formatDateForAviasales } from '@/lib/date-utils'
 import { generateProductSchema } from '@/lib/seo'
+import {
+  AFFILIATE_LINKS,
+  AFFILIATE_LINK_REL,
+  getContextualAffiliateSuggestions,
+} from '@/lib/affiliate-links'
+import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { detectLocation, getDetectedCity, verifyIPinfoConfig } from '@/lib/detectLocation'
-import { trackItineraryCreation, trackCTA, trackAffiliateClick } from '@/utils/analytics'
+import { trackItineraryCreation, trackCTA } from '@/utils/analytics'
 
 interface HeroProps {
   title: string
@@ -28,44 +33,6 @@ interface HeroProps {
   description?: string
   colors: NicheColorScheme
   backgroundImage?: string
-}
-
-/**
- * Build Aviasales search URL with proper formatting
- * @param originCode - Origin IATA code (e.g., 'HOU')
- * @param destinationCode - Destination IATA code (e.g., 'LOS')
- * @param departDate - Departure date (defaults to next Friday)
- * @returns Formatted Aviasales URL
- */
-function buildAviasalesUrl(
-  originCode: string | null,
-  destinationCode: string | null,
-  departDate?: Date
-): string {
-  const marker = process.env.NEXT_PUBLIC_TRAVELPAYOUTS_MARKER || '692947'
-  const baseUrl = 'https://search.aviasales.com/flights/'
-  
-  // Use provided date or default to next Friday
-  const date = departDate || getValidDepartureDate()
-  const formattedDate = formatDateForAviasales(date)
-  
-  // Default to empty strings if codes not provided (Aviasales will handle it)
-  const origin = originCode || ''
-  const destination = destinationCode || ''
-  
-  const params = new URLSearchParams({
-    origin_iata: origin,
-    destination_iata: destination,
-    depart_date: formattedDate,
-    adults: '1',
-    children: '0',
-    infants: '0',
-    trip_class: '0',
-    marker: marker,
-    with_request: 'true',
-  })
-  
-  return `${baseUrl}?${params.toString()}`
 }
 
 export default function Hero({ title, subtitle, placeholder, description, colors, backgroundImage }: HeroProps) {
@@ -83,6 +50,9 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   const [detectedCity, setDetectedCity] = useState<string | null>(null)
   const [locationDetected, setLocationDetected] = useState(false)
   const itineraryRef = useRef<HTMLDivElement>(null)
+
+  const postItineraryAffiliates =
+    itinerary && !isLoading ? getContextualAffiliateSuggestions(searchQuery, itinerary) : []
 
   useEffect(() => {
     setIsMounted(true)
@@ -226,10 +196,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       setOriginCode(origin)
       setDestinationCode(destination)
 
-      // Build Aviasales URL with validated date
-      const departDate = getValidDepartureDate(searchQuery.trim())
-      const url = buildAviasalesUrl(origin, destination, departDate)
-      setAviasalesUrl(url)
+      setAviasalesUrl(AFFILIATE_LINKS.flights.aviasales.url)
 
       // Call Gemini API to generate travel itinerary
       // Gemini will automatically call searchFlightPrices if user asks about prices/deals
@@ -613,6 +580,34 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </div>
                 </div>
 
+                {postItineraryAffiliates.length > 0 && (
+                  <div className="mt-6 pt-6 border-t border-white/10">
+                    <p className="text-sm font-semibold text-white/90 heading-robotic mb-1">
+                      Book your trip · partner tools
+                    </p>
+                    <p className="text-xs text-white/55 mb-4">
+                      Disclosure: TourwiseAI may earn a commission when you book through some links, at no
+                      extra cost to you. Some links may earn us a commission at no extra cost to you.
+                    </p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+                      {postItineraryAffiliates.map((item) => (
+                        <li key={item.id}>
+                          <ExternalAffiliateLink
+                            href={item.url}
+                            trackingLabel={`hero_post_itin_${item.id}`}
+                            className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                            aria-label={`${item.label} — ${item.partner}, opens in a new tab`}
+                          >
+                            <span className="text-sm font-semibold text-white block">{item.label}</span>
+                            <span className="text-xs text-neon-cyan/90">{item.partner}</span>
+                            <span className="text-xs text-white/50 mt-1 block">{item.reason}</span>
+                          </ExternalAffiliateLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 {/* Product Schema for AI Overviews - Critical for 2026 SEO */}
                 {flightData && flightData.price && (
                   <Script
@@ -626,7 +621,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                           price: flightData.price,
                           currency: flightData.currency || 'USD',
                           availability: 'https://schema.org/InStock',
-                          url: aviasalesUrl || 'https://tourwiseai.com',
+                          url: aviasalesUrl || AFFILIATE_LINKS.flights.aviasales.url,
                           brand: flightData.airline,
                           category: 'Travel',
                         })
@@ -700,23 +695,21 @@ export default function Hero({ title, subtitle, placeholder, description, colors
 
                       {/* BOOK NOW Button */}
                       {aviasalesUrl && (
-                        <a
+                        <ExternalAffiliateLink
                           href={aviasalesUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          trackingLabel="hero_book_now_deal"
                           className="block w-full"
-                          onClick={() => {
-                            trackCTA('hero_book_now', 'hero_flight_deal')
-                            trackAffiliateClick('aviasales_flight_deal', aviasalesUrl, flightData.price)
-                          }}
+                          aria-label="Book this flight deal on Aviasales in a new tab"
+                          onClick={() => trackCTA('hero_book_now', 'hero_flight_deal')}
                         >
-                          <motion.button
+                          <motion.span
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className="w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden min-h-[48px]"
+                            className="block w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden min-h-[48px] cursor-pointer text-center"
                             style={{
                               background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                              boxShadow: '0 0 30px rgba(16, 185, 129, 0.6), 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                              boxShadow:
+                                '0 0 30px rgba(16, 185, 129, 0.6), 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                             }}
                           >
                             <span className="relative z-10 flex items-center justify-center gap-3 font-bold">
@@ -724,14 +717,14 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                               <span>BOOK THIS DEAL NOW</span>
                               <span>→</span>
                             </span>
-                            <motion.div
-                              className="absolute inset-0 bg-white/20"
+                            <motion.span
+                              className="absolute inset-0 bg-white/20 block"
                               initial={{ x: '-100%' }}
                               whileHover={{ x: '100%' }}
                               transition={{ duration: 0.6 }}
                             />
-                          </motion.button>
-                        </a>
+                          </motion.span>
+                        </ExternalAffiliateLink>
                       )}
                     </div>
                   </motion.div>
@@ -791,23 +784,23 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 </div>
 
                 {/* Search Live Deals CTA */}
-                {aviasalesUrl && destinationCode && (
+                {aviasalesUrl && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
                     className="mt-6"
                   >
-                    <a
+                    <ExternalAffiliateLink
                       href={aviasalesUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      trackingLabel="hero_search_live_aviasales"
                       className="block w-full"
+                      aria-label="Find cheap flights on Aviasales in a new tab"
                     >
-                      <motion.button
+                      <motion.span
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden"
+                        className="block w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden cursor-pointer text-center"
                         style={{
                           background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                           boxShadow: '0 0 30px rgba(16, 185, 129, 0.5), 0 4px 20px rgba(0, 0, 0, 0.3)',
@@ -815,17 +808,17 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                       >
                         <span className="relative z-10 flex items-center justify-center gap-3">
                           <span>✈️</span>
-                          <span>SEARCH LIVE DEALS ON AVIASALES</span>
+                          <span>FIND CHEAP FLIGHTS</span>
                           <span>→</span>
                         </span>
-                        <motion.div
-                          className="absolute inset-0 bg-white/20"
+                        <motion.span
+                          className="absolute inset-0 bg-white/20 block"
                           initial={{ x: '-100%' }}
                           whileHover={{ x: '100%' }}
                           transition={{ duration: 0.6 }}
                         />
-                      </motion.button>
-                    </a>
+                      </motion.span>
+                    </ExternalAffiliateLink>
                   </motion.div>
                 )}
               </div>
@@ -849,11 +842,12 @@ export default function Hero({ title, subtitle, placeholder, description, colors
             }}
           >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 justify-items-center">
-              {/* Cheap Flights Button */}
+              {/* Find Cheap Flights */}
               <motion.a
-                href="https://www.aviasales.com/search?marker=692947"
+                href={AFFILIATE_LINKS.flights.aviasales.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={AFFILIATE_LINK_REL}
+                aria-label="Find cheap flights on Aviasales in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
@@ -871,9 +865,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
                 >
-                  Cheap Flights
+                  Find Cheap Flights
                 </span>
-                {/* Neon-blue glow on hover */}
                 <div 
                   className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"
                   style={{ 
@@ -883,45 +876,28 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 />
               </motion.a>
 
-              {/* Best Hotels Button */}
-              <motion.a
-                href="https://www.aviasales.com/search?marker=692947"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.005, y: -0.2 }}
-                whileTap={{ scale: 0.98 }}
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
+              {/* Stays — no hotel affiliate yet */}
+              <div
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md min-h-[48px] w-full max-w-[200px] opacity-70 cursor-default"
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${colors.primary}20`
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  border: `1px dashed ${colors.primary}25`
                 }}
+                role="note"
+                aria-label="Hotels and stays: plan your dates with our AI first, then book on your preferred hotel site"
               >
                 <span className="text-lg md:text-xl">🏨</span>
-                <span 
-                  className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap transition-all duration-300 relative z-10"
-                  style={{
-                    color: 'white',
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
-                >
-                  Best Hotels
+                <span className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap text-white/80">
+                  Stays — plan dates first
                 </span>
-                {/* Neon-blue glow on hover */}
-                <div 
-                  className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"
-                  style={{ 
-                    backgroundColor: colors.primary,
-                    boxShadow: `0 0 20px ${colors.primary}, 0 0 40px ${colors.primary}40`
-                  }}
-                />
-              </motion.a>
+              </div>
 
-              {/* Car Rentals Button */}
+              {/* Rent a Car */}
               <motion.a
-                href="https://www.aviasales.com/search?marker=692947"
+                href={AFFILIATE_LINKS.carRentals.localrent.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={AFFILIATE_LINK_REL}
+                aria-label="Rent a car on Localrent in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
@@ -939,9 +915,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
                 >
-                  Car Rentals
+                  Rent a Car
                 </span>
-                {/* Neon-blue glow on hover */}
                 <div 
                   className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"
                   style={{ 
@@ -951,11 +926,12 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 />
               </motion.a>
 
-              {/* Tours & Activities Button */}
+              {/* Book Activities */}
               <motion.a
-                href="https://www.aviasales.com/search?marker=692947"
+                href={AFFILIATE_LINKS.tours.klook.url}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel={AFFILIATE_LINK_REL}
+                aria-label="Book activities on Klook in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
@@ -973,9 +949,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
                 >
-                  Tours & Activities
+                  Book Activities
                 </span>
-                {/* Neon-blue glow on hover */}
                 <div 
                   className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"
                   style={{ 

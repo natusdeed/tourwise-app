@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '../../components/AffiliateDisclosure'
-import AffiliateLink from '../../components/AffiliateLink'
+import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import ComparisonTable from '../../components/ComparisonTable'
 import FAQAccordion from '../../components/FAQAccordion'
 import LeadMagnetForm from '../../components/LeadMagnetForm'
@@ -119,20 +120,22 @@ export default function HolyLandToursPage() {
               <li>Pack walking shoes, sun layers, hydration strategy, and a modesty-ready day kit.</li>
             </ol>
             <div className="flex flex-wrap gap-3">
-              <AffiliateLink
-                program="viator"
-                path="/Jerusalem/d921-ttd"
-                subid="faith-holyland-primary-viator"
+              <ExternalAffiliateLink
+                href={AFFILIATE_LINKS.tours.klook.url}
+                trackingLabel="faith-holyland-klook"
+                className="text-neon-cyan underline underline-offset-2 hover:text-white/90 text-sm font-medium"
+                aria-label="Book activities for the Holy Land on Klook in a new tab"
               >
                 Compare Holy Land experiences
-              </AffiliateLink>
-              <AffiliateLink
-                program="getYourGuide"
-                path="/s/?q=Jerusalem"
-                subid="faith-holyland-primary-gyg"
+              </ExternalAffiliateLink>
+              <ExternalAffiliateLink
+                href={AFFILIATE_LINKS.tours.wegotrip.url}
+                trackingLabel="faith-holyland-wegotrip"
+                className="text-neon-cyan underline underline-offset-2 hover:text-white/90 text-sm font-medium"
+                aria-label="Browse audio and city tours for the Holy Land on Wegotrip in a new tab"
               >
                 Explore guided day tours
-              </AffiliateLink>
+              </ExternalAffiliateLink>
             </div>
           </div>
 

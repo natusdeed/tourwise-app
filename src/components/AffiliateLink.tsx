@@ -69,7 +69,7 @@ function AffiliateProgramLink({ program, path, subid, children, className }: Pro
     <a
       href={url}
       target="_blank"
-      rel="sponsored noopener noreferrer"
+      rel="nofollow sponsored noopener noreferrer"
       className={className}
       onClick={handleClick}
     >

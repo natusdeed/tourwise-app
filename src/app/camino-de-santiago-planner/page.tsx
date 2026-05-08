@@ -3,7 +3,8 @@ import Link from 'next/link'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '../../components/AffiliateDisclosure'
-import AffiliateLink from '../../components/AffiliateLink'
+import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import ComparisonTable from '../../components/ComparisonTable'
 import FAQAccordion from '../../components/FAQAccordion'
 import LeadMagnetForm from '../../components/LeadMagnetForm'
@@ -196,42 +197,10 @@ export default function CaminoPlannerPage() {
               flexibility, but reserve strategic nights in high-demand stops:
             </p>
             <ul className="list-disc list-inside space-y-1 text-white/75">
-              <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/searchresults.html?ss=Pamplona%2C%20Spain"
-                  subid="faith-camino-hotel-pamplona"
-                >
-                  Find stays in Pamplona
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/searchresults.html?ss=Burgos%2C%20Spain"
-                  subid="faith-camino-hotel-burgos"
-                >
-                  Find stays in Burgos
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/searchresults.html?ss=Sarria%2C%20Spain"
-                  subid="faith-camino-hotel-sarria"
-                >
-                  Find stays in Sarria
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="booking"
-                  path="/searchresults.html?ss=Santiago%20de%20Compostela%2C%20Spain"
-                  subid="faith-camino-hotel-santiago"
-                >
-                  Find stays in Santiago de Compostela
-                </AffiliateLink>
-              </li>
+              <li>Find stays in Pamplona on your preferred hotel site once your stage plan is set.</li>
+              <li>Find stays in Burgos with flexible cancellation if you may change your walking pace.</li>
+              <li>Book Sarria ahead in peak season — beds disappear quickly on busy arrival days.</li>
+              <li>Reserve Santiago de Compostela for your finish night and departure buffer.</li>
             </ul>
           </section>
 
@@ -243,13 +212,15 @@ export default function CaminoPlannerPage() {
               pilgrims avoid driving so they can keep the traditional stage flow.
             </p>
             <p className="text-white/75">
-              <AffiliateLink
-                program="discoverCars"
-                path="/es/search/"
-                subid="faith-camino-cars-spain"
+              <ExternalAffiliateLink
+                href={AFFILIATE_LINKS.carRentals.localrent.url}
+                trackingLabel="faith-camino-car-localrent"
+                className="text-neon-cyan underline underline-offset-2 hover:text-white/90 font-medium"
+                aria-label="Rent a car in Spain on Localrent in a new tab"
               >
-                Compare car rentals in Spain
-              </AffiliateLink>
+                Rent a car in Spain
+              </ExternalAffiliateLink>{' '}
+              for pre- or post-walk legs and airport logistics.
             </p>
           </section>
 
@@ -261,42 +232,10 @@ export default function CaminoPlannerPage() {
               scenario.
             </p>
             <ul className="list-disc list-inside space-y-1 text-white/75">
-              <li>
-                <AffiliateLink
-                  program="amazon"
-                  path="/dp/B07DXJSN6R"
-                  subid="faith-camino-gear-boots"
-                >
-                  Hiking boots
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="amazon"
-                  path="/dp/B000EBT6EI"
-                  subid="faith-camino-gear-poncho"
-                >
-                  Rain poncho
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="amazon"
-                  path="/dp/B07FVHVBKR"
-                  subid="faith-camino-gear-backpack"
-                >
-                  Lightweight backpack
-                </AffiliateLink>
-              </li>
-              <li>
-                <AffiliateLink
-                  program="amazon"
-                  path="/dp/B01N5G7HBK"
-                  subid="faith-camino-gear-headlamp"
-                >
-                  Headlamp
-                </AffiliateLink>
-              </li>
+              <li>Hiking boots — buy from a reputable outdoor retailer after you know your fit and break them in.</li>
+              <li>Rain protection — a packable poncho or shell for Galicia and shoulder seasons.</li>
+              <li>Lightweight backpack — aim for modest volume so daily mileage stays sustainable.</li>
+              <li>Headlamp — useful for early starts and shared albergue arrivals.</li>
             </ul>
           </section>
 

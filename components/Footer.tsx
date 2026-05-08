@@ -202,6 +202,10 @@ export default function Footer() {
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
                 <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-xs md:text-sm text-white/60">
                   <span>© 2026 TourWise AI. Plan Smart. Travel Further.</span>
+                  <span className="text-white/45 max-w-md md:max-w-lg text-center md:text-left">
+                    Disclosure: TourwiseAI may earn a commission when you book through some links, at no
+                    extra cost to you.
+                  </span>
                 </div>
                 <a 
                   href="https://mercyspeaksdigital.com" 

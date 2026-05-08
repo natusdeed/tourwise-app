@@ -144,13 +144,17 @@ export function BookTripSection({
 
   return (
     <section className="glass-strong rounded-xl p-8 mt-12">
-      <h2 className="text-3xl font-bold heading-robotic mb-6 text-center">{title}</h2>
+      <h2 className="text-3xl font-bold heading-robotic mb-2 text-center">{title}</h2>
+      <p className="text-center text-white/55 text-xs mb-6">
+        Some links may earn us a commission at no extra cost to you.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
         {hotelLink && (
           <a
             href={hotelLink}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow sponsored noopener noreferrer"
+            aria-label={`Book hotels in ${destination ?? 'this destination'} — opens partner site in a new tab`}
             className="group glass rounded-xl p-6 hover:scale-105 transition-transform text-center"
           >
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-neon-cyan/20 flex items-center justify-center group-hover:bg-neon-cyan/30 transition-colors">
@@ -169,7 +173,8 @@ export function BookTripSection({
           <a
             href={tourLink}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow sponsored noopener noreferrer"
+            aria-label={`Book tours in ${destination ?? 'this destination'} — opens partner site in a new tab`}
             className="group glass rounded-xl p-6 hover:scale-105 transition-transform text-center"
           >
             <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-neon-cyan/20 flex items-center justify-center group-hover:bg-neon-cyan/30 transition-colors">

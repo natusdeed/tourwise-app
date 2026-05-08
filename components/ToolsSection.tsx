@@ -4,62 +4,63 @@ import { motion } from 'framer-motion'
 import { ExternalLink, Check } from 'lucide-react'
 import { getIconByName } from '@/lib/icon-map'
 import { useState } from 'react'
+import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 const tools = [
   {
-    name: 'Viator Tours',
-    description: 'Book 300,000+ experiences worldwide',
+    name: 'Klook',
+    description: 'Book tours, experiences, and tickets worldwide',
     badge: 'Most Popular',
     icon: 'Compass',
-    cta: 'Explore Tours',
-    url: 'https://www.aviasales.com/search?marker=692947',
+    cta: 'Book Activities',
+    url: AFFILIATE_LINKS.tours.klook.url,
     color: 'from-purple-500 to-pink-500',
     benefits: [
-      'Free cancellation',
-      'Best price guarantee',
+      'Free cancellation on many offers',
       'Instant confirmation',
+      'Mobile tickets',
     ],
   },
   {
-    name: 'Booking.com',
-    description: 'Compare 2M+ properties instantly',
-    badge: 'Best Deals',
+    name: 'Hotels & stays',
+    description: 'Use TourWise to lock dates, then compare stays on your favorite site',
+    badge: 'Smart prep',
     icon: 'Building2',
-    cta: 'Find Hotels',
-    url: 'https://www.aviasales.com/search?marker=692947',
+    cta: null as string | null,
+    url: null as string | null,
     color: 'from-blue-500 to-cyan-500',
     benefits: [
-      'Free cancellation',
-      'Best price guarantee',
-      'Instant confirmation',
+      'Plan with AI first',
+      'Flexible date options',
+      'Book where you already trust',
     ],
   },
   {
     name: 'Aviasales',
-    description: 'Find the cheapest flights worldwide',
+    description: 'Compare airfare across airlines',
     badge: 'Top Rated',
     icon: 'Plane',
-    cta: 'Search Flights',
-    url: 'https://www.aviasales.com/search?marker=692947',
+    cta: 'Find Cheap Flights',
+    url: AFFILIATE_LINKS.flights.aviasales.url,
     color: 'from-yellow-400 to-orange-500',
     benefits: [
-      'Free cancellation',
-      'Best price guarantee',
-      'Instant confirmation',
+      'Wide route coverage',
+      'Clear pricing context',
+      'Book with partner sites',
     ],
   },
   {
-    name: 'Rentalcars',
+    name: 'Car rentals',
     description: 'Rent a car in 160+ countries',
     badge: 'Trusted',
     icon: 'Car',
     cta: 'Rent a Car',
-    url: 'https://www.aviasales.com/search?marker=692947',
+    url: AFFILIATE_LINKS.carRentals.localrent.url,
     color: 'from-green-500 to-emerald-500',
     benefits: [
-      'Free cancellation',
-      'Best price guarantee',
-      'Instant confirmation',
+      'Multiple suppliers',
+      'International options',
+      'Compare and choose',
     ],
   },
 ]
@@ -139,12 +140,14 @@ function ToolCard({ tool, Icon, index }: ToolCardProps) {
             {tool.description}
           </p>
 
-          {/* CTA Button */}
+          {/* CTA hint */}
           <div className="flex items-center gap-2 text-neon-cyan group-hover:text-electric-blue transition-all group-hover:gap-[2.035px] relative min-h-[48px] py-2 justify-center mt-auto">
             <span className="text-xs heading-robotic font-bold group-hover:drop-shadow-[0_0_1.2px_currentColor] transition-all group-hover:scale-[1.004] inline-block">
-              {tool.cta}
+              {tool.cta ?? 'Tap to flip — how we use this'}
             </span>
-            <ExternalLink className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-[0.1px] group-hover:-translate-y-0 group-hover:scale-[1.004] transition-transform group-hover:drop-shadow-[0_0_1.2px_currentColor]" />
+            {tool.url ? (
+              <ExternalLink className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-[0.1px] group-hover:-translate-y-0 group-hover:scale-[1.004] transition-transform group-hover:drop-shadow-[0_0_1.2px_currentColor]" />
+            ) : null}
             {/* Glow effect on hover */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-3 transition-opacity duration-300 blur-xl pointer-events-none"
@@ -196,22 +199,33 @@ function ToolCard({ tool, Icon, index }: ToolCardProps) {
           </ul>
 
           {/* CTA Link on Back */}
-          <a
-            href={tool.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="mt-6 sm:mt-8 flex items-center gap-2 text-neon-cyan hover:text-electric-blue transition-all hover:gap-[2.035px] relative px-4 py-2 rounded-lg border border-neon-cyan/40 hover:border-neon-cyan/60"
-            style={{
-              background:
-                'linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(50, 168, 221, 0.1) 100%)',
-            }}
-          >
-            <span className="text-xs heading-robotic font-bold">
-              {tool.cta}
-            </span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          {tool.url && tool.cta ? (
+            <a
+              href={tool.url}
+              target="_blank"
+              rel={AFFILIATE_LINK_REL}
+              onClick={(e) => e.stopPropagation()}
+              aria-label={`${tool.cta} — opens in a new tab`}
+              className="mt-6 sm:mt-8 flex items-center gap-2 text-neon-cyan hover:text-electric-blue transition-all hover:gap-[2.035px] relative px-4 py-2 rounded-lg border border-neon-cyan/40 hover:border-neon-cyan/60"
+              style={{
+                background:
+                  'linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(50, 168, 221, 0.1) 100%)',
+              }}
+            >
+              <span className="text-xs heading-robotic font-bold">
+                {tool.cta}
+              </span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          ) : (
+            <p
+              className="mt-6 sm:mt-8 text-xs text-white/55 max-w-xs px-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              No hotel partner link here yet — use the AI planner to set dates, then book stays on a site
+              you already trust.
+            </p>
+          )}
 
           {/* Hover Glow */}
           <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-3 transition-opacity duration-300 pointer-events-none">

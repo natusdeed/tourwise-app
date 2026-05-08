@@ -156,11 +156,15 @@ export default function DestinationTemplate({
               <a
                 href={hotelLink}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow sponsored noopener noreferrer"
+                aria-label={`Book hotels in ${frontmatter.title} — opens partner site in a new tab`}
                 className="block w-full text-center py-3 px-6 rounded-lg bg-neon-cyan text-black font-bold hover:bg-electric-blue transition-colors"
               >
                 Book Hotels
               </a>
+              <p className="mt-3 text-[11px] text-white/45 leading-snug">
+                Some links may earn us a commission at no extra cost to you.
+              </p>
             </section>
           )}
 
@@ -174,11 +178,15 @@ export default function DestinationTemplate({
               <a
                 href={tourLink}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow sponsored noopener noreferrer"
+                aria-label={`Book tours in ${frontmatter.title} — opens partner site in a new tab`}
                 className="block w-full text-center py-3 px-6 rounded-lg bg-neon-cyan text-black font-bold hover:bg-electric-blue transition-colors"
               >
                 Book Tours
               </a>
+              <p className="mt-3 text-[11px] text-white/45 leading-snug">
+                Some links may earn us a commission at no extra cost to you.
+              </p>
             </section>
           )}
 
