@@ -13,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls = await generateSitemapUrls(baseUrl);
   const additionalRoutes = [
     '/faith-travel',
+    '/cheap-flights',
     '/holy-land-tours-from-usa',
     '/camino-de-santiago-planner',
     '/vatican-rome-christian-itinerary',

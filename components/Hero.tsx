@@ -20,7 +20,6 @@ import { generateProductSchema } from '@/lib/seo'
 import {
   AFFILIATE_LINKS,
   AFFILIATE_LINK_REL,
-  getContextualAffiliateSuggestions,
 } from '@/lib/affiliate-links'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { detectLocation, getDetectedCity, verifyIPinfoConfig } from '@/lib/detectLocation'
@@ -50,9 +49,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   const [detectedCity, setDetectedCity] = useState<string | null>(null)
   const [locationDetected, setLocationDetected] = useState(false)
   const itineraryRef = useRef<HTMLDivElement>(null)
-
-  const postItineraryAffiliates =
-    itinerary && !isLoading ? getContextualAffiliateSuggestions(searchQuery, itinerary) : []
 
   useEffect(() => {
     setIsMounted(true)
@@ -580,33 +576,63 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </div>
                 </div>
 
-                {postItineraryAffiliates.length > 0 && (
-                  <div className="mt-6 pt-6 border-t border-white/10">
-                    <p className="text-sm font-semibold text-white/90 heading-robotic mb-1">
-                      Book your trip · partner tools
-                    </p>
-                    <p className="text-xs text-white/55 mb-4">
-                      Disclosure: TourwiseAI may earn a commission when you book through some links, at no
-                      extra cost to you. Some links may earn us a commission at no extra cost to you.
-                    </p>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
-                      {postItineraryAffiliates.map((item) => (
-                        <li key={item.id}>
-                          <ExternalAffiliateLink
-                            href={item.url}
-                            trackingLabel={`hero_post_itin_${item.id}`}
-                            className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
-                            aria-label={`${item.label} — ${item.partner}, opens in a new tab`}
-                          >
-                            <span className="text-sm font-semibold text-white block">{item.label}</span>
-                            <span className="text-xs text-neon-cyan/90">{item.partner}</span>
-                            <span className="text-xs text-white/50 mt-1 block">{item.reason}</span>
-                          </ExternalAffiliateLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div className="mt-6 pt-6 border-t border-white/10">
+                  <p className="text-sm font-semibold text-white/90 heading-robotic mb-1">
+                    Book your trip · partner tools
+                  </p>
+                  <p className="text-xs text-white/55 mb-4">
+                    Disclosure: TourwiseAI may earn a commission when you book through some links, at no
+                    extra cost to you.
+                  </p>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.flights.aviasales.url}
+                        trackingLabel="hero_post_itin_flights"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Find flights for this trip on Aviasales, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">Find flights for this trip</span>
+                        <span className="text-xs text-neon-cyan/90">Aviasales</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.transfers.kiwitaxi.url}
+                        trackingLabel="hero_post_itin_transfer"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Book airport transfer on Kiwitaxi, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">Book airport transfer</span>
+                        <span className="text-xs text-neon-cyan/90">Kiwitaxi</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.esim.airalo.url}
+                        trackingLabel="hero_post_itin_esim"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Get travel eSIM from Airalo, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">Get travel eSIM</span>
+                        <span className="text-xs text-neon-cyan/90">Airalo</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.tours.klook.url}
+                        trackingLabel="hero_post_itin_activities"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Book tours and activities, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">
+                          Book tours and activities
+                        </span>
+                        <span className="text-xs text-neon-cyan/90">Klook / Tiqets</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                  </ul>
+                </div>
 
                 {/* Product Schema for AI Overviews - Critical for 2026 SEO */}
                 {flightData && flightData.price && (

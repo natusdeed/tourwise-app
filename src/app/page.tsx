@@ -240,6 +240,65 @@ export default function Home() {
           backgroundImage="/header-banner.jpg.png"
         />
 
+        <section className="relative py-8 md:py-10 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-7 md:mb-8 max-w-3xl mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold heading-robotic mb-3">
+                <span className="text-gradient">Find Better Flight Deals Before You Book</span>
+              </h2>
+              <p className="text-white/75 text-sm md:text-base leading-relaxed">
+                Search flights, compare routes, and use TourWise AI to plan the rest of your trip around
+                better prices.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <Link
+                href="/cheap-flights"
+                className="glass-strong rounded-xl border border-neon-cyan/20 p-4 hover:border-neon-cyan/50 transition-colors"
+              >
+                <h3 className="text-white heading-robotic font-semibold">Cheap Flights</h3>
+                <p className="text-sm text-white/60 mt-2">Search deals and route ideas.</p>
+              </Link>
+              <a
+                href={AFFILIATE_LINKS.tours.klook.url}
+                target="_blank"
+                rel={AFFILIATE_LINK_REL}
+                className="glass-strong rounded-xl border border-white/10 p-4 hover:border-neon-cyan/40 transition-colors"
+              >
+                <h3 className="text-white heading-robotic font-semibold">Weekend Getaways</h3>
+                <p className="text-sm text-white/60 mt-2">Book quick activities and city passes.</p>
+              </a>
+              <a
+                href={AFFILIATE_LINKS.flights.aviasales.url}
+                target="_blank"
+                rel={AFFILIATE_LINK_REL}
+                className="glass-strong rounded-xl border border-white/10 p-4 hover:border-neon-cyan/40 transition-colors"
+              >
+                <h3 className="text-white heading-robotic font-semibold">International Trips</h3>
+                <p className="text-sm text-white/60 mt-2">Compare long-haul route options fast.</p>
+              </a>
+              <a
+                href={AFFILIATE_LINKS.transfers.kiwitaxi.url}
+                target="_blank"
+                rel={AFFILIATE_LINK_REL}
+                className="glass-strong rounded-xl border border-white/10 p-4 hover:border-neon-cyan/40 transition-colors"
+              >
+                <h3 className="text-white heading-robotic font-semibold">Airport Transfers</h3>
+                <p className="text-sm text-white/60 mt-2">Reserve pickups before arrival.</p>
+              </a>
+              <a
+                href={AFFILIATE_LINKS.esim.airalo.url}
+                target="_blank"
+                rel={AFFILIATE_LINK_REL}
+                className="glass-strong rounded-xl border border-white/10 p-4 hover:border-neon-cyan/40 transition-colors"
+              >
+                <h3 className="text-white heading-robotic font-semibold">Travel eSIM</h3>
+                <p className="text-sm text-white/60 mt-2">Stay connected as soon as you land.</p>
+              </a>
+            </div>
+          </div>
+        </section>
+
         <section className="relative py-10 md:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <motion.div
