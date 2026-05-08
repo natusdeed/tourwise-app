@@ -48,6 +48,13 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   const [isMounted, setIsMounted] = useState(false)
   const [detectedCity, setDetectedCity] = useState<string | null>(null)
   const [locationDetected, setLocationDetected] = useState(false)
+  const [destination, setDestination] = useState('')
+  const [tripLength, setTripLength] = useState('')
+  const [travelStyle, setTravelStyle] = useState('')
+  const [budgetLevel, setBudgetLevel] = useState('')
+  const [dailyBudget, setDailyBudget] = useState('')
+  const [travelerType, setTravelerType] = useState('')
+  const [interests, setInterests] = useState('')
   const itineraryRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -179,18 +186,32 @@ export default function Hero({ title, subtitle, placeholder, description, colors
         setTimeout(() => setIsAccessingMarketData(true), 2000) // Show after 2 seconds of loading
       }
 
+      const composedQuery = [
+        searchQuery.trim(),
+        destination ? `Destination: ${destination}.` : '',
+        tripLength ? `Trip length: ${tripLength}.` : '',
+        travelStyle ? `Travel style: ${travelStyle}.` : '',
+        budgetLevel ? `Budget level: ${budgetLevel}.` : '',
+        dailyBudget ? `Daily budget: ${dailyBudget}.` : '',
+        travelerType ? `Traveler type: ${travelerType}.` : '',
+        interests ? `Interests: ${interests}.` : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+
       // Extract origin and destination codes from query
-      const { origin, destination } = extractOriginAndDestination(searchQuery.trim())
+      const { origin, destination: parsedDestination } = extractOriginAndDestination(composedQuery)
       
       // Validate that at least destination is recognized
-      if (!destination) {
+      const effectiveDestination = parsedDestination || getIATACode(destination || '')
+      if (!effectiveDestination) {
         setCityError('Please enter a valid city name.')
         setIsLoading(false)
         return
       }
 
       setOriginCode(origin)
-      setDestinationCode(destination)
+      setDestinationCode(effectiveDestination)
 
       setAviasalesUrl(AFFILIATE_LINKS.flights.aviasales.url)
 
@@ -205,9 +226,18 @@ export default function Hero({ title, subtitle, placeholder, description, colors
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query: searchQuery.trim(),
+          query: composedQuery,
           originCode: origin,
-          destinationCode: destination,
+          destinationCode: effectiveDestination,
+          plannerInput: {
+            destination,
+            tripLength,
+            travelStyle,
+            budgetLevel,
+            dailyBudget,
+            travelerType,
+            interests,
+          },
         }),
         signal: controller.signal,
       })
@@ -237,7 +267,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
         const budget = budgetMatch ? parseInt(budgetMatch[1].replace('k', '000')) : undefined
         
         trackItineraryCreation(
-          destination || data.flightData?.destination || 'Unknown',
+          effectiveDestination || data.flightData?.destination || 'Unknown',
           duration,
           budget
         )
@@ -412,7 +442,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 >
                   <span>
                     {isAccessingMarketData 
-                      ? 'ACCESSING LIVE MARKET DATA...' 
+                      ? 'CHECKING AVAILABLE MARKET DATA...' 
                       : isLoading 
                         ? 'THINKING...' 
                         : 'PLAN TRIP'}
@@ -424,6 +454,15 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   )}
                 </button>
               </div>
+            </div>
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
+              <input value={destination} onChange={(e) => setDestination(e.target.value)} placeholder="Destination" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={tripLength} onChange={(e) => setTripLength(e.target.value)} placeholder="Trip length (e.g. 7 days)" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={travelStyle} onChange={(e) => setTravelStyle(e.target.value)} placeholder="Travel style (budget / comfort / luxury)" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={budgetLevel} onChange={(e) => setBudgetLevel(e.target.value)} placeholder="Budget level (low / mid / luxury)" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={dailyBudget} onChange={(e) => setDailyBudget(e.target.value)} placeholder="Daily budget (e.g. $80/day)" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={travelerType} onChange={(e) => setTravelerType(e.target.value)} placeholder="Traveler type (solo / couple / family)" className="bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
+              <input value={interests} onChange={(e) => setInterests(e.target.value)} placeholder="Interests (food, nature, history...)" className="sm:col-span-2 bg-black/40 border border-white/20 rounded-md px-3 py-2 text-sm text-white placeholder:text-white/45" />
             </div>
           </form>
           
@@ -446,7 +485,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 <Sparkles className="w-5 h-5 animate-pulse" style={{ color: colors.primary }} />
                 <p className="text-white/90 text-sm md:text-base heading-robotic font-medium" style={{ color: colors.primary }}>
                   {isAccessingMarketData 
-                    ? '🔍 Searching live market data for the best deals...' 
+                    ? '🔍 Checking available market data for this route...' 
                     : '✨ Our AI travel expert is crafting your perfect itinerary...'}
                 </p>
               </div>
@@ -578,7 +617,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
 
                 <div className="mt-6 pt-6 border-t border-white/10">
                   <p className="text-sm font-semibold text-white/90 heading-robotic mb-1">
-                    Book your trip · partner tools
+                    Book the essentials for this trip
                   </p>
                   <p className="text-xs text-white/55 mb-4">
                     Disclosure: TourwiseAI may earn a commission when you book through some links, at no
@@ -593,7 +632,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         aria-label="Find flights for this trip on Aviasales, opens in a new tab"
                       >
                         <span className="text-sm font-semibold text-white block">Find flights for this trip</span>
-                        <span className="text-xs text-neon-cyan/90">Aviasales</span>
+                        <span className="text-xs text-neon-cyan/90">Aviasales · Compare options</span>
                       </ExternalAffiliateLink>
                     </li>
                     <li>
@@ -604,7 +643,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         aria-label="Book airport transfer on Kiwitaxi, opens in a new tab"
                       >
                         <span className="text-sm font-semibold text-white block">Book airport transfer</span>
-                        <span className="text-xs text-neon-cyan/90">Kiwitaxi</span>
+                        <span className="text-xs text-neon-cyan/90">Kiwitaxi · Check current deals</span>
                       </ExternalAffiliateLink>
                     </li>
                     <li>
@@ -615,7 +654,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         aria-label="Get travel eSIM from Airalo, opens in a new tab"
                       >
                         <span className="text-sm font-semibold text-white block">Get travel eSIM</span>
-                        <span className="text-xs text-neon-cyan/90">Airalo</span>
+                        <span className="text-xs text-neon-cyan/90">Airalo · Compare options</span>
                       </ExternalAffiliateLink>
                     </li>
                     <li>
@@ -628,7 +667,29 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         <span className="text-sm font-semibold text-white block">
                           Book tours and activities
                         </span>
-                        <span className="text-xs text-neon-cyan/90">Klook / Tiqets</span>
+                        <span className="text-xs text-neon-cyan/90">Klook · Explore booking options</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.carRentals.localrent.url}
+                        trackingLabel="hero_post_itin_car"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Rent a car with Localrent, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">Rent a car</span>
+                        <span className="text-xs text-neon-cyan/90">Localrent · Check current offers</span>
+                      </ExternalAffiliateLink>
+                    </li>
+                    <li>
+                      <ExternalAffiliateLink
+                        href={AFFILIATE_LINKS.insurance.ekta.url}
+                        trackingLabel="hero_post_itin_insurance"
+                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                        aria-label="Get travel insurance with Ekta, opens in a new tab"
+                      >
+                        <span className="text-sm font-semibold text-white block">Get travel insurance</span>
+                        <span className="text-xs text-neon-cyan/90">Ekta · Explore protection options</span>
                       </ExternalAffiliateLink>
                     </li>
                   </ul>

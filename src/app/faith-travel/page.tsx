@@ -80,7 +80,7 @@ export default function FaithTravelHubPage() {
               </p>
             </Link>
             <Link
-              href="/vatican-rome-christian-itinerary"
+              href="/vatican-rome-christian-travel-guide"
               className="glass-strong rounded-xl border border-white/10 p-6 transition hover:border-neon-cyan/50"
             >
               <h3 className="heading-robotic text-xl font-semibold text-white">

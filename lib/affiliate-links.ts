@@ -1,148 +1,209 @@
 /**
- * Central Travelpayouts short links (tp.st) for Tourwise AI.
- * Use only these URLs for monetized outbound CTAs site-wide.
+ * Central affiliate link registry for TourWiseAI.
+ * All partner URLs should come from this file.
  */
-
 export const AFFILIATE_LINK_REL = 'nofollow sponsored noopener noreferrer' as const
 
+export const AFFILIATE_CATEGORIES = [
+  'flights',
+  'tours',
+  'esim',
+  'transfers',
+  'carRentals',
+  'bikeRentals',
+  'insurance',
+  'compensation',
+  'seaTravel',
+] as const
+
+export type AffiliateCategory = (typeof AFFILIATE_CATEGORIES)[number]
+
 export type AffiliateLinkItem = {
-  /** Visible partner / product name */
-  partner: string
-  /** Default CTA label */
-  label: string
+  name: string
+  category: AffiliateCategory
   url: string
+  description: string
+  recommendedButtonText: string
 }
 
 export const AFFILIATE_LINKS = {
   flights: {
     aviasales: {
-      partner: 'Aviasales',
-      label: 'Find Cheap Flights',
+      name: 'Aviasales',
+      category: 'flights',
       url: 'https://aviasales.tp.st/qpIjGSzy',
+      description: 'Compare flight options and route timing before booking.',
+      recommendedButtonText: 'Compare flight options',
     },
   },
   tours: {
     klook: {
-      partner: 'Klook',
-      label: 'Book Activities',
+      name: 'Klook',
+      category: 'tours',
       url: 'https://klook.tp.st/BUBgkcdK',
+      description: 'Discover tours, attraction tickets, and activity bundles.',
+      recommendedButtonText: 'Explore booking options',
     },
     tiqets: {
-      partner: 'Tiqets',
-      label: 'Attractions & Tickets',
+      name: 'Tiqets',
+      category: 'tours',
       url: 'https://tiqets.tp.st/4Nt5bARw',
+      description: 'Book museum and attraction tickets for major destinations.',
+      recommendedButtonText: 'Check current deals',
     },
     wegotrip: {
-      partner: 'Wegotrip',
-      label: 'Audio Tours / City Tours',
+      name: 'Wegotrip',
+      category: 'tours',
       url: 'https://wegotrip.tp.st/ndpQAL9M',
+      description: 'Audio-guided and city tour options for flexible itineraries.',
+      recommendedButtonText: 'Explore partner deals',
     },
     ticketnetwork: {
-      partner: 'TicketNetwork',
-      label: 'Events Near You',
+      name: 'TicketNetwork',
+      category: 'tours',
       url: 'https://ticketnetwork.tp.st/BNn5ubdJ',
+      description: 'Find live events and ticketed experiences while traveling.',
+      recommendedButtonText: 'Check current offers',
     },
   },
   esim: {
     airalo: {
-      partner: 'Airalo',
-      label: 'Get Travel eSIM',
+      name: 'Airalo',
+      category: 'esim',
       url: 'https://airalo.tp.st/GAQVa77S',
+      description: 'Stay connected abroad with destination-specific data plans.',
+      recommendedButtonText: 'Compare eSIM options',
     },
     yesim: {
-      partner: 'Yesim',
-      label: 'Compare eSIM Plans',
+      name: 'Yesim',
+      category: 'esim',
       url: 'https://yesim.tp.st/8nIqLptQ',
+      description: 'International eSIM coverage for short and long trips.',
+      recommendedButtonText: 'Check current offers',
     },
     drimsim: {
-      partner: 'Drimsim',
-      label: 'Backup Travel SIM',
+      name: 'Drimsim',
+      category: 'esim',
       url: 'https://drimsim.tp.st/uvGifbV1',
+      description: 'Alternative travel SIM option for global data access.',
+      recommendedButtonText: 'Explore data options',
     },
   },
   transfers: {
     kiwitaxi: {
-      partner: 'Kiwitaxi',
-      label: 'Book Airport Transfer',
+      name: 'Kiwitaxi',
+      category: 'transfers',
       url: 'https://kiwitaxi.tp.st/1ohvPr7V',
+      description: 'Pre-book private airport transfers before arrival.',
+      recommendedButtonText: 'Book airport transfer',
     },
     welcomePickups: {
-      partner: 'Welcome Pickups',
-      label: 'Private Airport Pickup',
+      name: 'Welcome Pickups',
+      category: 'transfers',
       url: 'https://tp.st/Q6l5lO20',
+      description: 'Door-to-door transfer options from airport to hotel.',
+      recommendedButtonText: 'Compare transfer options',
     },
     gettransfer: {
-      partner: 'GetTransfer',
-      label: 'Compare Transfers',
+      name: 'GetTransfer',
+      category: 'transfers',
       url: 'https://gettransfer.tp.st/QSiGZjJO',
+      description: 'Compare private transfer offers in major cities.',
+      recommendedButtonText: 'Check current deals',
     },
     intui: {
-      partner: 'Intui Travel',
-      label: 'Shared/Private Transfer',
+      name: 'Intui Travel',
+      category: 'transfers',
       url: 'https://intui.tp.st/wwXLxAYy',
+      description: 'Shared and private ride choices for airport arrivals.',
+      recommendedButtonText: 'Explore transfer options',
     },
   },
   carRentals: {
     localrent: {
-      partner: 'Localrent',
-      label: 'Rent a Car',
+      name: 'Localrent',
+      category: 'carRentals',
       url: 'https://localrent.tp.st/SOncPyr4',
+      description: 'Compare local car rentals for flexible self-drive plans.',
+      recommendedButtonText: 'Compare car rentals',
     },
     getrentacar: {
-      partner: 'GetRentacar',
-      label: 'Alternative Car Rental',
+      name: 'GetRentacar',
+      category: 'carRentals',
       url: 'https://getrentacar.tp.st/1rTkO3np',
+      description: 'Browse alternative rental inventory and pricing.',
+      recommendedButtonText: 'Check rental options',
     },
     economybookings: {
-      partner: 'EconomyBookings',
-      label: 'Compare Car Rentals',
+      name: 'EconomyBookings',
+      category: 'carRentals',
       url: 'https://economybookings.tp.st/MikZp4Vx',
+      description: 'Compare rental offers across providers.',
+      recommendedButtonText: 'Check current offers',
     },
     qeeq: {
-      partner: 'QEEQ',
-      label: 'More Car Rental Deals',
+      name: 'QEEQ',
+      category: 'carRentals',
       url: 'https://qeeq.tp.st/KsqTipUC',
+      description: 'Global car rental options and booking support.',
+      recommendedButtonText: 'Explore partner deals',
     },
     autoeurope: {
-      partner: 'AutoEurope',
-      label: 'International Car Rental',
+      name: 'AutoEurope',
+      category: 'carRentals',
       url: 'https://autoeurope.tp.st/DxC6Kaix',
+      description: 'International rental options for multi-country trips.',
+      recommendedButtonText: 'Compare international rentals',
     },
   },
   bikeRentals: {
     bikesbooking: {
-      partner: 'BikesBooking',
-      label: 'Rent a Bike',
+      name: 'BikesBooking',
+      category: 'bikeRentals',
       url: 'https://bikesbooking.tp.st/J222oCRg',
+      description: 'Find motorbike and bicycle rental options by destination.',
+      recommendedButtonText: 'Explore bike rental options',
     },
   },
   insurance: {
     ekta: {
-      partner: 'Ekta Travel Insurance',
-      label: 'Get Travel Insurance',
+      name: 'Ekta Travel Insurance',
+      category: 'insurance',
       url: 'https://ektatraveling.tp.st/k2fRJYNJ',
+      description: 'Travel insurance options for medical and trip protection.',
+      recommendedButtonText: 'Get travel insurance',
     },
   },
   compensation: {
     airhelp: {
-      partner: 'AirHelp',
-      label: 'Claim Flight Compensation',
+      name: 'AirHelp',
+      category: 'compensation',
       url: 'https://airhelp.tp.st/PqdZnWfc',
+      description: 'Check flight delay or cancellation compensation eligibility.',
+      recommendedButtonText: 'Check compensation options',
     },
     compensair: {
-      partner: 'Compensair',
-      label: 'Check Compensation',
+      name: 'Compensair',
+      category: 'compensation',
       url: 'https://compensair.tp.st/wdUzhr22',
+      description: 'Alternative service to evaluate flight compensation claims.',
+      recommendedButtonText: 'Explore compensation options',
     },
   },
   seaTravel: {
     searadar: {
-      partner: 'SeaRadar',
-      label: 'Book Yacht / Boat Rental',
+      name: 'SeaRadar',
+      category: 'seaTravel',
       url: 'https://searadar.tp.st/TXhyLQso',
+      description: 'Compare yacht and boat charter options.',
+      recommendedButtonText: 'Explore sea travel options',
     },
   },
 } as const
+
+export const AFFILIATE_LINK_LIST = Object.values(AFFILIATE_LINKS).flatMap((group) =>
+  Object.values(group)
+) as AffiliateLinkItem[]
 
 export type AffiliateSuggestion = AffiliateLinkItem & {
   id: string

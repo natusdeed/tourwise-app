@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 export default async function BlogIndexPage() {
   const posts = await getAllContentItems('posts')
+  const categories = ['AI Travel Tips', 'Flight Deals', 'Destination Guides', 'Faith-Based Travel', 'Travel Essentials', 'Budget Travel']
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24 pb-16">
@@ -23,9 +24,15 @@ export default async function BlogIndexPage() {
             <span className="text-gradient">Stories from the road</span>
           </h1>
           <p className="text-lg text-white/70 max-w-2xl">
-            Long-form companions to the AI planner—focused on pilgrimage pacing, ticketing, and
-            respectful travel.
+            Practical travel content designed to support itinerary planning, smarter booking decisions, and better trip execution.
           </p>
+          <div className="flex flex-wrap gap-2 pt-2">
+            {categories.map((category) => (
+              <span key={category} className="text-xs px-2 py-1 rounded-full border border-white/15 text-white/70">
+                {category}
+              </span>
+            ))}
+          </div>
         </header>
 
         <div className="grid gap-6 md:grid-cols-2">

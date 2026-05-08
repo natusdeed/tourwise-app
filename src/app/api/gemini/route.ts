@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { query, flightData, originCode, destinationCode } = body;
+    const { query, flightData, originCode, destinationCode, plannerInput } = body;
 
     // Validate input
     if (!query || typeof query !== 'string' || !query.trim()) {
@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get API key from environment variable
-    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+    // Server-side key only
+    const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       console.error('Gemini API key is not configured. Check NEXT_PUBLIC_GEMINI_API_KEY or GEMINI_API_KEY in .env.local');
@@ -46,18 +46,34 @@ export async function POST(request: NextRequest) {
     // Log API key status (without exposing the key)
     console.log('Gemini API key found:', apiKey ? `Present (${apiKey.length} chars)` : 'Missing');
 
-    // Create the prompt for travel itinerary with system instruction
-    let systemInstruction = `You are the Senior AI Travel Concierge for TourWise AI. Your goal is to provide world-class, luxury-level travel itineraries that make the user want to book immediately.
+    const budgetContext = plannerInput
+      ? `Planner fields:
+- destination: ${plannerInput.destination || 'not provided'}
+- trip length: ${plannerInput.tripLength || 'not provided'}
+- travel style: ${plannerInput.travelStyle || 'not provided'}
+- budget level: ${plannerInput.budgetLevel || 'not provided'}
+- daily budget: ${plannerInput.dailyBudget || 'not provided'}
+- traveler type: ${plannerInput.travelerType || 'not provided'}
+- interests: ${plannerInput.interests || 'not provided'}`
+      : ''
 
-Tone: Professional, exciting, and highly organized. Use travel-related emojis (✈️, 🏨, 🌍) to make the text scannable.
+    // Create a production-safe prompt
+    let systemInstruction = `You are a senior travel planning assistant for TourWiseAI.
 
-CRITICAL INSTRUCTION: If the user asks about "cheap", "deals", "prices", "cost", "affordable", "budget", or "best price", you MUST call the searchFlightPrices function to get REAL-TIME market data before answering. Never guess prices - always use live data when available.
+Write practical itineraries that are realistic, useful, and easy to scan.
+Never promise guaranteed cheapest prices.
+Do not fabricate exact live prices. Only mention exact prices if flightData exists.
+Respect the user's budget strictly. Do not suggest luxury options for budget travelers unless clearly marked as optional splurges.
 
-If searchFlightPrices returns success: false or no data is found, you MUST say: "I couldn't find a live price, but here is the typical cost for this route." Then provide general pricing guidance based on typical market rates.
+Budget behavior:
+- If low budget or low daily budget: prioritize free attractions, public transportation, walking routes, budget food, hostels/budget stays, and fewer paid activities.
+- If luxury budget: include premium hotels, private tours, fine dining, and private airport transfers.
 
-Structure:
-
-Exciting Intro: Acknowledge their destination with a "wow" fact.`;
+Output format:
+- Trip overview
+- Day-by-day plan
+- Budget notes
+- Optional booking checklist`
 
     // Add real-time flight data to prompt if available
     if (flightData && flightData.price) {
@@ -71,16 +87,12 @@ Start your response with: "🎉 I found a live deal for $${flightData.price}! ${
 
     systemInstruction += `
 
-Daily Breakdown: Provide a 3-day plan. For each day, suggest:
-- Morning: Sightseeing/Activity.
-- Afternoon: A local food spot or culture.
-- Evening: A high-end or unique accommodation suggestion.
+${budgetContext}
 
-The 'Money' Tip: ${flightData && flightData.price ? `Mention the live flight deal you found ($${flightData.price} on ${flightData.airline || 'multiple airlines'}).` : 'If you found live pricing data, mention it. Otherwise, suggest a specific flight or hotel search they should do right now to lock in a price.'}
+Money tip:
+${flightData && flightData.price ? `You may reference available live pricing context: $${flightData.price} (${flightData.currency || 'USD'}) from ${flightData.airline || 'available carrier data'}.` : 'If no live pricing is available, use broad ranges and clearly label them as estimates.'}
 
-Call to Action: Tell them: 'Scroll down to the Travel Toolkit below to book these specific flights and hotels through our partners!'
-
-Format your response using markdown with headers, bold text, bullet points, and emojis for visual appeal.`;
+Format response with markdown headings and bullet points.`;
 
     const userQuery = query.trim();
 
