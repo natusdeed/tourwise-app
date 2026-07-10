@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
+import FlightSearchWidget from '@/components/FlightSearchWidget'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
@@ -239,6 +240,13 @@ export default function Home() {
           colors={defaultColors}
           backgroundImage="/header-banner.jpg.png"
         />
+
+        {/* Aviasales flight search — primary conversion tool, near top of page */}
+        <section className="relative z-20 -mt-6 md:-mt-10 px-4 sm:px-6 lg:px-8 pb-6">
+          <div className="max-w-4xl mx-auto w-full">
+            <FlightSearchWidget />
+          </div>
+        </section>
 
         <section className="relative py-8 md:py-10 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">

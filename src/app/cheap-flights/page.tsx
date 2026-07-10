@@ -4,7 +4,7 @@ import Script from 'next/script'
 import Footer from '@/components/Footer'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
-import AviasalesWidgetContainer from '@/components/AviasalesWidgetContainer'
+import FlightSearchWidget from '@/components/FlightSearchWidget'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import { breadcrumbListSchema } from '@/lib/schema'
@@ -184,7 +184,7 @@ export default function CheapFlightsPage() {
           >
             Compare Flights
           </ExternalAffiliateLink>
-          <AviasalesWidgetContainer />
+          <FlightSearchWidget />
         </div>
       </section>
 

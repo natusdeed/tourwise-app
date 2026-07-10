@@ -53,7 +53,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://generativelanguage.googleapis.com https://api.travelpayouts.com https://api.resend.com https://tpwidg.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://tpwidg.com; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://generativelanguage.googleapis.com https://api.travelpayouts.com https://api.resend.com https://search.aviasales.com https://tpwidg.com https://ipinfo.io https://www.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://tpwidg.com; frame-ancestors 'none';"
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://generativelanguage.googleapis.com https://api.travelpayouts.com https://api.resend.com https://tpwidg.com https://tp-em.com http://tp-em.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://tpwidg.com; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://generativelanguage.googleapis.com https://api.travelpayouts.com https://api.resend.com https://search.aviasales.com https://tpwidg.com https://tp-em.com http://tp-em.com https://avsplow.com http://avsplow.com https://www.apistp.com https://apistp.com https://sentry.avs.io https://ipinfo.io https://www.google-analytics.com https://www.googletagmanager.com; frame-src 'self' https://tpwidg.com https://www.aviasales.com https://aviasales.com; frame-ancestors 'none';"
           }
         ]
       }

@@ -220,12 +220,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        {/* Travelpayouts Widget - Lazy load after page is fully interactive */}
-        <Script
-          id="travelpayouts-widget"
-          src="https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%2332a8dd&color_button=%2332a8dd&color_icons=%2332a8dd&dark=%23FFFFFF&light=%23FFFFFF&secondary=%230B1120&special=%2332A8DD&color_focused=%2332a8dd&border_radius=0&no_labels=true&plain=true&promo_id=7879&campaign_id=100"
-          strategy="lazyOnload"
-        />
         <Navbar />
         {children}
         <CookieBanner />
