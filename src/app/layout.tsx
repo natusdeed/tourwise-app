@@ -183,10 +183,17 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.travelpayouts.com" />
         <link rel="dns-prefetch" href="https://api.resend.com" />
         <link rel="dns-prefetch" href="https://tpwidg.com" />
+        <link rel="dns-prefetch" href="https://tp-em.com" />
         <link rel="dns-prefetch" href="https://ipinfo.io" />
         {/* Google Analytics preconnect - only if consent given */}
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        {/* Travelpayouts Drive — loads on every page (affiliate tracking) */}
+        <Script
+          id="travelpayouts-drive"
+          src="https://tp-em.com/NDg0MjQ3.js?t=484247"
+          strategy="beforeInteractive"
+        />
         {gaId ? (
           <>
             <Script

@@ -9,8 +9,6 @@ interface SEOProps {
   canonical?: string
   image?: string
   type?: 'website' | 'article' | 'profile'
-  ratingValue?: string
-  reviewCount?: string
 }
 
 /**
@@ -33,12 +31,10 @@ interface SEOProps {
  */
 export default function SEO({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
-  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals. Join 15,000+ travelers saving time and money with AI-powered trip planning.",
+  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
   canonical,
   image = "/header-banner.jpg.png",
   type = "website",
-  ratingValue = "4.9",
-  reviewCount = "1247"
 }: SEOProps) {
   const siteUrl = "https://tourwiseai.com"
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
@@ -52,11 +48,6 @@ export default function SEO({
     "description": description,
     "url": siteUrl,
     "logo": `${siteUrl}/appicon.png.png`,
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": ratingValue,
-      "reviewCount": reviewCount
-    },
     "sameAs": [
       "https://www.facebook.com/tourwiseai",
       "https://www.instagram.com/tourwiseai",
@@ -95,7 +86,7 @@ export default function SEO({
  */
 export function generateSEOMetadata({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
-  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals. Join 15,000+ travelers saving time and money with AI-powered trip planning.",
+  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
   canonical,
   image = "/header-banner.jpg.png",
   type = "website",

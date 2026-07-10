@@ -396,7 +396,7 @@ export default function Home() {
               className="text-center"
             >
               <p className="text-white text-xs md:text-sm heading-robotic mb-4 md:mb-6 lg:mb-8 tracking-wider font-semibold">
-                ✈️ TRUSTED BY 15,000+ TRAVELERS WORLDWIDE
+                COMPARE DEALS ACROSS TOP TRAVEL BRANDS
               </p>
               <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12 grayscale-[0.3] hover:grayscale-0 transition-all duration-500">
                 {/* Expedia Logo Placeholder */}

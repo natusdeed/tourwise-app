@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Users, Star, Shield } from 'lucide-react'
+import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Shield } from 'lucide-react'
 import { useState, FormEvent, useEffect, useRef, lazy, Suspense } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -384,14 +384,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
           transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
           className="trust-bar flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 mb-6 sm:mb-8 px-4"
         >
-          <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
-            <Users className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.primary }} />
-            <span className="heading-robotic">Trusted by 15,000+ travelers</span>
-          </span>
-          <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
-            <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 text-yellow-400" />
-            <span className="heading-robotic">4.9/5 Average Rating</span>
-          </span>
           <span className="trust-stat flex items-center gap-2 text-white/80 text-sm sm:text-base">
             <Shield className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.primary }} />
             <span className="heading-robotic">100% Free to Use</span>

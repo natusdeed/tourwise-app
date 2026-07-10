@@ -131,7 +131,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
           
           {/* Subtitle */}
           <p className="text-white/90 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
-            Join 15,000+ smart travelers unlocking exclusive deals up to 70% off flights, hotels, and tours
+            Unlock exclusive deals on flights, hotels, and tours — free travel hacks for smarter trips
           </p>
 
           {/* Benefits List */}
