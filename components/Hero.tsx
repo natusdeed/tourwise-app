@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Shield } from 'lucide-react'
+import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Shield, Check } from 'lucide-react'
 import { useState, FormEvent, useEffect, useRef, lazy, Suspense } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
@@ -23,7 +23,7 @@ import {
 } from '@/lib/affiliate-links'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { detectLocation, getDetectedCity, verifyIPinfoConfig } from '@/lib/detectLocation'
-import { trackItineraryCreation, trackCTA } from '@/utils/analytics'
+import { trackItineraryCreation, trackCTA, trackEmailSignup } from '@/utils/analytics'
 
 interface HeroProps {
   title: string
@@ -40,6 +40,11 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   const [isAccessingMarketData, setIsAccessingMarketData] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [itinerary, setItinerary] = useState<string | null>(null)
+  // Planner email gate (soft gate — the itinerary stays visible regardless of signup)
+  const [gateEmail, setGateEmail] = useState('')
+  const [gateStatus, setGateStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [gateError, setGateError] = useState<string | null>(null)
+  const [gateDismissed, setGateDismissed] = useState(false)
   const [flightData, setFlightData] = useState<{ price: number; currency: string; airline: string; destination: string; origin?: string } | null>(null)
   const [destinationCode, setDestinationCode] = useState<string | null>(null)
   const [originCode, setOriginCode] = useState<string | null>(null)
@@ -164,6 +169,10 @@ export default function Hero({ title, subtitle, placeholder, description, colors
     setDestinationCode(null)
     setOriginCode(null)
     setAviasalesUrl(null)
+    // Reset the email gate for the new itinerary
+    setGateStatus('idle')
+    setGateError(null)
+    setGateDismissed(false)
 
     try {
       // Check if we're online first (only in browser)
@@ -304,6 +313,42 @@ export default function Hero({ title, subtitle, placeholder, description, colors
     } finally {
       setIsLoading(false)
       setIsAccessingMarketData(false)
+    }
+  }
+
+  // Email gate: deliver the generated itinerary to the user's inbox and capture
+  // the lead. Soft gate — failures never hide the itinerary.
+  const handleGateSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const email = gateEmail.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setGateError('Please enter a valid email address.')
+      setGateStatus('error')
+      return
+    }
+    setGateStatus('sending')
+    setGateError(null)
+    try {
+      const response = await fetch('/api/lead-magnet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          magnet_id: 'itinerary-delivery',
+          destination: destination || detectedCity || undefined,
+          tripLength: tripLength || undefined,
+          itinerary,
+        }),
+      })
+      const data = await response.json().catch(() => ({}))
+      if (!response.ok || data.ok !== true) {
+        throw new Error(data.error || 'Could not send the email right now. Please try again.')
+      }
+      setGateStatus('success')
+      trackEmailSignup('planner_itinerary_gate')
+    } catch (err) {
+      setGateError(err instanceof Error ? err.message : 'Could not send the email right now. Please try again.')
+      setGateStatus('error')
     }
   }
 
@@ -558,6 +603,65 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </h3>
                 </div>
 
+                {/* Email gate — soft gate: itinerary stays visible no matter what */}
+                {!gateDismissed && (
+                  <div className="mb-6 rounded-lg border border-neon-cyan/30 bg-neon-cyan/5 p-4 md:p-5">
+                    {gateStatus === 'success' ? (
+                      <div className="flex items-start gap-3">
+                        <Check className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-white font-semibold text-sm md:text-base">Itinerary sent — check your inbox ✈️</p>
+                          <p className="text-white/60 text-xs md:text-sm mt-1">
+                            You&apos;ll also get weekly flight deals and trip-planning tips. Unsubscribe anytime.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleGateSubmit}>
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-white font-semibold text-sm md:text-base">
+                            📩 Email me this itinerary
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => setGateDismissed(true)}
+                            className="text-white/40 hover:text-white/70 text-xs underline flex-shrink-0"
+                            aria-label="Dismiss email signup"
+                          >
+                            Not now
+                          </button>
+                        </div>
+                        <p className="text-white/60 text-xs md:text-sm mt-1 mb-3">
+                          Get this{destination ? ` ${destination}` : ''}{tripLength ? ` (${tripLength})` : ''} itinerary
+                          in your inbox, plus weekly flight deals. No spam, ever.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-2">
+                          <input
+                            type="email"
+                            value={gateEmail}
+                            onChange={(e) => setGateEmail(e.target.value)}
+                            placeholder="you@example.com"
+                            required
+                            disabled={gateStatus === 'sending'}
+                            aria-label="Email address"
+                            className="flex-1 px-4 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/40 text-sm focus:outline-none focus:border-neon-cyan disabled:opacity-60"
+                          />
+                          <button
+                            type="submit"
+                            disabled={gateStatus === 'sending'}
+                            className="px-5 py-2.5 rounded-lg bg-neon-cyan/20 border border-neon-cyan/50 text-neon-cyan font-semibold text-sm hover:bg-neon-cyan/30 transition-colors disabled:opacity-60 whitespace-nowrap"
+                          >
+                            {gateStatus === 'sending' ? 'Sending…' : 'Send it to me'}
+                          </button>
+                        </div>
+                        {gateStatus === 'error' && gateError && (
+                          <p className="text-red-400 text-xs mt-2">{gateError}</p>
+                        )}
+                      </form>
+                    )}
+                  </div>
+                )}
+
                 {/* Itinerary Content */}
                 <div className="max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                   <div className="prose prose-invert prose-headings:text-white prose-p:text-white/90 prose-strong:text-white prose-ul:text-white/90 prose-li:text-white/90 prose-a:text-cyan-400 hover:prose-a:text-cyan-300 max-w-none">
@@ -627,6 +731,21 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         <span className="text-xs text-neon-cyan/90">Aviasales · Compare options</span>
                       </ExternalAffiliateLink>
                     </li>
+                    {(AFFILIATE_LINKS.hotels.tripcom.url || AFFILIATE_LINKS.hotels.bookingcom.url) && (
+                      <li>
+                        <ExternalAffiliateLink
+                          href={AFFILIATE_LINKS.hotels.tripcom.url || AFFILIATE_LINKS.hotels.bookingcom.url}
+                          trackingLabel="hero_post_itin_hotels"
+                          className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                          aria-label="Find stays for this trip, opens in a new tab"
+                        >
+                          <span className="text-sm font-semibold text-white block">Find stays for this trip</span>
+                          <span className="text-xs text-neon-cyan/90">
+                            {AFFILIATE_LINKS.hotels.tripcom.url ? 'Trip.com · Compare hotel prices' : 'Booking.com · Find stays'}
+                          </span>
+                        </ExternalAffiliateLink>
+                      </li>
+                    )}
                     <li>
                       <ExternalAffiliateLink
                         href={AFFILIATE_LINKS.transfers.kiwitaxi.url}

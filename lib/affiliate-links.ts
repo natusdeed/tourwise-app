@@ -6,6 +6,7 @@ export const AFFILIATE_LINK_REL = 'nofollow sponsored noopener noreferrer' as co
 
 export const AFFILIATE_CATEGORIES = [
   'flights',
+  'hotels',
   'tours',
   'esim',
   'transfers',
@@ -34,6 +35,35 @@ export const AFFILIATE_LINKS = {
       url: 'https://aviasales.tp.st/qpIjGSzy',
       description: 'Compare flight options and route timing before booking.',
       recommendedButtonText: 'Compare flight options',
+    },
+  },
+  hotels: {
+    // ---------------------------------------------------------------------------
+    // HOTEL PROGRAMS — paste your own Travelpayouts links below.
+    // Dashboard: Travelpayouts → Programs → All Programs → Connect, then Tools →
+    // copy each program's link and paste it as `url`. Cards with an empty `url`
+    // are hidden automatically across the site until you fill them in.
+    // ---------------------------------------------------------------------------
+    tripcom: {
+      name: 'Trip.com',
+      category: 'hotels',
+      url: '',
+      description: 'Compare hotel prices across thousands of properties worldwide.',
+      recommendedButtonText: 'Compare hotel prices',
+    },
+    bookingcom: {
+      name: 'Booking.com',
+      category: 'hotels',
+      url: '',
+      description: 'Hotels, apartments, and guesthouses worldwide.',
+      recommendedButtonText: 'Find stays',
+    },
+    hotelook: {
+      name: 'Hotelook',
+      category: 'hotels',
+      url: '',
+      description: 'Hotel metasearch — compare prices across major booking sites.',
+      recommendedButtonText: 'Search hotels',
     },
   },
   tours: {
@@ -231,6 +261,16 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
     /\b(round\s*-?trip|roundtrip|nonstop|layover)\b/i.test(text)
   if (flying) {
     push('flights', AFFILIATE_LINKS.flights.aviasales, 'Flights or airports came up in your plan.')
+  }
+
+  // Stays come up in nearly every itinerary — surface hotel partners when configured.
+  if (/\b(hotel|hostel|stay|staying|accommodation|lodging|resort|airbnb|guesthouse|riad|where to stay)\b/i.test(text)) {
+    if (AFFILIATE_LINKS.hotels.tripcom.url) {
+      push('hotel-trip', AFFILIATE_LINKS.hotels.tripcom, 'Stays came up in your plan.')
+    }
+    if (AFFILIATE_LINKS.hotels.bookingcom.url) {
+      push('hotel-booking', AFFILIATE_LINKS.hotels.bookingcom, 'Compare stays for your dates.')
+    }
   }
 
   if (/\b(museum|tour|activity|attraction|skip-the-line|walking tour|day trip|things to do)\b/i.test(text)) {

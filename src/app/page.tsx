@@ -393,8 +393,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Trust Partners Section */}
-        <section className="relative py-3 md:py-3 lg:py-4 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm">
+        {/* How Booking Works Section — names only partners we actually link to */}
+        <section className="relative py-8 md:py-10 lg:py-12 px-4 sm:px-6 lg:px-8 bg-black/60 backdrop-blur-sm">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -403,23 +403,47 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="text-center"
             >
-              <p className="text-white text-xs md:text-sm heading-robotic mb-4 md:mb-6 lg:mb-8 tracking-wider font-semibold">
-                COMPARE DEALS ACROSS TOP TRAVEL BRANDS
+              <p className="text-white/60 text-xs md:text-sm heading-robotic mb-3 tracking-widest font-semibold">
+                HOW BOOKING WORKS
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12 grayscale-[0.3] hover:grayscale-0 transition-all duration-500">
-                {/* Expedia Logo Placeholder */}
-                <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white text-lg md:text-xl font-bold">Expedia</span>
-                </div>
-                {/* Booking.com Logo Placeholder */}
-                <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white text-lg md:text-xl font-bold">Booking.com</span>
-                </div>
-                {/* TripAdvisor Logo Placeholder */}
-                <div className="flex items-center justify-center h-8 md:h-10">
-                  <span className="text-white text-lg md:text-xl font-bold">TripAdvisor</span>
-                </div>
+              <h2 className="text-2xl md:text-3xl font-bold heading-robotic mb-3">
+                <span className="text-gradient">One trip, every booking covered</span>
+              </h2>
+              <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+                TourWise AI compares live prices across our trusted travel partners — flights, stays,
+                tours, transfers, eSIMs, and insurance — so you book each part of your trip at the
+                best available price, all in one place.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 text-left">
+                {[
+                  { icon: '✈️', title: 'Flights', text: 'Live fares across hundreds of airlines', partner: 'Aviasales' },
+                  ...(AFFILIATE_LINKS.hotels.bookingcom.url || AFFILIATE_LINKS.hotels.tripcom.url
+                    ? [{ icon: '🏨', title: 'Stays', text: 'Hotels and apartments worldwide', partner: 'Booking.com · Trip.com' }]
+                    : []),
+                  { icon: '🎟️', title: 'Tours & activities', text: 'Attraction tickets and local experiences', partner: 'Klook · Tiqets' },
+                  { icon: '🚕', title: 'Airport transfers', text: 'Pre-booked pickup, no taxi lines', partner: 'Kiwitaxi' },
+                  { icon: '📱', title: 'Travel eSIM', text: 'Land with data from ~$5', partner: 'Airalo' },
+                  { icon: '🛡️', title: 'Travel insurance', text: 'Medical and trip protection', partner: 'EKTA' },
+                  { icon: '🚗', title: 'Car rentals', text: 'Self-drive options by destination', partner: 'Localrent' },
+                ].map((card) => (
+                  <div
+                    key={card.title}
+                    className="glass-strong rounded-xl border border-white/10 p-4 md:p-5"
+                  >
+                    <div className="text-2xl mb-2">{card.icon}</div>
+                    <p className="text-white font-semibold text-sm md:text-base heading-robotic">{card.title}</p>
+                    <p className="text-white/60 text-xs md:text-sm mt-1">{card.text}</p>
+                    <p className="text-neon-cyan/80 text-xs mt-2">{card.partner}</p>
+                  </div>
+                ))}
               </div>
+              <p className="text-white/50 text-xs md:text-sm mt-8 max-w-2xl mx-auto">
+                TourWise AI may earn a commission when you book through our partners — at no extra
+                cost to you. That&apos;s what keeps the planner free.{' '}
+                <Link href="/affiliate-disclosure" className="text-neon-cyan/90 hover:text-neon-cyan underline">
+                  Read our affiliate disclosure
+                </Link>
+              </p>
             </motion.div>
           </div>
         </section>
