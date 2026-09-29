@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import HoustonRouteLanding from '@/components/HoustonRouteLanding'
+import { HOUSTON_ROUTES } from '@/lib/houston-routes'
+
+const route = HOUSTON_ROUTES['houston-to-lagos-flights']
 
 export const metadata: Metadata = {
-  title: 'Houston to Lagos Flights | TourWiseAI',
-  description: 'Plan Houston to Lagos flights with route notes, IAH/HOU context, and booking essentials.',
+  title: 'Lagos Flights from Houston (IAH): Airlines, Best Time to Book & Tips | TourWiseAI',
+  description: 'Complete guide to Houston to Lagos flights: which airlines fly it, when to book for the lowest fares, money-saving tips, and arrival essentials.',
   alternates: { canonical: 'https://tourwiseai.com/houston-to-lagos-flights' },
 }
 
 export default function Page() {
-  return <HoustonRouteLanding routeTitle="Houston to Lagos Flights" routePath="/houston-to-lagos-flights" destinationAirport="Murtala Muhammed International Airport (LOS)" international />
+  return <HoustonRouteLanding route={route} />
 }

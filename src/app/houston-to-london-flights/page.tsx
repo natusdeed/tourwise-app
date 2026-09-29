@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import HoustonRouteLanding from '@/components/HoustonRouteLanding'
+import { HOUSTON_ROUTES } from '@/lib/houston-routes'
+
+const route = HOUSTON_ROUTES['houston-to-london-flights']
 
 export const metadata: Metadata = {
-  title: 'Houston to London Flights | TourWiseAI',
-  description: 'Plan Houston to London flights with IAH/HOU notes, transfer prep, and practical route guidance.',
+  title: 'London Flights from Houston (IAH): Airlines, Best Time to Book & Tips | TourWiseAI',
+  description: 'Complete guide to Houston to London flights: which airlines fly it, when to book for the lowest fares, money-saving tips, and arrival essentials.',
   alternates: { canonical: 'https://tourwiseai.com/houston-to-london-flights' },
 }
 
 export default function Page() {
-  return <HoustonRouteLanding routeTitle="Houston to London Flights" routePath="/houston-to-london-flights" destinationAirport="Heathrow (LHR) or Gatwick (LGW)" international />
+  return <HoustonRouteLanding route={route} />
 }

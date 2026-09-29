@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import HoustonRouteLanding from '@/components/HoustonRouteLanding'
+import { HOUSTON_ROUTES } from '@/lib/houston-routes'
+
+const route = HOUSTON_ROUTES['houston-to-orlando-flights']
 
 export const metadata: Metadata = {
-  title: 'Houston to Orlando Flights | TourWiseAI',
-  description: 'Plan Houston to Orlando flights with airport tips and transfer-focused planning guidance.',
+  title: 'Orlando Flights from Houston (IAH): Airlines, Best Time to Book & Tips | TourWiseAI',
+  description: 'Complete guide to Houston to Orlando flights: which airlines fly it, when to book for the lowest fares, money-saving tips, and arrival essentials.',
   alternates: { canonical: 'https://tourwiseai.com/houston-to-orlando-flights' },
 }
 
 export default function Page() {
-  return <HoustonRouteLanding routeTitle="Houston to Orlando Flights" routePath="/houston-to-orlando-flights" destinationAirport="Orlando International Airport (MCO)" international={false} />
+  return <HoustonRouteLanding route={route} />
 }

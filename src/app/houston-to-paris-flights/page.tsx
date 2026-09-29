@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
 import HoustonRouteLanding from '@/components/HoustonRouteLanding'
+import { HOUSTON_ROUTES } from '@/lib/houston-routes'
+
+const route = HOUSTON_ROUTES['houston-to-paris-flights']
 
 export const metadata: Metadata = {
-  title: 'Houston to Paris Flights | TourWiseAI',
-  description: 'Plan Houston to Paris flights with airport notes, eSIM and insurance essentials, and route tips.',
+  title: 'Paris Flights from Houston (IAH): Airlines, Best Time to Book & Tips | TourWiseAI',
+  description: 'Complete guide to Houston to Paris flights: which airlines fly it, when to book for the lowest fares, money-saving tips, and arrival essentials.',
   alternates: { canonical: 'https://tourwiseai.com/houston-to-paris-flights' },
 }
 
 export default function Page() {
-  return <HoustonRouteLanding routeTitle="Houston to Paris Flights" routePath="/houston-to-paris-flights" destinationAirport="Paris Charles de Gaulle Airport (CDG)" international />
+  return <HoustonRouteLanding route={route} />
 }
