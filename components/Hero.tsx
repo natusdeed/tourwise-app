@@ -781,6 +781,21 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         <span className="text-xs text-neon-cyan/90">Klook · Explore booking options</span>
                       </ExternalAffiliateLink>
                     </li>
+                    {AFFILIATE_LINKS.tours.viator.url && (
+                      <li>
+                        <ExternalAffiliateLink
+                          href={AFFILIATE_LINKS.tours.viator.url}
+                          trackingLabel="hero_post_itin_viator"
+                          className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                          aria-label="Book tours and activities on Viator, opens in a new tab"
+                        >
+                          <span className="text-sm font-semibold text-white block">
+                            Book tours and activities
+                          </span>
+                          <span className="text-xs text-neon-cyan/90">Viator · Top-rated experiences</span>
+                        </ExternalAffiliateLink>
+                      </li>
+                    )}
                     <li>
                       <ExternalAffiliateLink
                         href={AFFILIATE_LINKS.carRentals.localrent.url}
@@ -792,6 +807,19 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         <span className="text-xs text-neon-cyan/90">Localrent · Check current offers</span>
                       </ExternalAffiliateLink>
                     </li>
+                    {AFFILIATE_LINKS.carRentals.discovercars.url && (
+                      <li>
+                        <ExternalAffiliateLink
+                          href={AFFILIATE_LINKS.carRentals.discovercars.url}
+                          trackingLabel="hero_post_itin_discovercars"
+                          className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
+                          aria-label="Compare car rental deals on Discover Cars, opens in a new tab"
+                        >
+                          <span className="text-sm font-semibold text-white block">Rent a car</span>
+                          <span className="text-xs text-neon-cyan/90">Discover Cars · Compare deals</span>
+                        </ExternalAffiliateLink>
+                      </li>
+                    )}
                     <li>
                       <ExternalAffiliateLink
                         href={AFFILIATE_LINKS.insurance.ekta.url}
