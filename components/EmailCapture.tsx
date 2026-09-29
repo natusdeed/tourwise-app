@@ -37,17 +37,16 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
         throw new Error('Please enter a valid email address.')
       }
 
-      // For now, we'll use the contact API or create a dedicated newsletter API
-      // You can integrate with your email service provider (e.g., Mailchimp, ConvertKit, etc.)
-      const response = await fetch('/api/contact', {
+      // Subscribe via the lead-magnet API: stores the lead in Supabase
+      // and delivers the free travel-hacks guide through Resend.
+      const response = await fetch('/api/lead-magnet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: 'Newsletter Subscriber',
           email: email.trim(),
-          message: 'Newsletter signup from email capture form',
+          magnet_id: 'newsletter-guide',
         }),
       })
 
@@ -64,7 +63,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
 
       const data = await response.json()
 
-      if (data.success) {
+      if (data.ok) {
         setSubmitStatus('success')
         setEmail('')
         

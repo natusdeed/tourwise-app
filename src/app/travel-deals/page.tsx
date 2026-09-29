@@ -3,6 +3,7 @@ import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import AffiliateCard from '@/components/AffiliateCard'
+import HotelSearchWidget from '@/components/HotelSearchWidget'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import { breadcrumbListSchema } from '@/lib/schema'
 
@@ -46,6 +47,7 @@ export default function TravelDealsPage() {
         <div className="max-w-6xl mx-auto space-y-8">
           <h1 className="text-4xl md:text-5xl font-bold heading-robotic"><span className="text-gradient">Travel Deals</span></h1>
           <p className="text-white/75">A central hub to compare options, check current offers, and explore partner deals for every stage of your trip.</p>
+          <HotelSearchWidget className="rounded-xl border border-white/10 bg-black/40 p-4 md:p-6" />
           {sections.map((section) => (
             <section key={section.title} className="space-y-3">
               <h2 className="text-2xl font-semibold text-white heading-robotic">{section.title}</h2>

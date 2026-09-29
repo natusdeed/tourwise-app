@@ -185,6 +185,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, message: 'Your itinerary is on its way to your inbox.' })
     }
 
+    if (magnet_id === 'newsletter-guide') {
+      await resend.emails.send({
+        from: fromEmail,
+        to: email,
+        subject: 'Your Free 2026 Travel Hacks Guide is here',
+        replyTo: replyToEmail || undefined,
+        html: emailShell(`
+          <p>Hi${name ? ` ${name}` : ''},</p>
+          <p>Welcome aboard — here is your <strong>Free 2026 Travel Hacks Guide</strong> from TourWiseAI:</p>
+          <ul style="padding-left:20px;">
+            <li><strong>Mistake fares & flash sales:</strong> set a price alert for your route before you book — <a href="${baseUrl}/cheap-flights">compare flight options</a>.</li>
+            <li><strong>Stays:</strong> always compare the same hotel across 2–3 booking sites; the same room often differs by 10–20% — <a href="${baseUrl}/travel-deals">check travel deals</a>.</li>
+            <li><strong>eSIM:</strong> buy your data plan before you fly; airport kiosks routinely cost double — <a href="${baseUrl}/travel-esim">compare eSIM options</a>.</li>
+            <li><strong>Transfers:</strong> pre-book your airport pickup; curbside taxis are the classic arrival rip-off — <a href="${baseUrl}/airport-transfers">compare transfers</a>.</li>
+            <li><strong>Insurance:</strong> a week of medical + trip cover usually costs less than one airport meal — <a href="${baseUrl}/travel-insurance">get covered</a>.</li>
+          </ul>
+          <p>Plan your next trip with the free AI planner any time: <a href="${baseUrl}/ai-travel-planner">${baseUrl}/ai-travel-planner</a></p>
+          <p><strong>TourWiseAI</strong><br/>Smarter travel planning, zero guesswork.</p>
+        `),
+      })
+      return NextResponse.json({ ok: true, message: 'Your free guide is on its way to your inbox.' })
+    }
+
     // If a direct PDF is not uploaded yet, this can point to a guide landing page instead.
     const guideUrl = `${baseUrl}/holy-land-tours-from-usa`
 
