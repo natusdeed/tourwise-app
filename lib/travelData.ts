@@ -407,17 +407,30 @@ Common reasons for denial:
       officialUrl: 'https://www.ghana.gov.gh',
       processingTime: '2-3 weeks',
       cost: 'GHS 150',
-      guideMarkdown: `# Ghana Passport Application Guide\n\nComprehensive guide coming soon...`,
+      guideMarkdown: `# Ghana Passport Application Guide\n\n## Overview\nThe Ghanaian biometric passport is issued by the Ministry of Foreign Affairs and Regional Integration through Passport Application Centres nationwide. Ghana now issues chip-embedded biometric passports; the older machine-readable passports are being phased out.\n\n## Application Methods\n1. **Online Application**: Start your application through the official portal, then book a biometric capture appointment\n2. **Passport Application Centres**: Accra, Kumasi, Takoradi, Tamale, Ho, and other regional centres\n3. **Premium/Express Service**: Available at select centres for urgent travel (additional fees apply)\n\n## Required Documents\n- Completed online application form (printed)\n- Birth certificate or affidavit of birth\n- Proof of Ghanaian citizenship (Ghana Card, old passport, or citizenship documents)\n- Two recent passport photographs meeting biometric specifications\n- Payment receipt from the online portal\n- Guarantor's details where required\n\n## Processing Times\n- **Standard Processing**: 2-3 weeks after biometric capture\n- **Express/Premium Processing**: Faster turnaround at select centres (additional fee)\n- **Emergency Processing**: Limited availability for proven urgent travel\n\n## Important Notes\n- Biometric capture (fingerprints and photo) must be done in person\n- Ensure your Ghana Card details match your application to avoid delays\n- Track your application status online using your application reference number\n- Renew before expiry if you travel frequently — many countries require 6 months validity\n\n## Renewal Process\nRenewals follow the same online-first process. Submit your expiring passport with the renewal application; the biometric capture step is still required.\n\n**Note**: Fees and centre availability change. Always verify current requirements on the official portal before applying.`,
     },
     visa: {
       officialUrl: 'https://www.ghana.gov.gh',
-      requirements: ['Valid passport', 'Application form', 'Photographs'],
-      guideMarkdown: `# Ghana Visa Requirements Guide\n\nComprehensive guide coming soon...`,
+      requirements: [
+        'Valid passport with at least 6 months validity',
+        'Completed visa application form',
+        'Two recent passport photographs',
+        'Proof of sufficient funds (bank statements)',
+        'Travel itinerary (flight bookings)',
+        'Hotel reservation or host invitation letter',
+        'Yellow fever vaccination certificate',
+        'Return/onward ticket',
+      ],
+      guideMarkdown: `# Ghana Visa Requirements Guide\n\n## Overview\nMost travelers need a Ghanaian visa arranged **before** departure. Ghana has sharply limited visa-on-arrival — do not assume you can get one at Kotoka International Airport. Apply through the Ghanaian embassy or consulate covering your jurisdiction, or the official online portal where available.\n\n## Visa Types\n1. **Tourist Visa**: For leisure and sightseeing, typically single entry\n2. **Business Visa**: For meetings, conferences, and commercial visits\n3. **Transit Visa**: For passing through Ghana to a third country\n4. **Multiple-Entry Visa**: For frequent travelers (harder to obtain, requires justification)\n\n## General Requirements\nAll visa applicants typically need:\n- Valid passport (minimum 6 months validity beyond travel dates)\n- Completed visa application form\n- Recent passport photographs (white background)\n- Proof of financial means (recent bank statements)\n- Confirmed travel itinerary and return/onward ticket\n- Hotel reservation or a host invitation letter with the host's Ghanaian ID\n- Yellow fever vaccination certificate (mandatory)\n\n## Visa-Free and Visa-Exempt Travelers\n- Citizens of ECOWAS member states: visa-free for stays up to 90 days\n- A small number of additional nationalities have visa-free or visa-on-arrival arrangements — verify for your passport, as these lists change\n\n## Processing Times\n- **Standard Processing**: 5-10 working days at most missions\n- **Express Processing**: 2-3 working days where offered (additional fees apply)\n- Apply at least 3-4 weeks before travel; December demand spikes with diaspora holiday travel\n\n## Application Process\n1. Complete the application on the official portal or embassy website\n2. Upload/prepare all supporting documents\n3. Pay the visa fee (non-refundable)\n4. Attend an in-person appointment if required by your mission\n5. Submit your passport for visa affixing\n6. Collect your passport or receive it by courier\n\n## Important Notes\n- Yellow fever vaccination is mandatory — carry the certificate; it is checked\n- Single-entry visas are the norm; do not plan a side trip to Togo or Côte d'Ivoire expecting to re-enter on the same visa unless you hold multiple entry\n- Requirements vary by embassy — the Ghana mission in Washington may ask for different supporting documents than the one in London\n- Visa fees are non-refundable even if refused\n\n**Note**: Visa policy changes frequently. Always verify current requirements with the Ghanaian embassy or consulate in your country before booking non-refundable travel.`,
     },
     embassies: [
       {
         city: 'Accra',
-        address: 'Embassy details coming soon',
+        address: 'Passport Application Centre, Accra — verify current location on the official portal before visiting',
+      },
+      {
+        city: 'Kumasi',
+        address: 'Passport Application Centre, Kumasi — verify current location on the official portal before visiting',
       },
     ],
     updates: [

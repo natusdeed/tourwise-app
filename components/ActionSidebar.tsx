@@ -1,8 +1,8 @@
 'use client'
 
-import { Plane, FileCheck, ExternalLink } from 'lucide-react'
-import Link from 'next/link'
+import { Plane, ShieldCheck, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 interface ActionSidebarProps {
   countryName: string;
@@ -11,21 +11,23 @@ interface ActionSidebarProps {
 
 /**
  * ActionSidebar Component
- * 
+ *
  * Right-hand sidebar for monetization through affiliate links.
  * Features:
- * - Slot 1: "Check Visa Now" (iVisa placeholder)
- * - Slot 2: "Book Flights to [Country]" (Expedia/Skyscanner placeholder)
+ * - Slot 1: Travel insurance (EKTA affiliate)
+ * - Slot 2: "Book Flights to [Country]" (Aviasales affiliate)
+ *
+ * NOTE: We intentionally do NOT link to Expedia or iVisa here — TourWiseAI has
+ * no affiliate relationship with them, so those clicks would earn $0.
  */
-export default function ActionSidebar({ countryName, countrySlug }: ActionSidebarProps) {
-  // Placeholder affiliate links - replace with actual affiliate URLs
-  const visaCheckUrl = `https://www.ivisa.com/apply-online?country=${countrySlug}`
-  const flightBookingUrl = `https://www.expedia.com/Flights/${countryName}`
+export default function ActionSidebar({ countryName }: ActionSidebarProps) {
+  const flightBookingUrl = AFFILIATE_LINKS.flights.aviasales.url
+  const insuranceUrl = AFFILIATE_LINKS.insurance.ekta.url
 
   return (
     <aside className="hidden lg:block w-80 flex-shrink-0 ml-8">
       <div className="sticky top-24 space-y-6">
-        {/* Visa Check CTA */}
+        {/* Travel Insurance CTA */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -34,26 +36,26 @@ export default function ActionSidebar({ countryName, countrySlug }: ActionSideba
         >
           <div className="flex items-start gap-4 mb-4">
             <div className="p-3 bg-gradient-to-br from-neon-cyan/20 to-electric-blue/20 rounded-lg">
-              <FileCheck className="h-6 w-6 text-neon-cyan" />
+              <ShieldCheck className="h-6 w-6 text-neon-cyan" />
             </div>
             <div className="flex-1">
               <h3 className="text-lg font-bold heading-robotic text-white mb-1">
-                CHECK VISA NOW
+                PROTECT YOUR TRIP
               </h3>
               <p className="text-sm text-white/70">
-                Verify visa requirements and get assistance with your application
+                Travel insurance for medical cover and trip protection in {countryName}
               </p>
             </div>
           </div>
-          <Link
-            href={visaCheckUrl}
+          <a
+            href={insuranceUrl}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel={AFFILIATE_LINK_REL}
             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-neon-cyan to-electric-blue text-black font-bold heading-robotic py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
           >
-            Check Visa Requirements
+            Get Travel Insurance
             <ExternalLink className="h-4 w-4" />
-          </Link>
+          </a>
           <p className="text-xs text-white/50 mt-3 text-center">
             Affiliate partner - we may earn a commission
           </p>
@@ -79,15 +81,15 @@ export default function ActionSidebar({ countryName, countrySlug }: ActionSideba
               </p>
             </div>
           </div>
-          <Link
+          <a
             href={flightBookingUrl}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel={AFFILIATE_LINK_REL}
             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-neon-cyan to-electric-blue text-black font-bold heading-robotic py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
           >
             Search Flights to {countryName}
             <ExternalLink className="h-4 w-4" />
-          </Link>
+          </a>
           <p className="text-xs text-white/50 mt-3 text-center">
             Affiliate partner - we may earn a commission
           </p>

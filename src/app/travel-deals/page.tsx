@@ -3,18 +3,28 @@ import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import AffiliateCard from '@/components/AffiliateCard'
+import HotelSearchWidget from '@/components/HotelSearchWidget'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import { breadcrumbListSchema } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Travel Deals',
   description:
-    'Explore travel deals and essentials on TourWiseAI, including flights, tours, airport transfers, eSIM options, and travel insurance tools.',
+    'Explore travel deals and essentials on TourWiseAI, including flights, stays, tours, airport transfers, eSIM options, and travel insurance tools.',
   alternates: { canonical: 'https://tourwiseai.com/travel-deals' },
 }
 
 export default function TravelDealsPage() {
+  // Stays lead the page — hotels carry the highest affiliate commissions.
+  // Cards with an empty `url` (links not yet pasted in lib/affiliate-links.ts)
+  // are filtered out, and whole sections with no cards are hidden.
+  const hotelCards = [
+    AFFILIATE_LINKS.hotels.tripcom,
+    AFFILIATE_LINKS.hotels.bookingcom,
+    AFFILIATE_LINKS.hotels.hotelook,
+  ].filter((card) => card.url)
   const sections = [
+    { title: 'Stays', cards: hotelCards },
     { title: 'Flights', cards: [AFFILIATE_LINKS.flights.aviasales] },
     { title: 'Tours & Activities', cards: [AFFILIATE_LINKS.tours.klook, AFFILIATE_LINKS.tours.tiqets, AFFILIATE_LINKS.tours.wegotrip] },
     { title: 'Airport Transfers', cards: [AFFILIATE_LINKS.transfers.kiwitaxi, AFFILIATE_LINKS.transfers.welcomePickups, AFFILIATE_LINKS.transfers.gettransfer] },
@@ -24,7 +34,7 @@ export default function TravelDealsPage() {
     { title: 'Flight Compensation', cards: [AFFILIATE_LINKS.compensation.airhelp, AFFILIATE_LINKS.compensation.compensair] },
     { title: 'Bike Rentals', cards: [AFFILIATE_LINKS.bikeRentals.bikesbooking] },
     { title: 'Sea Travel', cards: [AFFILIATE_LINKS.seaTravel.searadar] },
-  ]
+  ].filter((section) => section.cards.length > 0)
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
@@ -37,6 +47,7 @@ export default function TravelDealsPage() {
         <div className="max-w-6xl mx-auto space-y-8">
           <h1 className="text-4xl md:text-5xl font-bold heading-robotic"><span className="text-gradient">Travel Deals</span></h1>
           <p className="text-white/75">A central hub to compare options, check current offers, and explore partner deals for every stage of your trip.</p>
+          <HotelSearchWidget className="rounded-xl border border-white/10 bg-black/40 p-4 md:p-6" />
           {sections.map((section) => (
             <section key={section.title} className="space-y-3">
               <h2 className="text-2xl font-semibold text-white heading-robotic">{section.title}</h2>

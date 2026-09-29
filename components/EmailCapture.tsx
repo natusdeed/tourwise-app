@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Check, Mail, Lock } from 'lucide-react'
 import { trackEmailSignup } from '@/utils/analytics'
 
@@ -18,25 +18,6 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [socialProofIndex, setSocialProofIndex] = useState(0)
-
-  // Sample social proof messages - rotate through them
-  const socialProofMessages = [
-    'Mike just subscribed from Chicago',
-    'Sarah joined from New York',
-    'John signed up from Los Angeles',
-    'Emma subscribed from Miami',
-    'David joined from Seattle',
-    'Lisa signed up from Boston',
-  ]
-
-  // Rotate social proof messages every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSocialProofIndex((prev) => (prev + 1) % socialProofMessages.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [socialProofMessages.length])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -56,17 +37,16 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
         throw new Error('Please enter a valid email address.')
       }
 
-      // For now, we'll use the contact API or create a dedicated newsletter API
-      // You can integrate with your email service provider (e.g., Mailchimp, ConvertKit, etc.)
-      const response = await fetch('/api/contact', {
+      // Subscribe via the lead-magnet API: stores the lead in Supabase
+      // and delivers the free travel-hacks guide through Resend.
+      const response = await fetch('/api/lead-magnet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: 'Newsletter Subscriber',
           email: email.trim(),
-          message: 'Newsletter signup from email capture form',
+          magnet_id: 'newsletter-guide',
         }),
       })
 
@@ -83,7 +63,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
 
       const data = await response.json()
 
-      if (data.success) {
+      if (data.ok) {
         setSubmitStatus('success')
         setEmail('')
         
@@ -222,21 +202,6 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
             <Lock className="w-4 h-4" />
             <span>We respect your privacy. Unsubscribe anytime. No spam, ever.</span>
           </p>
-
-          {/* Social Proof Ticker */}
-          <div className="social-proof-ticker relative overflow-hidden">
-            <motion.div
-              key={socialProofIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="ticker-item text-white/70 text-sm md:text-base flex items-center justify-center gap-2"
-            >
-              <span className="inline-block w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span>{socialProofMessages[socialProofIndex]}</span>
-            </motion.div>
-          </div>
         </motion.div>
       </div>
     </section>

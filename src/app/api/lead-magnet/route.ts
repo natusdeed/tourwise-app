@@ -7,7 +7,56 @@ const schema = z.object({
   email: z.string().email(),
   name: z.string().optional(),
   magnet_id: z.string().min(1),
+  // Itinerary delivery (magnet_id === 'itinerary-delivery')
+  destination: z.string().max(120).optional(),
+  tripLength: z.string().max(60).optional(),
+  itinerary: z.string().max(60000).optional(),
 })
+
+/** Escape HTML then lightly render markdown for email bodies. */
+function markdownToEmailHtml(markdown: string): string {
+  const escaped = markdown
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+  const lines = escaped.split('\n')
+  const html: string[] = []
+  let inList = false
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (/^#{1,4}\s+/.test(trimmed)) {
+      if (inList) { html.push('</ul>'); inList = false }
+      const text = trimmed.replace(/^#{1,4}\s+/, '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      html.push(`<h3 style="color:#0ea5e9;margin:18px 0 8px;">${text}</h3>`)
+    } else if (/^[-*]\s+/.test(trimmed)) {
+      if (!inList) { html.push('<ul style="margin:8px 0;padding-left:20px;">'); inList = true }
+      const text = trimmed.replace(/^[-*]\s+/, '').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      html.push(`<li style="margin:4px 0;">${text}</li>`)
+    } else if (trimmed === '') {
+      if (inList) { html.push('</ul>'); inList = false }
+    } else {
+      if (inList) { html.push('</ul>'); inList = false }
+      const text = trimmed.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      html.push(`<p style="margin:8px 0;">${text}</p>`)
+    }
+  }
+  if (inList) html.push('</ul>')
+  return html.join('\n')
+}
+
+const emailShell = (inner: string) => `
+  <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827; max-width: 640px;">
+    ${inner}
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:24px 0;" />
+    <p style="font-size: 12px; color: #6b7280;">
+      Affiliate disclosure: Some links on TourWiseAI are affiliate links, which means we may earn a commission
+      at no additional cost to you.
+    </p>
+    <p style="font-size: 12px; color: #6b7280;">
+      You're receiving this because you requested it on TourWiseAI. Unsubscribe anytime by replying STOP.
+    </p>
+  </div>
+`
 
 type LeadMagnetConfig = {
   supabaseUrl: string
@@ -73,7 +122,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
   }
 
-  const { email, name, magnet_id } = parsed.data
+  const { email, name, magnet_id, destination, tripLength, itinerary } = parsed.data
 
   const { config, missingVars } = getLeadMagnetConfig()
   if (!config) {
@@ -109,6 +158,56 @@ export async function POST(req: NextRequest) {
     // Send the lead magnet email via Resend (server-side only).
     const resend = new Resend(resendApiKey)
     const baseUrl = siteUrl.replace(/\/$/, '')
+
+    if (magnet_id === 'itinerary-delivery') {
+      if (!itinerary || itinerary.trim().length === 0) {
+        return NextResponse.json({ error: 'No itinerary to send.' }, { status: 400 })
+      }
+      const tripLabel = [destination, tripLength].filter(Boolean).join(' · ')
+      const capped = itinerary.length > 15000 ? itinerary.slice(0, 15000) + '\n\n…' : itinerary
+      await resend.emails.send({
+        from: fromEmail,
+        to: email,
+        subject: `Your ${destination ? `${destination} ` : ''}itinerary is here ✈️`,
+        replyTo: replyToEmail || undefined,
+        html: emailShell(`
+          <p>Hi${name ? ` ${name}` : ''},</p>
+          <p>Here's the personalized itinerary you just built with TourWiseAI${tripLabel ? ` <strong>(${tripLabel})</strong>` : ''}:</p>
+          ${markdownToEmailHtml(capped)}
+          <p style="margin-top:20px;">Next step: lock in the essentials for your dates —</p>
+          <ul style="padding-left:20px;">
+            <li><a href="${baseUrl}/travel-deals">Compare flights, stays, tours, transfers, eSIMs and insurance</a></li>
+            <li><a href="${baseUrl}/cheap-flights">Find cheap flights</a></li>
+          </ul>
+          <p><strong>TourWiseAI</strong><br/>Smarter travel planning, zero guesswork.</p>
+        `),
+      })
+      return NextResponse.json({ ok: true, message: 'Your itinerary is on its way to your inbox.' })
+    }
+
+    if (magnet_id === 'newsletter-guide') {
+      await resend.emails.send({
+        from: fromEmail,
+        to: email,
+        subject: 'Your Free 2026 Travel Hacks Guide is here',
+        replyTo: replyToEmail || undefined,
+        html: emailShell(`
+          <p>Hi${name ? ` ${name}` : ''},</p>
+          <p>Welcome aboard — here is your <strong>Free 2026 Travel Hacks Guide</strong> from TourWiseAI:</p>
+          <ul style="padding-left:20px;">
+            <li><strong>Mistake fares & flash sales:</strong> set a price alert for your route before you book — <a href="${baseUrl}/cheap-flights">compare flight options</a>.</li>
+            <li><strong>Stays:</strong> always compare the same hotel across 2–3 booking sites; the same room often differs by 10–20% — <a href="${baseUrl}/travel-deals">check travel deals</a>.</li>
+            <li><strong>eSIM:</strong> buy your data plan before you fly; airport kiosks routinely cost double — <a href="${baseUrl}/travel-esim">compare eSIM options</a>.</li>
+            <li><strong>Transfers:</strong> pre-book your airport pickup; curbside taxis are the classic arrival rip-off — <a href="${baseUrl}/airport-transfers">compare transfers</a>.</li>
+            <li><strong>Insurance:</strong> a week of medical + trip cover usually costs less than one airport meal — <a href="${baseUrl}/travel-insurance">get covered</a>.</li>
+          </ul>
+          <p>Plan your next trip with the free AI planner any time: <a href="${baseUrl}/ai-travel-planner">${baseUrl}/ai-travel-planner</a></p>
+          <p><strong>TourWiseAI</strong><br/>Smarter travel planning, zero guesswork.</p>
+        `),
+      })
+      return NextResponse.json({ ok: true, message: 'Your free guide is on its way to your inbox.' })
+    }
+
     // If a direct PDF is not uploaded yet, this can point to a guide landing page instead.
     const guideUrl = `${baseUrl}/holy-land-tours-from-usa`
 
@@ -117,8 +216,7 @@ export async function POST(req: NextRequest) {
       to: email,
       subject: 'Your Free 12-Day Holy Land Itinerary Guide',
       replyTo: replyToEmail || undefined,
-      html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #111827;">
+      html: emailShell(`
           <p>Hi${name ? ` ${name}` : ''},</p>
           <p>
             Thank you for requesting the free 12-day Holy Land itinerary guide from TourWiseAI.
@@ -131,12 +229,7 @@ export async function POST(req: NextRequest) {
             If a direct PDF download is not yet available, this page will be updated with the final PDF link after upload.
           </p>
           <p><strong>TourWiseAI</strong><br/>Smarter travel planning for faith-led journeys.</p>
-          <p style="font-size: 12px; color: #6b7280;">
-            Affiliate disclosure: Some links on TourWiseAI are affiliate links, which means we may earn a commission
-            at no additional cost to you.
-          </p>
-        </div>
-      `,
+      `),
     })
 
     return NextResponse.json({
