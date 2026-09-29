@@ -67,6 +67,18 @@ export const AFFILIATE_LINKS = {
     },
   },
   tours: {
+    // ---------------------------------------------------------------------------
+    // VIATOR — join in Travelpayouts (Programs → Viator → Connect), then paste
+    // your affiliate link as `url`. 8% commission, 30-day cookie, 300k+
+    // experiences. The card stays hidden until you fill it in.
+    // ---------------------------------------------------------------------------
+    viator: {
+      name: 'Viator',
+      category: 'tours',
+      url: '',
+      description: 'Top-rated tours, activities, and experiences worldwide.',
+      recommendedButtonText: 'Explore tours & activities',
+    },
     klook: {
       name: 'Klook',
       category: 'tours',
@@ -150,6 +162,18 @@ export const AFFILIATE_LINKS = {
     },
   },
   carRentals: {
+    // ---------------------------------------------------------------------------
+    // DISCOVER CARS — direct program at discovercars.com/affiliate (free signup,
+    // ~$20 avg commission per booking, 365-day cookie). Paste your affiliate link
+    // as `url`. Hidden until filled in.
+    // ---------------------------------------------------------------------------
+    discovercars: {
+      name: 'Discover Cars',
+      category: 'carRentals',
+      url: '',
+      description: 'Compare car rental deals worldwide with free cancellation.',
+      recommendedButtonText: 'Compare car rental deals',
+    },
     localrent: {
       name: 'Localrent',
       category: 'carRentals',
@@ -274,6 +298,9 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
   }
 
   if (/\b(museum|tour|activity|attraction|skip-the-line|walking tour|day trip|things to do)\b/i.test(text)) {
+    if (AFFILIATE_LINKS.tours.viator.url) {
+      push('activities-viator', AFFILIATE_LINKS.tours.viator, 'Top-rated tours and experiences worldwide.')
+    }
     push('activities-klook', AFFILIATE_LINKS.tours.klook, 'Activities and tours match your itinerary.')
     push('attractions-tiqets', AFFILIATE_LINKS.tours.tiqets, 'Timed tickets and museum-style stops.')
   }
@@ -292,6 +319,9 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
   }
 
   if (/\b(road trip|drive|rent a car|driving|highway|self-?drive)\b/i.test(text)) {
+    if (AFFILIATE_LINKS.carRentals.discovercars.url) {
+      push('car-discover', AFFILIATE_LINKS.carRentals.discovercars, 'Compare car rental deals worldwide.')
+    }
     push('car-localrent', AFFILIATE_LINKS.carRentals.localrent, 'Road-trip style routing.')
     push('car-compare', AFFILIATE_LINKS.carRentals.economybookings, 'Compare rental rates.')
   }
