@@ -7,6 +7,25 @@ import { useState } from 'react'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 const tools = [
+  // Viator appears automatically once its Travelpayouts link is configured.
+  ...(AFFILIATE_LINKS.tours.viator.url
+    ? [
+        {
+          name: 'Viator',
+          description: 'Top-rated tours, activities, and experiences worldwide',
+          badge: 'Top Rated',
+          icon: 'Ticket',
+          cta: 'Explore Tours',
+          url: AFFILIATE_LINKS.tours.viator.url,
+          color: 'from-emerald-500 to-teal-500',
+          benefits: [
+            '300,000+ experiences',
+            'Free cancellation on many tours',
+            'Verified traveler reviews',
+          ],
+        },
+      ]
+    : []),
   {
     name: 'Klook',
     description: 'Book tours, experiences, and tickets worldwide',
