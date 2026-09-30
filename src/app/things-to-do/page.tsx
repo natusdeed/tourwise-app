@@ -20,6 +20,9 @@ export default function ThingsToDoPage() {
           <h1 className="text-4xl md:text-5xl font-bold heading-robotic"><span className="text-gradient">Things to Do</span></h1>
           <p className="text-white/75">Use this page to shortlist experiences after your route and budget are clear.</p>
           <div className="flex flex-wrap gap-3">
+            {AFFILIATE_LINKS.tours.viator.url && (
+              <ExternalAffiliateLink href={AFFILIATE_LINKS.tours.viator.url} trackingLabel="things-to-do-viator" className="inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Explore Tours & Activities</ExternalAffiliateLink>
+            )}
             <ExternalAffiliateLink href={AFFILIATE_LINKS.tours.klook.url} trackingLabel="things-to-do-klook" className="inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Browse Tours & Activities</ExternalAffiliateLink>
             <Link href="/travel-deals" className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">More Travel Deals</Link>
           </div>
