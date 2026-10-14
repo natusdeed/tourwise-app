@@ -466,4 +466,436 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Check the Brightline train if combining Orlando with Miami/South Florida.',
     ],
   },
+  'houston-to-accra-flights': {
+    slug: 'houston-to-accra-flights',
+    title: 'Houston to Accra Flights',
+    routePath: '/houston-to-accra-flights',
+    destinationName: 'Accra, Ghana',
+    destinationAirport: 'Kotoka International Airport (ACC)',
+    international: true,
+    flightTime: 'Typically 16–22 hours including one stop',
+    overview: [
+      'Houston to Accra is a cornerstone route for Texas\u2019s Ghanaian diaspora, alongside Lagos one of the two great West Africa corridors out of IAH. \u201CThe Year of Return\u201D momentum made Ghana a mainstream heritage destination, so this route now mixes VFR (visiting friends and relatives) travelers with first-time heritage tourists \u2014 especially around Christmas and New Year.',
+      'There is no nonstop service; every itinerary connects once, most often in Europe or via Addis Ababa. Fares behave like Lagos: steady year-round demand, limited competition, and a sharp December spike. Booking early and staying flexible on the connecting city are the two levers that actually move the price.',
+    ],
+    airlines:
+      'The most common one-stop routings are British Airways via London Heathrow, KLM via Amsterdam, Turkish Airlines via Istanbul, Ethiopian Airlines via Addis Ababa, and Qatar Airways via Doha, with United selling connections on Star Alliance partners. Compare at least three connecting cities \u2014 the cheapest routing shifts month to month, and Addis Ababa or Istanbul routings often undercut London.',
+    bestTimeToBook:
+      'For most of the year, 6\u201312 weeks ahead is the sweet spot. For mid-December travel, book by September: diaspora demand fills the limited one-stop capacity early and fares climb steeply from October. Mid-January through March and September through early November are typically the calmest \u2014 and cheapest \u2014 windows.',
+    moneyTips: [
+      'Compare connecting cities, not just dates. Addis Ababa and Istanbul routings often price well below London.',
+      'Check baggage allowance before booking \u2014 most long-haul tickets include two checked bags, but the cheapest consolidator fares sometimes do not, and diaspora trips are rarely light.',
+      'Avoid separate tickets for the connection unless savings are dramatic. On a single ticket the airline rebooks you after a delay; on separate tickets a missed connection is your problem.',
+      'US passport holders need a Ghanaian visa in advance. Do not book a non-refundable fare before the visa is approved \u2014 factor the fee and processing time into your planning.',
+      'A yellow fever vaccination certificate is required for entry into Ghana. Get vaccinated at least 10 days before travel.',
+      'Set a fare alert 3+ months out and watch Tuesday/Wednesday departures, which tend to price lower than weekends.',
+    ],
+    arrivalTips: [
+      'You will land at Kotoka International Airport (ACC). Immigration and baggage reclaim can be slow when several wide-bodies arrive together \u2014 allow buffer time before any onward connection to Kumasi or elsewhere.',
+      'Pre-book your airport transfer. The arrivals-hall touts are persistent; a pre-paid pickup means walking straight to a named driver.',
+      'Buy your eSIM before you fly. Ghana data plans are cheap and you land connected \u2014 far easier than hunting for a local SIM late at night.',
+      'Airport ATMs can be unreliable. Bring some USD cash to exchange as backup.',
+    ],
+    faqs: [
+      {
+        question: 'Is there a nonstop flight from Houston to Accra?',
+        answer:
+          'No regularly scheduled nonstop passenger service exists on this route. Plan on one stop, most commonly in London, Amsterdam, Istanbul, Addis Ababa, or Doha, for a total journey of roughly 16\u201322 hours.',
+      },
+      {
+        question: 'How long does Houston to Accra take?',
+        answer:
+          'Typically 16\u201322 hours door to door including the connection. Shorter layovers (2\u20134 hours) keep the trip tolerable; overnight layovers can be cheaper and less exhausting if you can rest in a transit hotel.',
+      },
+      {
+        question: 'Do I need a visa for Ghana?',
+        answer:
+          'Yes \u2014 most nationalities, including US citizens, need a Ghanaian visa arranged in advance. A yellow fever vaccination certificate is also required for entry.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Accra?',
+        answer:
+          'Mid-January through March and September through early November are typically the cheapest windows. Mid-December to early January is the most expensive period of the year by a wide margin.',
+      },
+      {
+        question: 'Which Houston airport do I fly from?',
+        answer:
+          'George Bush Intercontinental (IAH). All long-haul Africa routings depart from IAH, not Hobby (HOU), which is a domestic and short-haul airport.',
+      },
+      {
+        question: 'Can I combine Accra with a trip to Lagos?',
+        answer:
+          'Yes \u2014 it is a popular combination. Accra to Lagos is a short regional hop (about 1\u20132 hours). Just make sure your visas for both countries are sorted before you go.',
+      },
+    ],
+    bookingChecklist: [
+      'Confirm your Ghanaian visa is approved before booking a non-refundable fare.',
+      'Get your yellow fever certificate at least 10 days before departure.',
+      'Compare one-stop routings via at least three connecting cities (London, Amsterdam, Istanbul, Addis Ababa).',
+      'Verify two checked bags are included \u2014 diaspora trips are rarely light.',
+      'Book a single ticket (not separate tickets) so misconnections are the airline\u2019s problem.',
+      'Pre-book your ACC airport transfer and buy your Ghana eSIM before you fly.',
+      'For December travel, book by September; for off-peak, 6\u201312 weeks ahead is the sweet spot.',
+    ],
+  },
+  'houston-to-mexico-city-flights': {
+    slug: 'houston-to-mexico-city-flights',
+    title: 'Houston to Mexico City Flights',
+    routePath: '/houston-to-mexico-city-flights',
+    destinationName: 'Mexico City, Mexico',
+    destinationAirport: 'Benito Ju\u00e1rez International Airport (MEX)',
+    international: true,
+    flightTime: 'About 2.5\u20133 hours nonstop',
+    overview: [
+      'Houston to Mexico City is one of the highest-frequency international routes from Texas \u2014 barely 2.5 hours gate to gate, with multiple daily nonstops. United flies it from IAH and the route also sees Aerom\u00e9xico, Viva Aerobus, and Volaris capacity, so genuine competition keeps fares honest most of the year.',
+      'It is equal parts business corridor, VFR route, and city-break destination, which means pricing is steadier than pure leisure routes \u2014 but Mexican holidays (notably D\u00eda de Muertos in late October/early November, Christmas, and Semana Santa) spike demand. Mid-week departures are consistently the cheapest seats on the route.',
+    ],
+    airlines:
+      'United operates nonstop from IAH, and Aerom\u00e9xico, Viva Aerobus, and Volaris also serve the Houston\u2013Mexico City market with varying frequency. Compare United\u2019s included-bags fare against the Mexican ULCCs\u2019 base fares plus bag fees \u2014 the \u201Ccheap\u201D fare is not always cheaper once bags are added.',
+    bestTimeToBook:
+      'For most of the year, 3\u20136 weeks ahead is plenty. For D\u00eda de Muertos (late Oct\u2013early Nov), Christmas/New Year, and Semana Santa (the week before Easter), book 2\u20133 months ahead. Late January through March (outside Semana Santa) is typically the cheapest window.',
+    moneyTips: [
+      'Compare total price with bags: Mexican ULCC base fares look cheap until you add checked and carry-on bag fees.',
+      'Tuesday and Wednesday departures are consistently the cheapest on this route.',
+      'Note the airport: most flights use MEX (Benito Ju\u00e1rez). A few use Felipe \u00c1ngeles (NLU) \u2014 much farther from the city center, so factor the transfer cost and time.',
+      'US passport holders do not need a visa for tourist stays up to 180 days, but you do need a valid passport \u2014 check the expiry date now.',
+      'Mexico City sits at 7,350 feet. Give yourself an easy first day; altitude headaches are real for sea-level Houstonians.',
+      'Buy your eSIM before you fly. Mexico data plans are cheap and you land connected.',
+    ],
+    arrivalTips: [
+      'Most flights land at Benito Ju\u00e1rez (MEX), about 30\u201345 minutes from the main hotel zones by authorized taxi or rideshare. Confirm which airport your flight uses before booking transfers.',
+      'Use authorized airport taxis (buy the ticket at the booth inside) or rideshare from the designated pickup area \u2014 do not take an unmarked cab from the curb.',
+      'The metro is excellent and cheap, but skip it with luggage during rush hour; take an Uber instead.',
+      'ATMs inside the airport give better rates than currency-exchange booths. Decline the ATM\u2019s conversion offer and let your bank do it.',
+    ],
+    faqs: [
+      {
+        question: 'How long is the flight from Houston to Mexico City?',
+        answer:
+          'About 2.5\u20133 hours nonstop. It is one of the shortest international hops from Texas.',
+      },
+      {
+        question: 'Do I need a visa to visit Mexico City?',
+        answer:
+          'US citizens do not need a visa for tourist stays of up to 180 days \u2014 just a valid passport. Other nationalities should check Mexico\u2019s entry requirements before booking.',
+      },
+      {
+        question: 'Which Mexico City airport should I fly into?',
+        answer:
+          'Benito Ju\u00e1rez (MEX) is the main airport, close to the city. Felipe \u00c1ngeles (NLU) is much farther out \u2014 cheaper flights there can cost you the savings in transfer time and money.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Mexico City?',
+        answer:
+          'Late January through March (outside Semana Santa) is typically cheapest. Avoid D\u00eda de Muertos week, Christmas/New Year, and Semana Santa unless those are your dates.',
+      },
+      {
+        question: 'Which Houston airport flies to Mexico City?',
+        answer:
+          'Most service is from George Bush Intercontinental (IAH). Check your specific flight \u2014 IAH vs Hobby (HOU) matters for your drive to the airport.',
+      },
+      {
+        question: 'Is Mexico City safe for tourists?',
+        answer:
+          'The main tourist zones (Roma, Condesa, Polanco, Centro Hist\u00f3rico) are well-policed and heavily visited. Use the same street smarts you would in any big city: authorized transport at night, watch your phone in crowds.',
+      },
+    ],
+    bookingChecklist: [
+      'Compare United (bags included) vs Aerom\u00e9xico/Viva/Volaris (add bag fees) on total price.',
+      'Confirm which Mexico City airport (MEX vs NLU) your flight uses.',
+      'For D\u00eda de Muertos, Christmas, or Semana Santa, book 2\u20133 months ahead.',
+      'Check your passport expiry \u2014 no visa needed for US tourists, but the passport must be valid.',
+      'Buy your Mexico eSIM before you fly.',
+      'Pre-book your MEX airport transfer (authorized taxi booth or rideshare pickup).',
+      'Plan an easy first day \u2014 7,350 ft altitude hits sea-level Houstonians.',
+    ],
+  },
+  'houston-to-dubai-flights': {
+    slug: 'houston-to-dubai-flights',
+    title: 'Houston to Dubai Flights',
+    routePath: '/houston-to-dubai-flights',
+    destinationName: 'Dubai, UAE',
+    destinationAirport: 'Dubai International Airport (DXB)',
+    international: true,
+    flightTime: 'About 14\u201315 hours nonstop, or 18\u201324 hours with one stop',
+    overview: [
+      'Houston to Dubai is the flagship Middle East corridor from Texas \u2014 Emirates flies it nonstop from IAH in about 14\u201315 hours, one of the longest nonstops out of Houston. It serves business travelers, shoppers, and \u2014 increasingly \u2014 stopover tourists breaking up trips to Asia, Africa, or the Indian Ocean.',
+      'The nonstop commands a premium; one-stop routings via Europe (London, Frankfurt, Istanbul) or Doha are usually cheaper and sometimes dramatically so. Fares follow the Gulf calendar: the mild winter months (November\u2013March) are peak season, while the brutal summer (June\u2013September) is when the deals appear.',
+    ],
+    airlines:
+      'Emirates operates the nonstop from IAH. One-stop alternatives include Qatar Airways via Doha, Turkish Airlines via Istanbul, British Airways via London, and Lufthansa via Frankfurt, plus United selling connections on Star Alliance partners. Compare the Emirates nonstop against at least two one-stop routings \u2014 the savings can fund several extra hotel nights.',
+    bestTimeToBook:
+      'For winter travel (Nov\u2013Mar, peak season), book 2\u20134 months ahead. For summer (Jun\u2013Sep), 6\u20138 weeks is often enough and fares dip with the temperatures. Shoulder months (April\u2013May, October) balance decent weather with softer prices.',
+    moneyTips: [
+      'Price the Emirates nonstop against one-stop routings before deciding \u2014 the nonstop premium is real, and a one-stop via Istanbul or Doha can save enough for days of hotel.',
+      'Summer (Jun\u2013Sep) is furnace-hot but genuinely cheap: luxury hotels discount steeply. If you can handle 110\u00b0F, it is the budget play.',
+      'US passport holders get a free 30-day visa on arrival in the UAE \u2014 no advance paperwork.',
+      'Emirates includes generous baggage (often two checked bags) even in economy \u2014 factor that against ULCC-style one-stop fares with bag fees.',
+      'Consider a stopover: Emirates and Qatar both offer stopover programs that let you break the journey in Dubai or Doha for little extra.',
+      'Book hotels with free cancellation. Dubai hotel prices swing hard with events and season; re-check rates closer to departure.',
+    ],
+    arrivalTips: [
+      'You will land at DXB Terminal 3 (Emirates) \u2014 efficient immigration, usually fast. The Dubai Metro Red Line runs straight from the airport to most hotel zones for a few dollars.',
+      'Taxis are metered, plentiful, and honest \u2014 but agree nothing in advance; just take the queue.',
+      'Buy your eSIM before you fly. Note that VoIP calls (WhatsApp voice, FaceTime audio) are restricted on local networks \u2014 plan accordingly.',
+      'Friday is the holy day; the weekend is Saturday\u2013Sunday. Malls open late-morning and stay open past midnight.',
+    ],
+    faqs: [
+      {
+        question: 'Is there a nonstop flight from Houston to Dubai?',
+        answer:
+          'Yes \u2014 Emirates flies nonstop from IAH, about 14\u201315 hours. It is one of the longest nonstops out of Houston.',
+      },
+      {
+        question: 'Do I need a visa for Dubai?',
+        answer:
+          'US citizens receive a free 30-day visa on arrival in the UAE. No advance application needed for tourist visits.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Dubai?',
+        answer:
+          'Summer (June\u2013September) is cheapest \u2014 extreme heat drives prices down. Winter (November\u2013March) is peak season with the highest fares.',
+      },
+      {
+        question: 'How long is the layover option via Europe?',
+        answer:
+          'One-stop routings via London, Frankfurt, Istanbul, or Doha typically total 18\u201324 hours. They are often much cheaper than the Emirates nonstop.',
+      },
+      {
+        question: 'Can I do a stopover in Dubai on the way to Asia?',
+        answer:
+          'Yes \u2014 both Emirates and Qatar Airways offer stopover programs. It is one of the best-value ways to see Dubai without buying a separate trip.',
+      },
+      {
+        question: 'Is Dubai expensive?',
+        answer:
+          'It can be, but mid-range travelers do fine: the metro is cheap, food courts are excellent and affordable, and summer hotel discounts are steep. Alcohol is the budget-killer \u2014 it is only sold in licensed venues at high prices.',
+      },
+    ],
+    bookingChecklist: [
+      'Compare the Emirates nonstop vs one-stop routings (Istanbul, Doha, London) on total price.',
+      'For winter travel book 2\u20134 months ahead; summer 6\u20138 weeks is fine.',
+      'No visa paperwork needed \u2014 US passport gets 30 days on arrival.',
+      'Check baggage included: Emirates economy usually includes two checked bags.',
+      'Consider a stopover program if continuing to Asia or Africa.',
+      'Buy your eSIM before flying; remember VoIP restrictions on local networks.',
+      'Book hotels with free cancellation and re-check rates before departure.',
+    ],
+  },
+  'houston-to-tokyo-flights': {
+    slug: 'houston-to-tokyo-flights',
+    title: 'Houston to Tokyo Flights',
+    routePath: '/houston-to-tokyo-flights',
+    destinationName: 'Tokyo, Japan',
+    destinationAirport: 'Narita (NRT) or Haneda (HND)',
+    international: true,
+    flightTime: 'About 13\u201314 hours nonstop, or 17\u201322 hours with one stop',
+    overview: [
+      'Houston to Tokyo is the premier Asia corridor from Texas \u2014 ANA and United both fly it nonstop from IAH in about 13\u201314 hours. Japan\u2019s post-reopening tourism boom made this one of the most searched long-haul routes from Houston, with cherry-blossom season and autumn foliage driving the biggest spikes.',
+      'The nonstops are convenient but rarely the cheapest; one-stop routings via the West Coast (LAX, SFO, SEA) or via Taipei and Seoul often undercut them. Fares follow Japan\u2019s seasons hard: late March\u2013early April (sakura) and November (autumn color) are peak; June (rainy season) and late January\u2013February are the value windows.',
+    ],
+    airlines:
+      'ANA and United operate nonstop from IAH (mostly to Narita, some Haneda). One-stop options include American/JAL via Dallas, Delta/Korean Air via Seattle, EVA Air via Taipei, and Asiana via Seoul. Compare the nonstop against West Coast one-stops \u2014 the savings are often significant enough to justify the extra hours.',
+    bestTimeToBook:
+      'For cherry-blossom season (late Mar\u2013early Apr) and autumn foliage (Nov), book 3\u20135 months ahead \u2014 these sell out. For June (rainy season) or Jan\u2013Feb, 6\u201310 weeks is usually enough. Golden Week (late Apr\u2013early May) is Japan\u2019s domestic peak: avoid it unless that is your plan.',
+    moneyTips: [
+      'One-stop via the West Coast or Asia (Taipei, Seoul) is often much cheaper than the IAH nonstop. Price both before deciding.',
+      'Note the Tokyo airport: Haneda (HND) is ~30 min from downtown; Narita (NRT) is 60\u201390 min. A \u201Ccheaper\u201D Narita fare can cost you the savings in transfer time.',
+      'US passport holders do not need a visa for tourist stays up to 90 days.',
+      'The JR Pass rarely pays off for Tokyo-only trips \u2014 do the math for your actual itinerary; city IC cards (Suica/Pasmo) cover Tokyo itself.',
+      'Japan is still heavily cash-assisted in small shops and rural areas. Land with yen or hit a 7-Eleven ATM (best rates, English menus).',
+      'Buy your eSIM before you fly. Japan data eSIMs are cheap and you land connected \u2014 pocket WiFi is the old way.',
+    ],
+    arrivalTips: [
+      'From Narita, the Narita Express or Access Express trains beat taxis on price by a mile. From Haneda, the monorail or Keikyu line gets you downtown in ~30 minutes.',
+      'Fill out Japan\u2019s Visit Japan Web customs/immigration QR before departure \u2014 it shortens the arrivals line considerably.',
+      'Trains stop around midnight. If you land late, pre-book an airport transfer or confirm your hotel\u2019s late check-in.',
+      'Learn two phrases and the bow: basic courtesy goes an extremely long way in Japan.',
+    ],
+    faqs: [
+      {
+        question: 'Is there a nonstop flight from Houston to Tokyo?',
+        answer:
+          'Yes \u2014 ANA and United both fly nonstop from IAH, about 13\u201314 hours. One-stop options via the West Coast or Asia are often cheaper.',
+      },
+      {
+        question: 'Do I need a visa for Japan?',
+        answer:
+          'US citizens do not need a visa for tourist stays of up to 90 days. Just bring a valid passport.',
+      },
+      {
+        question: 'Narita or Haneda \u2014 which Tokyo airport is better?',
+        answer:
+          'Haneda (HND) is much closer to downtown Tokyo (~30 min). Narita (NRT) is 60\u201390 minutes out. Prefer Haneda when fares are close.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Tokyo?',
+        answer:
+          'June (rainy season) and late January\u2013February are typically cheapest. Cherry-blossom season and November foliage are the most expensive.',
+      },
+      {
+        question: 'How far ahead should I book for cherry-blossom season?',
+        answer:
+          'Three to five months ahead. Late-March to early-April flights and hotels sell out \u2014 this is not a route to book last-minute.',
+      },
+      {
+        question: 'Should I buy a JR Pass?',
+        answer:
+          'Only if you are doing serious intercity travel (Tokyo\u2013Kyoto\u2013Osaka and beyond). For a Tokyo-only trip, a rechargeable IC card is cheaper and simpler.',
+      },
+    ],
+    bookingChecklist: [
+      'Compare IAH nonstops vs West Coast / Taipei / Seoul one-stops on total price.',
+      'Check whether you land at Haneda or Narita \u2014 it changes your transfer plan.',
+      'For sakura or autumn foliage, book 3\u20135 months ahead.',
+      'No visa needed for US tourists (90 days) \u2014 just a valid passport.',
+      'Complete Visit Japan Web before departure for faster immigration.',
+      'Buy your Japan eSIM before you fly; plan yen cash for small shops.',
+      'If landing after midnight, pre-book your airport transfer.',
+    ],
+  },
+  'houston-to-madrid-flights': {
+    slug: 'houston-to-madrid-flights',
+    title: 'Houston to Madrid Flights',
+    routePath: '/houston-to-madrid-flights',
+    destinationName: 'Madrid, Spain',
+    destinationAirport: 'Adolfo Su\u00e1rez Madrid\u2013Barajas Airport (MAD)',
+    international: true,
+    flightTime: 'About 9\u201310 hours nonstop, or 13\u201318 hours with one stop',
+    overview: [
+      'Houston to Madrid is Texas\u2019s front door to Spain \u2014 Iberia flies it nonstop from IAH in about 9\u201310 hours, making it the fastest way from Houston to southwestern Europe. Madrid works as a destination in its own right and as a springboard: cheap intra-Europe flights fan out to Barcelona, Lisbon, Rome, and Morocco from here.',
+      'Fares follow the European summer calendar: June\u2013August is peak (and Madrid is genuinely hot), while November\u2013February is the value season \u2014 with the bonus of fewer crowds at the Prado and Royal Palace. Shoulder months (April\u2013May, September\u2013October) are the sweet spot for weather and price.',
+    ],
+    airlines:
+      'Iberia operates the nonstop from IAH. One-stop alternatives include American via Dallas or Philadelphia, United via Newark or Washington, and European carriers via London, Amsterdam, or Frankfurt. Compare the Iberia nonstop against one-stops \u2014 the premium is usually modest, making the nonstop an easy choice when schedules align.',
+    bestTimeToBook:
+      'For summer (Jun\u2013Aug), book 2\u20134 months ahead. For winter (Nov\u2013Feb), 6\u20138 weeks is often enough. Shoulder season (Apr\u2013May, Sep\u2013Oct) rewards 2\u20133 months ahead with the best balance of weather and fares.',
+    moneyTips: [
+      'The Iberia nonstop premium over one-stops is usually modest \u2014 price both, but do not assume the connection is much cheaper.',
+      'Spain uses the euro. Get euros from ATMs on arrival (decline the conversion offer); airport exchange booths are the worst rate in the building.',
+      'US passport holders do not need a visa for Schengen stays up to 90 days in any 180-day period.',
+      'Madrid\u2019s Barajas airport is huge \u2014 allow 2+ hours for international connections, especially terminal changes.',
+      'Book intra-Europe onward flights separately and early: Madrid\u2013Barcelona or Madrid\u2013Lisbon can be very cheap when booked ahead.',
+      'Buy your eSIM before you fly. One EU eSIM covers Spain and every onward country.',
+    ],
+    arrivalTips: [
+      'Barajas (MAD) connects to central Madrid via metro (Line 8), commuter rail, express bus, or taxi (flat rate to the center \u2014 confirm it is in force). Metro takes ~30\u201340 minutes.',
+      'Spaniards eat late: lunch at 2\u20133pm, dinner at 9\u201310pm. Restaurants that open at 6pm are tourist traps.',
+      'The Prado is free during the last two hours of the day \u2014 check current hours and go late to skip the ticket line.',
+      'Pickpockets work the metro and Plaza Mayor crowds. Front pockets, zipped bags, done.',
+    ],
+    faqs: [
+      {
+        question: 'Is there a nonstop flight from Houston to Madrid?',
+        answer:
+          'Yes \u2014 Iberia flies nonstop from IAH, about 9\u201310 hours. It is the fastest way from Houston to southwestern Europe.',
+      },
+      {
+        question: 'Do I need a visa for Spain?',
+        answer:
+          'US citizens do not need a visa for Schengen stays up to 90 days in any 180-day period. Just bring a valid passport.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Madrid?',
+        answer:
+          'November through February is typically cheapest. Summer (June\u2013August) is peak season with the highest fares \u2014 and serious heat.',
+      },
+      {
+        question: 'Can I use Madrid as a base for the rest of Europe?',
+        answer:
+          'Absolutely \u2014 it is one of the best-value springboards in Europe. Cheap intra-Europe flights connect Madrid to Barcelona, Lisbon, Rome, Paris, and Morocco.',
+      },
+      {
+        question: 'How do I get from Barajas airport to central Madrid?',
+        answer:
+          'Metro Line 8 (~30\u201340 min), commuter rail, the Expr\u00e9s Aeropuerto bus (24h), or a flat-rate taxi. All are straightforward \u2014 pick by luggage and arrival time.',
+      },
+      {
+        question: 'Is Madrid walkable?',
+        answer:
+          'Very. The historic center, Retiro Park, Gran V\u00eda, and the museum triangle are all comfortably walkable, and the metro covers everything else.',
+      },
+    ],
+    bookingChecklist: [
+      'Compare the Iberia nonstop vs one-stop options \u2014 the premium is often modest.',
+      'For summer book 2\u20134 months ahead; winter 6\u20138 weeks is fine.',
+      'No visa needed for US tourists (Schengen 90/180 rule) \u2014 just a valid passport.',
+      'Allow 2+ hours for connections at Barajas; it is a big airport.',
+      'Buy your EU eSIM before you fly \u2014 one SIM covers Spain and onward countries.',
+      'Book onward intra-Europe flights early for the cheapest fares.',
+      'Plan dinners late (9\u201310pm) \u2014 that is when Madrid actually eats.',
+    ],
+  },
+  'houston-to-amsterdam-flights': {
+    slug: 'houston-to-amsterdam-flights',
+    title: 'Houston to Amsterdam Flights',
+    routePath: '/houston-to-amsterdam-flights',
+    destinationName: 'Amsterdam, Netherlands',
+    destinationAirport: 'Amsterdam Airport Schiphol (AMS)',
+    international: true,
+    flightTime: 'About 9\u201310 hours nonstop, or 13\u201318 hours with one stop',
+    overview: [
+      'Houston to Amsterdam is KLM\u2019s Texas gateway \u2014 nonstop from IAH in about 9\u201310 hours, and one of the most useful nonstops in the city because Schiphol is Europe\u2019s great connecting hub. Amsterdam works as a destination (canals, museums, tulips) and as the cleanest one-stop springboard to the rest of Europe.',
+      'Fares follow the northern-European calendar: late April\u2013May (tulip season) and summer are peak; November\u2013February is the value window \u2014 gray but cheap, with Christmas markets as the consolation prize. KLM\u2019s nonstop usually prices competitively against one-stop routings, which is not always true on other routes.',
+    ],
+    airlines:
+      'KLM operates the nonstop from IAH (with United codeshares). One-stop alternatives include United via Newark/Washington, American via Dallas or Philadelphia, and routings via London, Paris, or Frankfurt. Price the KLM nonstop first \u2014 it is often within striking distance of the cheapest one-stop, making it the obvious pick.',
+    bestTimeToBook:
+      'For tulip season (mid-Apr\u2013early May) and summer, book 2\u20134 months ahead. For winter (Nov\u2013Feb), 6\u20138 weeks is usually enough. September\u2013October is the sweet spot: decent weather, thinner crowds, softer fares.',
+    moneyTips: [
+      'The KLM nonstop often prices close to one-stop routings \u2014 check it before assuming a connection saves money.',
+      'The Netherlands is nearly cashless. A no-foreign-fee card (or phone tap) covers essentially everything; do not bother with euros in cash beyond a small backup.',
+      'US passport holders do not need a visa for Schengen stays up to 90 days in any 180-day period.',
+      'Schiphol is huge but efficient \u2014 still allow 2+ hours for international connections.',
+      'Tulip season accommodation books out: if going mid-April\u2013early May, lock the hotel when you book the flight.',
+      'Buy your eSIM before you fly. One EU eSIM covers the Netherlands and every onward country.',
+    ],
+    arrivalTips: [
+      'Schiphol has a train station directly below the terminal \u2014 15\u201320 minutes to Amsterdam Centraal, trains every few minutes. It beats taxis on price and usually on time.',
+      'Do not rent a car for Amsterdam itself. Trams, metro, and bikes cover the city; rent only if leaving town.',
+      'The city center is compact but the canals all look alike after dark \u2014 drop a pin at your hotel on day one.',
+      'Book the Rijksmuseum, Van Gogh Museum, and Anne Frank House online in advance. Same-day tickets are often gone.',
+    ],
+    faqs: [
+      {
+        question: 'Is there a nonstop flight from Houston to Amsterdam?',
+        answer:
+          'Yes \u2014 KLM flies nonstop from IAH, about 9\u201310 hours. It is often priced competitively with one-stop routings.',
+      },
+      {
+        question: 'Do I need a visa for the Netherlands?',
+        answer:
+          'US citizens do not need a visa for Schengen stays up to 90 days in any 180-day period. Just bring a valid passport.',
+      },
+      {
+        question: 'When is the cheapest time to fly Houston to Amsterdam?',
+        answer:
+          'November through February is typically cheapest. Tulip season (mid-April\u2013early May) and summer are the most expensive.',
+      },
+      {
+        question: 'How do I get from Schiphol to central Amsterdam?',
+        answer:
+          'Train \u2014 the station is directly under the terminal, 15\u201320 minutes to Centraal, running every few minutes. Cheap and faster than a taxi in traffic.',
+      },
+      {
+        question: 'Should I rent a car in Amsterdam?',
+        answer:
+          'No \u2014 not for the city. Trams, metro, and bikes cover everything. Rent only if you are heading out to the countryside or other cities.',
+      },
+      {
+        question: 'Do I need cash in Amsterdam?',
+        answer:
+          'Barely. The Netherlands is nearly cashless \u2014 a no-foreign-fee card or phone tap handles essentially everything.',
+      },
+    ],
+    bookingChecklist: [
+      'Price the KLM nonstop first \u2014 it is often close to the cheapest one-stop.',
+      'For tulip season or summer, book 2\u20134 months ahead; winter 6\u20138 weeks.',
+      'No visa needed for US tourists (Schengen 90/180 rule) \u2014 just a valid passport.',
+      'If going for tulips, lock accommodation when you book the flight.',
+      'Buy your EU eSIM before you fly.',
+      'Take the train from Schiphol to Centraal \u2014 15\u201320 minutes, no taxi needed.',
+      'Book Rijksmuseum, Van Gogh, and Anne Frank House online in advance.',
+    ],
+  },
 }
