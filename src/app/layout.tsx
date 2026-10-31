@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import CookieBanner from '@/components/CookieBanner'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
 import Script from 'next/script'
+import { SITE_ORIGIN, pageMeta } from '@/lib/site'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -12,14 +13,21 @@ const inter = Inter({
   display: 'swap',
 })
 
+const homeTitle = 'TourWiseAI | AI Travel Planner & Flight Deals'
+const homeDescription =
+  'Plan trips with TourWiseAI. Compare partner options for flights, stays, tours, transfers, eSIMs, and insurance.'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tourwiseai.com'),
+  metadataBase: new URL(SITE_ORIGIN),
+  ...pageMeta({
+    title: homeTitle,
+    description: homeDescription,
+    path: '/',
+  }),
   title: {
-    default: 'TourWiseAI | AI Travel Planner, Flight Deals & Smarter Trip Planning',
+    default: homeTitle,
     template: '%s | TourWiseAI',
   },
-  description:
-    'Plan smarter trips with TourWiseAI. Compare flight ideas, explore travel deals, build AI-powered itineraries, and find travel essentials like airport transfers, eSIMs, tours, and insurance.',
   keywords: [
     'AI travel planner',
     'cheap flights',
@@ -31,12 +39,15 @@ export const metadata: Metadata = {
     'faith travel',
   ],
   icons: {
-    icon: '/appicon.png.png',
-    shortcut: '/appicon.png.png',
-    apple: '/appicon.png.png',
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/appicon.png.png', type: 'image/png', sizes: '64x64' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
   },
   appleWebApp: {
-    title: 'Tour Wise AI',
+    title: 'TourWiseAI',
     capable: true,
     statusBarStyle: 'default',
   },
@@ -49,34 +60,6 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-  },
-  alternates: {
-    canonical: 'https://tourwiseai.com',
-  },
-  openGraph: {
-    title: 'TourWiseAI | AI Travel Planner, Flight Deals & Smarter Trip Planning',
-    description:
-      'Plan smarter trips with TourWiseAI. Compare flight ideas, explore travel deals, build AI-powered itineraries, and find travel essentials.',
-    url: 'https://tourwiseai.com',
-    images: [
-      {
-        url: '/header-banner.jpg.png',
-        width: 1200,
-        height: 630,
-        alt: 'TourWise AI - The Future of Smart Travel Planning',
-      },
-    ],
-    type: 'website',
-    siteName: 'TourWiseAI',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'TourWiseAI | AI Travel Planner, Flight Deals & Smarter Trip Planning',
-    description:
-      'Plan smarter trips with TourWiseAI. Compare flight ideas, explore travel deals, build AI-powered itineraries, and find travel essentials.',
-    images: ['/header-banner.jpg.png'],
-    creator: '@tourwiseai',
   },
 }
 
@@ -94,35 +77,26 @@ export default function RootLayout({
 }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID
 
-  // Organization & TravelAgency schema for Knowledge Graph, E-E-A-T, and Domain Authority
+  // Terms say TourWiseAI is not a travel agency, so this is Organization, not TravelAgency.
   const organizationSchema = {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'TravelAgency'],
-    name: 'TourWise AI',
-    legalName: 'TourWise AI',
-    url: 'https://tourwiseai.com',
+    '@type': 'Organization',
+    name: 'TourWiseAI',
+    url: SITE_ORIGIN,
     logo: {
       '@type': 'ImageObject',
-      url: 'https://tourwiseai.com/appicon.png.png',
-      width: 512,
-      height: 512,
+      url: `${SITE_ORIGIN}/appicon.png.png`,
+      width: 64,
+      height: 64,
     },
-    description: 'TourWise AI is the leading AI-powered smart travel planner, delivering hyper-personalized travel itineraries, real-time flight tracking, and intelligent local detection to solve travel planning headaches.',
-    foundingDate: '2024',
+    description:
+      'TourWiseAI is an AI travel planner that helps people build itineraries and compare partner booking options. Bookings are completed on partner sites.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Richmond',
       addressRegion: 'TX',
+      postalCode: '77407',
       addressCountry: 'US',
-    },
-    location: {
-      '@type': 'Place',
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: 'Richmond',
-        addressRegion: 'TX',
-        addressCountry: 'US',
-      },
     },
     contactPoint: {
       '@type': 'ContactPoint',
@@ -143,33 +117,43 @@ export default function RootLayout({
     knowsAbout: [
       'AI Travel Planning',
       'Flight Search',
-      'Hotel Booking',
       'Travel Itineraries',
-      'Smart Travel Technology',
-      'Travel Agency Services',
-      'AI-driven Itineraries',
-      'Real-time Flight Tracking',
+      'Airport Transfers',
+      'Travel eSIM',
+      'Travel Insurance',
     ],
   }
 
-  // Website schema with SearchAction
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'TourWise AI',
-    url: 'https://tourwiseai.com',
+    name: 'TourWiseAI',
+    url: SITE_ORIGIN,
     publisher: {
       '@type': 'Organization',
-      name: 'TourWise AI',
-      url: 'https://tourwiseai.com',
+      name: 'TourWiseAI',
+      url: SITE_ORIGIN,
     },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: 'https://tourwiseai.com/?q={search_term_string}',
-      },
-      'query-input': 'required name=search_term_string',
+  }
+
+  const webAppSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'TourWiseAI',
+    url: SITE_ORIGIN,
+    applicationCategory: 'TravelApplication',
+    operatingSystem: 'Web',
+    description:
+      'AI travel planner for building itineraries and comparing partner options for flights, stays, tours, transfers, eSIMs, car rentals, and insurance. TourWiseAI is not a travel agency.',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'TourWiseAI',
+      url: SITE_ORIGIN,
     },
   }
 
@@ -219,6 +203,11 @@ export default function RootLayout({
           id="website-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <Script
+          id="webapp-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
         />
         <Navbar />
         {children}

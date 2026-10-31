@@ -7,9 +7,11 @@
 import { MetadataRoute } from 'next';
 import { generateSitemapUrls } from '@/lib/sitemap';
 import type { SitemapUrl } from '@/lib/sitemap';
+import { getAllContentItems } from '@/lib/content';
+import { SITE_ORIGIN } from '@/lib/site';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://tourwiseai.com';
+  const baseUrl = SITE_ORIGIN;
   const urls = await generateSitemapUrls(baseUrl);
   const additionalRoutes = [
     '/faith-travel',
@@ -50,6 +52,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/vatican-rome-christian-itinerary',
     '/vatican-rome-christian-travel-guide',
     '/affiliate-disclosure',
+    '/privacy-policy',
+    '/terms',
+    '/alerts',
+    '/us-visa-suspension',
     '/blog',
     '/blog/how-to-use-ai-to-plan-a-trip',
     '/blog/cheap-flights-from-houston',
@@ -63,6 +69,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changefreq: 'weekly' as const,
     priority: 0.8,
   }));
+
+  const posts = await getAllContentItems('posts');
+  for (const post of posts) {
+    additionalUrls.push({
+      loc: `${baseUrl}/blog/${post.slug}`,
+      lastmod: post.frontmatter.modifiedTime || post.frontmatter.date,
+      changefreq: 'monthly',
+      priority: 0.7,
+    });
+  }
 
   const allUrls = [...urls, ...additionalUrls];
   const uniqueUrls = Array.from(new Map(allUrls.map(url => [url.loc, url])).values());

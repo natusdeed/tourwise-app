@@ -112,6 +112,9 @@ export default function AffiliateDisclosurePage() {
               <span className="text-gradient">AFFILIATE DISCLOSURE</span>
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-4" />
+            <p className="text-white text-lg md:text-xl max-w-3xl mx-auto mb-4 font-medium">
+              TourWiseAI may earn a commission from partner links at no extra cost to you.
+            </p>
             <p className="text-white/70 text-lg md:text-xl max-w-3xl mx-auto mb-4">
               Transparency is important to us. This page explains how affiliate relationships work and how they support our free service.
             </p>

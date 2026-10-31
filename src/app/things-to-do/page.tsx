@@ -4,13 +4,13 @@ import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Things to Do',
-  description:
-    'Discover tours and activities you can add to your itinerary, with practical planning tips for timing, tickets, and logistics.',
-  alternates: { canonical: 'https://tourwiseai.com/things-to-do' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Things to Do | TourWiseAI',
+  description: 'Discover tours and activities to add to your itinerary. Partners named on site include Klook and Tiqets.',
+  path: '/things-to-do',
+})
 
 export default function ThingsToDoPage() {
   return (

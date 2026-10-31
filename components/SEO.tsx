@@ -2,6 +2,7 @@
 
 import Script from 'next/script'
 import type { Metadata } from 'next'
+import { absoluteUrl, fitDescription, fitTitle, pageMeta } from '@/lib/site'
 
 interface SEOProps {
   title?: string
@@ -24,7 +25,7 @@ interface SEOProps {
  * <SEO 
  *   title="Page Title"
  *   description="Page description"
- *   canonical="https://tourwiseai.com/page"
+ *   canonical="https://www.tourwiseai.com/page"
  *   image="/og-image.jpg"
  * />
  * ```
@@ -33,18 +34,18 @@ export default function SEO({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
   description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
   canonical,
-  image = "/header-banner.jpg.png",
+  image = "/og-image.jpg",
   type = "website",
 }: SEOProps) {
-  const siteUrl = "https://tourwiseai.com"
+  const siteUrl = "https://www.tourwiseai.com"
   const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
   const canonicalUrl = canonical || siteUrl
 
-  // TravelAgency schema for SEO and Knowledge Graph
+  // Organization schema. Terms say TourWiseAI is not a travel agency.
   const travelAgencySchema = {
     "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "name": "TourWise AI",
+    "@type": "Organization",
+    "name": "TourWiseAI",
     "description": description,
     "url": siteUrl,
     "logo": `${siteUrl}/appicon.png.png`,
@@ -60,7 +61,7 @@ export default function SEO({
 
   return (
     <Script
-      id="travel-agency-schema"
+      id="page-organization-schema"
       type="application/ld+json"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(travelAgencySchema)
@@ -78,7 +79,7 @@ export default function SEO({
  *   return generateSEOMetadata({
  *     title: "Page Title",
  *     description: "Page description",
- *     canonical: "https://tourwiseai.com/page",
+ *     canonical: "https://www.tourwiseai.com/page",
  *     image: "/og-image.jpg"
  *   })
  * }
@@ -88,7 +89,7 @@ export function generateSEOMetadata({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
   description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
   canonical,
-  image = "/header-banner.jpg.png",
+  image = "/og-image.jpg",
   type = "website",
   keywords,
   publishedTime,
@@ -105,49 +106,16 @@ export function generateSEOMetadata({
   modifiedTime?: string
   author?: string
 }): Metadata {
-  const siteUrl = "https://tourwiseai.com"
-  const fullImageUrl = image.startsWith('http') ? image : `${siteUrl}${image}`
-  const canonicalUrl = canonical || siteUrl
-
-  // Ensure title includes site name if not already present
-  const fullTitle = title.includes('|') || title.includes('TourWise') 
-    ? title 
-    : `${title} | TourWise AI`
-
   return {
-    title: fullTitle,
-    description,
-    keywords: keywords?.join(', '),
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      type: type,
-      title: fullTitle,
-      description: description,
-      url: canonicalUrl,
-      siteName: 'TourWise AI',
-      images: [
-        {
-          url: fullImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-      locale: 'en_US',
-      ...(publishedTime && { publishedTime }),
-      ...(modifiedTime && { modifiedTime }),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: fullTitle,
-      description: description,
-      images: [fullImageUrl],
-      creator: '@tourwiseai',
-    },
-    ...(author && {
-      authors: [{ name: author }],
+    ...pageMeta({
+      title: fitTitle(title),
+      description: fitDescription(description),
+      path: absoluteUrl(canonical || '/'),
+      type: type === 'article' ? 'article' : 'website',
+      image,
     }),
+    keywords: keywords?.join(', '),
+    ...(author && { authors: [{ name: author }] }),
+    ...(publishedTime || modifiedTime ? {} : {}),
   }
 }

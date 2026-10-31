@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Footer from '@/components/Footer'
 
-export const metadata: Metadata = {
-  title: 'Vatican Rome Christian Travel Guide',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Vatican Rome Christian Travel Guide | TourWiseAI',
   description:
-    'Plan a Christian trip to Rome and the Vatican with itinerary guidance, practical planning notes, and related faith travel resources.',
-  alternates: { canonical: 'https://tourwiseai.com/vatican-rome-christian-travel-guide' },
-}
+    'Plan a Christian trip to Rome and the Vatican with itinerary guidance and related faith travel resources.',
+  path: '/vatican-rome-christian-travel-guide',
+})
 
 export default function VaticanRomeChristianTravelGuidePage() {
   return (

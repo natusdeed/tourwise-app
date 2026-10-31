@@ -25,14 +25,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getContentItem('blog', slug, vertical);
   
   if (!verticalConfig || !post) {
-    return { title: 'Post Not Found | TourWise' };
+    return { title: { absolute: 'Post Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
 
   return generateSEOMetadata({
     title: post.frontmatter.seoTitle || `${post.frontmatter.title} - ${verticalConfig.displayName}`,
     description: post.frontmatter.seoDescription || post.frontmatter.description,
     keywords: post.frontmatter.keywords || [],
-    canonicalUrl: `https://tourwiseai.com/${vertical}/blog/${slug}`,
+    canonicalUrl: `https://www.tourwiseai.com/${vertical}/blog/${slug}`,
     ogImage: post.frontmatter.image,
     ogType: 'article',
     publishedTime: post.frontmatter.date,

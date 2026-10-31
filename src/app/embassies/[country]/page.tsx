@@ -26,13 +26,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!countryData) {
     return {
-      title: 'Country Not Found | Tour Wise AI',
+      title: { absolute: 'Country Not Found | TourWiseAI' },
+      robots: { index: false, follow: false },
     }
   }
 
   return generateSEOMetadata({
-    title: `${countryData.name} Embassies & Consulates Worldwide ${new Date().getFullYear()} | Tour Wise AI`,
-    description: `Find ${countryData.name} embassies and consulates worldwide. Get contact information, addresses, map links, and office locations for visa services and consular assistance.`,
+    title: `${countryData.name} Embassies`,
+    description: `Embassy and consulate contacts and locations for ${countryData.name} on TourWiseAI.`,
     keywords: [
       `${countryData.name} embassy`,
       `${countryData.name} consulate`,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'diplomatic missions',
       countryData.name.toLowerCase(),
     ],
-    canonicalUrl: `https://tourwiseai.com/embassies/${country}`,
+    canonicalUrl: `https://www.tourwiseai.com/embassies/${country}`,
   })
 }
 

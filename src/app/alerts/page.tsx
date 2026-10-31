@@ -9,22 +9,12 @@ import { getAllAlerts } from '@/lib/travelData'
 import TrustShield from '@/components/TrustShield'
 import Link from 'next/link'
 import { AlertTriangle, Calendar, ArrowRight, Info, AlertCircle } from 'lucide-react'
-import { generateMetadata as generateSEOMetadata } from '@/lib/seo'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = generateSEOMetadata({
-  title: 'Travel Alerts & Visa Updates 2026 | Tour Wise AI',
-  description: 'Real-time updates on visa policies, passport delays, and travel regulations. Stay informed about critical travel alerts and border updates from around the world.',
-  keywords: [
-    'travel alerts',
-    'visa updates',
-    'passport delays',
-    'travel regulations',
-    'border updates',
-    'travel warnings',
-    'immigration news',
-    'travel advisories',
-  ],
-  canonicalUrl: 'https://tourwiseai.com/alerts',
+export const metadata: Metadata = pageMeta({
+  title: 'Travel Alerts | TourWiseAI',
+  description: 'Visa, passport, and travel regulation updates collected in the TourWiseAI country guides.',
+  path: '/alerts',
 })
 
 export default function AlertsPage() {

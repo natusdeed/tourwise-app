@@ -7,12 +7,14 @@ import FAQAccordion from '@/components/FAQAccordion'
 import { HOUSTON_ROUTES } from '@/lib/houston-routes'
 import { generateFAQSchema } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Cheap Flights from Houston (IAH & HOU): Route Guides & Booking Tips | TourWiseAI',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Cheap Flights from Houston | TourWiseAI',
   description:
-    'Houston flight guides for IAH and Hobby: which airport to use, route-by-route booking tips for Lagos, Cancun, London, Paris, Rome, and Orlando, and how Houston travelers pay less.',
-  alternates: { canonical: 'https://tourwiseai.com/cheap-flights-from-houston' },
-}
+    'Houston (IAH and HOU) flight guides with booking tips for Lagos, Cancun, London, Paris, Rome, and more.',
+  path: '/cheap-flights-from-houston',
+})
 
 const hubFaqs = [
   {

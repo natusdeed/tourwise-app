@@ -25,18 +25,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const destination = await getContentItem('destinations', slug, vertical);
   
   if (!verticalConfig || !destination) {
-    return { title: 'Destination Not Found | TourWise' };
+    return { title: { absolute: 'Destination Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
 
   return generateSEOMetadata({
-    title: `${destination.frontmatter.title} - ${verticalConfig.displayName} Travel Guide`,
+    title: destination.frontmatter.seoTitle || destination.frontmatter.title,
     description: destination.frontmatter.seoDescription || destination.frontmatter.description,
     keywords: [
       ...(destination.frontmatter.keywords || []),
       destination.frontmatter.title,
       verticalConfig.displayName,
     ],
-    canonicalUrl: `https://tourwiseai.com/${vertical}/destinations/${slug}`,
+    canonicalUrl: `https://www.tourwiseai.com/${vertical}/destinations/${slug}`,
     ogImage: destination.frontmatter.image,
   });
 }

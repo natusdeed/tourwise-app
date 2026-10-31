@@ -5,12 +5,14 @@ import AffiliateDisclosure from '../../components/AffiliateDisclosure'
 import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
 
-export const metadata: Metadata = {
-  title: 'Faith-Based Travel Planning — Holy Land, Camino & Rome',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Faith Travel Guides | TourWiseAI',
   description:
-    'Plan meaningful Christian and faith-based trips with TourWise AI guides for the Holy Land, Camino de Santiago, Rome, and future pilgrimage routes.',
-  alternates: { canonical: 'https://tourwiseai.com/faith-travel' },
-}
+    'Plan Christian and faith-based trips with TourWiseAI guides for the Holy Land, Camino de Santiago, and Rome.',
+  path: '/faith-travel',
+})
 
 export default function FaithTravelHubPage() {
   return (
