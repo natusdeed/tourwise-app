@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const post = await getContentItem('posts', params.slug)
   if (!post) {
-    return { title: 'Post not found | TourWise AI' }
+    return { title: { absolute: 'Post Not Found | TourWiseAI' }, robots: { index: false, follow: false } }
   }
 
   const { frontmatter } = post
@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: frontmatter.seoTitle || frontmatter.title,
     description: frontmatter.seoDescription || frontmatter.description,
     keywords: frontmatter.keywords || [],
-    canonicalUrl: `https://tourwiseai.com/blog/${params.slug}`,
+    canonicalUrl: `https://www.tourwiseai.com/blog/${params.slug}`,
     ogImage: frontmatter.image,
     ogType: 'article',
     publishedTime: frontmatter.date,
@@ -59,9 +59,9 @@ export default async function SiteBlogPostPage({ params }: PageProps) {
   })
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://tourwiseai.com' },
-    { name: 'Blog', url: 'https://tourwiseai.com/blog' },
-    { name: post.frontmatter.title, url: `https://tourwiseai.com/blog/${post.slug}` },
+    { name: 'Home', url: 'https://www.tourwiseai.com' },
+    { name: 'Blog', url: 'https://www.tourwiseai.com/blog' },
+    { name: post.frontmatter.title, url: `https://www.tourwiseai.com/blog/${post.slug}` },
   ])
 
   return (

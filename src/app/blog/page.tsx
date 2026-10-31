@@ -5,11 +5,13 @@ import Footer from '@/components/Footer'
 import { getAllContentItems } from '@/lib/content'
 import { format } from 'date-fns'
 
-export const metadata: Metadata = {
-  title: 'Faith travel blog | TourWise AI',
-  description: 'Guides and field notes for Christian travel, pilgrimage planning, and slow tourism.',
-  alternates: { canonical: 'https://tourwiseai.com/blog' },
-}
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'TourWiseAI Travel Blog',
+  description: 'TourWiseAI guides on AI trip planning, cheap flights, faith travel, and essentials before you book.',
+  path: '/blog',
+})
 
 export default async function BlogIndexPage() {
   const posts = await getAllContentItems('posts')
@@ -18,12 +20,12 @@ export default async function BlogIndexPage() {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'TourWiseAI Blog',
-    url: 'https://tourwiseai.com/blog',
+    url: 'https://www.tourwiseai.com/blog',
     description: metadata.description,
     hasPart: posts.slice(0, 12).map((post) => ({
       '@type': 'BlogPosting',
       headline: post.frontmatter.title,
-      url: `https://tourwiseai.com/blog/${post.slug}`,
+      url: `https://www.tourwiseai.com/blog/${post.slug}`,
       datePublished: post.frontmatter.date,
       description: post.frontmatter.description,
     })),

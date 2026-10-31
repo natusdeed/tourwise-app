@@ -8,12 +8,13 @@ import FlightSearchWidget from '@/components/FlightSearchWidget'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import { breadcrumbListSchema } from '@/lib/schema'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Cheap Flights & Travel Deals | TourWiseAI',
-  description: 'Find cheap flights, compare route ideas, and plan smarter trips with TourWiseAI.',
-  alternates: { canonical: 'https://tourwiseai.com/cheap-flights' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Cheap Flights & Route Ideas | TourWiseAI',
+  description: 'Find cheap flight ideas and compare routes with TourWiseAI, then book through partner search tools.',
+  path: '/cheap-flights',
+})
 
 const houstonRoutes = [
   {
@@ -79,7 +80,7 @@ export default function CheapFlightsPage() {
             '@context': 'https://schema.org',
             '@type': 'WebPage',
             name: 'Find Cheap Flights for Your Next Trip',
-            url: 'https://tourwiseai.com/cheap-flights',
+            url: 'https://www.tourwiseai.com/cheap-flights',
             description: metadata.description,
           }),
         }}
@@ -96,7 +97,7 @@ export default function CheapFlightsPage() {
               '@type': 'ListItem',
               position: index + 1,
               name: item.route,
-              url: `https://tourwiseai.com${item.href}`,
+              url: `https://www.tourwiseai.com${item.href}`,
             })),
           }),
         }}

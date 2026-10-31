@@ -6,7 +6,7 @@ import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
-import { HOUSTON_ROUTES } from '@/lib/houston-routes'
+import { HOUSTON_ROUTES, houstonChecklistMetadata } from '@/lib/houston-routes'
 import { generateFAQSchema } from '@/lib/seo'
 
 export function generateStaticParams() {
@@ -15,12 +15,8 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { route: string } }): Metadata {
   const route = HOUSTON_ROUTES[params.route]
-  if (!route) return {}
-  return {
-    title: `${route.title}: Booking Checklist & Fare Tips | TourWiseAI`,
-    description: `Plan and book ${route.title.toLowerCase()} with a step-by-step checklist, fare tips, and links for flights, transfers${route.international ? ', eSIM' : ''}, and trip essentials.`,
-    alternates: { canonical: `https://tourwiseai.com/cheap-flights-from-houston/${params.route}` },
-  }
+  if (!route) return { title: { absolute: 'Route Not Found | TourWiseAI' }, robots: { index: false, follow: false } }
+  return houstonChecklistMetadata(route)
 }
 
 /**

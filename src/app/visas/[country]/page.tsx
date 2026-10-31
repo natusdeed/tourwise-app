@@ -27,13 +27,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!countryData) {
     return {
-      title: 'Country Not Found | Tour Wise AI',
+      title: { absolute: 'Country Not Found | TourWiseAI' },
+      robots: { index: false, follow: false },
     }
   }
 
   return generateSEOMetadata({
-    title: `${countryData.name} Visa Requirements ${new Date().getFullYear()} | Tour Wise AI`,
-    description: `Complete guide to ${countryData.name} visa requirements, application process, fees, processing times, and official links. Step-by-step instructions for all visa types.`,
+    title: `${countryData.name} Visa Guide`,
+    description: `Visa requirements and application notes for ${countryData.name} on TourWiseAI.`,
     keywords: [
       `${countryData.name} visa`,
       'visa requirements',
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'visa processing',
       countryData.name.toLowerCase(),
     ],
-    canonicalUrl: `https://tourwiseai.com/visas/${country}`,
+    canonicalUrl: `https://www.tourwiseai.com/visas/${country}`,
   })
 }
 

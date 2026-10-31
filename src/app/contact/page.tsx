@@ -112,9 +112,9 @@ export default function ContactPage() {
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
       <SEO
-        title="Contact TourWise AI - Get in Touch"
-        description="Contact TourWise AI for support, partnerships, or inquiries. We're here to help you plan your perfect trip. Reach out via email, phone, or our contact form."
-        canonical="https://tourwiseai.com/contact"
+        title="Contact TourWiseAI"
+        description="Email don@tourwiseai.com or call (703) 332-5956. TourWiseAI responds within 24 hours about AI trip planning."
+        canonical="https://www.tourwiseai.com/contact"
       />
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />

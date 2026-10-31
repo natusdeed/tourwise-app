@@ -19,7 +19,7 @@ export interface SitemapUrl {
 /**
  * Generate sitemap URLs
  */
-export async function generateSitemapUrls(baseUrl: string = 'https://tourwiseai.com'): Promise<SitemapUrl[]> {
+export async function generateSitemapUrls(baseUrl: string = 'https://www.tourwiseai.com'): Promise<SitemapUrl[]> {
   const urls: SitemapUrl[] = [];
 
   // Homepage - Priority 1.0
@@ -137,7 +137,7 @@ export async function generateSitemapUrls(baseUrl: string = 'https://tourwiseai.
 /**
  * Generate sitemap XML
  */
-export async function generateSitemapXml(baseUrl: string = 'https://tourwiseai.com'): Promise<string> {
+export async function generateSitemapXml(baseUrl: string = 'https://www.tourwiseai.com'): Promise<string> {
   const urls = await generateSitemapUrls(baseUrl);
   const currentDate = new Date().toISOString().split('T')[0];
 

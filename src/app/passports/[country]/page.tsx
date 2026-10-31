@@ -27,13 +27,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!countryData) {
     return {
-      title: 'Country Not Found | Tour Wise AI',
+      title: { absolute: 'Country Not Found | TourWiseAI' },
+      robots: { index: false, follow: false },
     }
   }
 
   return generateSEOMetadata({
-    title: `${countryData.name} Passport Requirements ${new Date().getFullYear()} | Tour Wise AI`,
-    description: `Complete guide to ${countryData.name} passport application, renewal, requirements, fees, and processing times. Official links and step-by-step instructions.`,
+    title: `${countryData.name} Passport Guide`,
+    description: `Passport requirements, fees, and processing notes for ${countryData.name} on TourWiseAI.`,
     keywords: [
       `${countryData.name} passport`,
       'passport application',
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'travel documents',
       countryData.name.toLowerCase(),
     ],
-    canonicalUrl: `https://tourwiseai.com/passports/${country}`,
+    canonicalUrl: `https://www.tourwiseai.com/passports/${country}`,
   })
 }
 

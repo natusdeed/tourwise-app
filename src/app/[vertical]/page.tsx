@@ -23,15 +23,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   if (!verticalConfig) {
     return {
-      title: 'Vertical Not Found | TourWise',
+      title: { absolute: 'Page Not Found | TourWiseAI' },
+      robots: { index: false, follow: false },
     };
   }
 
+  const verticalDescriptions: Record<string, string> = {
+    africa: 'Plan Africa trips with TourWiseAI guides for safaris, national parks, wildlife, and cultural travel.',
+    'christian-travel': 'Plan Christian trips with TourWiseAI guides for holy sites, pilgrimage routes, and biblical destinations.',
+    luxury: 'Plan premium trips with TourWiseAI guides for luxury stays and exclusive destinations.',
+    budget: 'Plan lower-cost trips with TourWiseAI guides for affordable destinations and money-saving ideas.',
+    'usa-tours': 'Plan USA trips with TourWiseAI guides for national parks, cities, and road trips.',
+    'island-retreats': 'Plan island trips with TourWiseAI guides for beach and tropical destinations.',
+  }
+
   const seoData = {
-    title: `${verticalConfig.displayName} - Expert Travel Guides & Planning`,
-    description: verticalConfig.description,
+    title: `${verticalConfig.displayName} Guides`,
+    description: verticalDescriptions[vertical] || verticalConfig.description,
     keywords: verticalConfig.keywords,
-    canonicalUrl: `https://tourwiseai.com/${vertical}`,
+    canonicalUrl: `https://www.tourwiseai.com/${vertical}`,
   };
 
   return generateSEOMetadata(seoData);

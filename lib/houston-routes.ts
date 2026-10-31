@@ -1,3 +1,6 @@
+import type { Metadata } from 'next'
+import { fitDescription, pageMeta } from './site'
+
 /**
  * Rich editorial content for the Houston route guides.
  *
@@ -898,4 +901,24 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Book Rijksmuseum, Van Gogh, and Anne Frank House online in advance.',
     ],
   },
+}
+
+export function houstonGuideMetadata(route: HoustonRouteDetails): Metadata {
+  return pageMeta({
+    title: `${route.title} | TourWiseAI`,
+    description: fitDescription(
+      `Guide to ${route.title}: ${route.flightTime}. Arrival airport: ${route.destinationAirport}.`
+    ),
+    path: route.routePath,
+  })
+}
+
+export function houstonChecklistMetadata(route: HoustonRouteDetails): Metadata {
+  return pageMeta({
+    title: `${route.title.replace(/ Flights$/, '')} Flight Tips | TourWiseAI`,
+    description: fitDescription(
+      `Booking checklist for ${route.title.toLowerCase()}: fare timing, partner flight search, and trip essentials before you book.`
+    ),
+    path: `/cheap-flights-from-houston/${route.slug}`,
+  })
 }

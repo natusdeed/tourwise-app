@@ -10,12 +10,14 @@ import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
 import { faqPageSchema, touristTripSchema } from '../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Christian Rome & Vatican Itinerary — 5-Day Guide for Pilgrims 2026',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Rome & Vatican Itinerary | TourWiseAI',
   description:
-    "A 5-day Christian itinerary for Rome and the Vatican. Skip-the-line tickets, hotel picks near St. Peter's, and a free PDF guide.",
-  alternates: { canonical: 'https://tourwiseai.com/vatican-rome-christian-itinerary' },
-}
+    "A 5-day Christian itinerary for Rome and the Vatican, with a free PDF guide for pilgrims.",
+  path: '/vatican-rome-christian-itinerary',
+})
 
 const faqs = [
   {
@@ -65,7 +67,7 @@ export default function VaticanRomePage() {
     name: 'Christian Rome & Vatican Itinerary — 5-Day Guide for Pilgrims 2026',
     description:
       'A five-day Christian itinerary for Rome and Vatican City with practical route planning, sacred sites, catacombs, and optional day trips.',
-    url: 'https://tourwiseai.com/vatican-rome-christian-itinerary',
+    url: 'https://www.tourwiseai.com/vatican-rome-christian-itinerary',
     itinerary: [
       {
         name: "Day 1: Vatican Museums, Sistine Chapel, and St. Peter's Basilica",

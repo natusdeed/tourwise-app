@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const verticalConfig = getVerticalBySlug(vertical);
   
   if (!verticalConfig) {
-    return { title: 'Vertical Not Found | TourWise' };
+    return { title: { absolute: 'Page Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
 
   return generateSEOMetadata({
-    title: `${verticalConfig.displayName} Destinations - Complete Travel Guide`,
-    description: `Discover amazing destinations for ${verticalConfig.displayName.toLowerCase()}. Expert guides, itineraries, and travel tips for every destination.`,
+    title: `${verticalConfig.displayName} Destinations`,
+    description: `Destination guides for ${verticalConfig.displayName} published on TourWiseAI.`,
     keywords: [...verticalConfig.keywords, 'destinations', 'travel guides'],
-    canonicalUrl: `https://tourwiseai.com/${vertical}/destinations`,
+    canonicalUrl: `https://www.tourwiseai.com/${vertical}/destinations`,
   });
 }
 

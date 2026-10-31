@@ -68,9 +68,9 @@ export default function AboutPage() {
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
       <SEO
-        title="About TourWise AI - Our Mission & Vision"
-        description="Learn about TourWise AI, the leading AI-powered travel planning platform. Discover our mission to make travel planning accessible, our cutting-edge AI technology, and our vision for the future of smart travel."
-        canonical="https://tourwiseai.com/about"
+        title="About TourWiseAI — AI Travel Planning"
+        description="TourWiseAI is an AI travel planner that helps you build itineraries and compare partner booking options. Based in Richmond, Texas."
+        canonical="https://www.tourwiseai.com/about"
       />
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />

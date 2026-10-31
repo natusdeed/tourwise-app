@@ -5,13 +5,14 @@ import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import FAQAccordion from '@/components/FAQAccordion'
 import { faqPageSchema } from '@/lib/schema'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'AI Travel Planner',
+export const metadata: Metadata = pageMeta({
+  title: 'AI Travel Planner | TourWiseAI',
   description:
-    'Use TourWiseAI to build practical trip plans faster. Compare route ideas, organize priorities, and connect your itinerary with flights, tours, transfers, eSIM, and insurance tools.',
-  alternates: { canonical: 'https://tourwiseai.com/ai-travel-planner' },
-}
+    'Build a practical trip plan with TourWiseAI. Organize priorities and compare partner options for flights and essentials.',
+  path: '/ai-travel-planner',
+})
 
 const faqs = [
   { question: 'What is TourWiseAI?', answer: 'TourWiseAI is a travel planning website that helps you organize trip ideas, compare options, and plan your itinerary with AI-assisted guidance.' },
@@ -24,12 +25,12 @@ export default function AiTravelPlannerPage() {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'AI Travel Planner',
-    url: 'https://tourwiseai.com/ai-travel-planner',
+    url: 'https://www.tourwiseai.com/ai-travel-planner',
     description: metadata.description,
     isPartOf: {
       '@type': 'WebSite',
       name: 'TourWiseAI',
-      url: 'https://tourwiseai.com',
+      url: 'https://www.tourwiseai.com',
     },
     about: [
       'AI itinerary planning',

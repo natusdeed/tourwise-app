@@ -24,7 +24,7 @@ export default function HoustonRouteLanding({ route }: Props) {
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
       <Script id={`${route.routePath}-breadcrumb`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbListSchema([{ name: 'Home', path: '/' }, { name: 'Cheap Flights', path: '/cheap-flights' }, { name: 'Cheap Flights from Houston', path: '/cheap-flights-from-houston' }, { name: route.title, path: route.routePath }])) }} />
-      <Script id={`${route.routePath}-webpage`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: route.title, url: `https://tourwiseai.com${route.routePath}` }) }} />
+      <Script id={`${route.routePath}-webpage`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebPage', name: route.title, url: `https://www.tourwiseai.com${route.routePath}` }) }} />
       <Script id={`${route.routePath}-faq`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(route.faqs)) }} />
       <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="max-w-5xl mx-auto space-y-5">

@@ -11,12 +11,14 @@ import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
 import { faqPageSchema, touristTripSchema } from '../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Camino de Santiago Planner — Free Route Guide & Itinerary 2026',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Camino de Santiago Planner | TourWiseAI',
   description:
     'Plan your Camino de Santiago with our free AI planner. Compare routes, find albergues, and get a free 7-day itinerary PDF.',
-  alternates: { canonical: 'https://tourwiseai.com/camino-de-santiago-planner' },
-}
+  path: '/camino-de-santiago-planner',
+})
 
 const faqs = [
   {
@@ -66,7 +68,7 @@ export default function CaminoPlannerPage() {
     name: 'Camino de Santiago Planner — Free Route Guide & Itinerary 2026',
     description:
       'A beginner-friendly Camino planner comparing routes, accommodation options, packing strategy, and realistic walking pace to Santiago de Compostela.',
-    url: 'https://tourwiseai.com/camino-de-santiago-planner',
+    url: 'https://www.tourwiseai.com/camino-de-santiago-planner',
     itinerary: [
       { name: 'Choose your route', description: 'Compare French, Portuguese, Northern, and Primitive routes.' },
       { name: 'Plan accommodation', description: 'Mix albergues, guesthouses, and hotels based on your comfort and budget.' },

@@ -4,13 +4,14 @@ import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Travel Insurance',
+export const metadata: Metadata = pageMeta({
+  title: 'Travel Insurance | TourWiseAI',
   description:
-    'Review travel insurance options for medical protection, delays, and cancellation coverage before your next trip.',
-  alternates: { canonical: 'https://tourwiseai.com/travel-insurance' },
-}
+    'Review travel insurance options for medical and trip protection before you book. Partner named on site: EKTA.',
+  path: '/travel-insurance',
+})
 
 export default function TravelInsurancePage() {
   return (

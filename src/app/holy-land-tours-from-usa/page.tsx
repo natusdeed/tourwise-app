@@ -10,12 +10,14 @@ import LeadMagnetForm from '../../components/LeadMagnetForm'
 import StickyTripCTA from '../../components/StickyTripCTA'
 import { breadcrumbListSchema, faqPageSchema, touristTripSchema } from '../../lib/schema'
 
-export const metadata: Metadata = {
-  title: 'Holy Land Tours from the USA | Planning Guide',
+import { pageMeta } from '@/lib/site'
+
+export const metadata: Metadata = pageMeta({
+  title: 'Holy Land Tours from the USA | TourWiseAI',
   description:
-    'How US travelers plan Holy Land tours: flight hubs, guided vs DIY, respectful pacing, and booking partners (affiliate disclosure included).',
-  alternates: { canonical: 'https://tourwiseai.com/holy-land-tours-from-usa' },
-}
+    'How US travelers plan Holy Land tours: flight hubs, guided vs DIY, respectful pacing, and booking partners.',
+  path: '/holy-land-tours-from-usa',
+})
 
 const faqs = [
   {

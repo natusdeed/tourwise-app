@@ -4,13 +4,13 @@ import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Travel eSIM',
-  description:
-    'Find travel eSIM options for international trips and stay connected from arrival through departure.',
-  alternates: { canonical: 'https://tourwiseai.com/travel-esim' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Travel eSIM | TourWiseAI',
+  description: 'Compare travel eSIM options on TourWiseAI and stay connected from landing. Partner: Airalo.',
+  path: '/travel-esim',
+})
 
 export default function TravelEsimPage() {
   return (

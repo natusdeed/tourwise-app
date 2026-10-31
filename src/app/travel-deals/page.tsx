@@ -6,13 +6,14 @@ import AffiliateCard from '@/components/AffiliateCard'
 import HotelSearchWidget from '@/components/HotelSearchWidget'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import { breadcrumbListSchema } from '@/lib/schema'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Travel Deals',
+export const metadata: Metadata = pageMeta({
+  title: 'Travel Deals | TourWiseAI',
   description:
-    'Explore travel deals and essentials on TourWiseAI, including flights, stays, tours, airport transfers, eSIM options, and travel insurance tools.',
-  alternates: { canonical: 'https://tourwiseai.com/travel-deals' },
-}
+    'Explore travel deals on TourWiseAI for flights, stays, tours, airport transfers, eSIMs, and travel insurance.',
+  path: '/travel-deals',
+})
 
 export default function TravelDealsPage() {
   // Stays lead the page — hotels carry the highest affiliate commissions.

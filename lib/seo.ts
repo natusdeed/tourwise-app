@@ -5,6 +5,14 @@
  */
 
 import type { Metadata } from 'next';
+import { OG_IMAGE_PATH, SITE_ORIGIN, absoluteUrl, fitDescription, fitTitle, pageMeta } from './site';
+
+function existingPublicImage(image?: string): string {
+  if (!image) return OG_IMAGE_PATH;
+  // Content frontmatter points at /images/... files that are not in public/.
+  if (image.startsWith('/images/')) return OG_IMAGE_PATH;
+  return image;
+}
 
 export interface SEOData {
   title: string;
@@ -24,44 +32,34 @@ export interface SEOData {
 /**
  * Generate Next.js Metadata from SEO data
  */
-export function generateMetadata(seoData: SEOData, baseUrl: string = 'https://tourwise.ai'): Metadata {
-  const title = seoData.title.includes('|') ? seoData.title : `${seoData.title} | TourWise`;
-  const canonicalUrl = seoData.canonicalUrl || baseUrl;
-  const ogImage = seoData.ogImage || `${baseUrl}/og-default.jpg`;
+export function generateMetadata(seoData: SEOData, baseUrl: string = SITE_ORIGIN): Metadata {
+  const title = fitTitle(seoData.title);
+  const description = fitDescription(seoData.description);
+  const canonicalUrl = absoluteUrl(seoData.canonicalUrl || baseUrl);
+  const ogImage = existingPublicImage(seoData.ogImage);
+  const ogType = seoData.ogType === 'article' ? 'article' : 'website';
+  const meta = pageMeta({
+    title,
+    description,
+    path: canonicalUrl,
+    type: ogType,
+    image: ogImage,
+  });
 
   return {
-    title,
-    description: seoData.description,
+    ...meta,
     keywords: seoData.keywords?.join(', '),
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title,
-      description: seoData.description,
-      url: canonicalUrl,
-      siteName: 'TourWise',
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: seoData.title,
-        },
-      ],
-      locale: 'en_US',
-      type: seoData.ogType || 'website',
-      ...(seoData.publishedTime && { publishedTime: seoData.publishedTime }),
-      ...(seoData.modifiedTime && { modifiedTime: seoData.modifiedTime }),
-      ...(seoData.section && { section: seoData.section }),
-      ...(seoData.tags && { tags: seoData.tags }),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description: seoData.description,
-      images: [ogImage],
-    },
+    openGraph:
+      ogType === 'article'
+        ? {
+            ...meta.openGraph,
+            type: 'article',
+            ...(seoData.publishedTime && { publishedTime: seoData.publishedTime }),
+            ...(seoData.modifiedTime && { modifiedTime: seoData.modifiedTime }),
+            ...(seoData.section && { section: seoData.section }),
+            ...(seoData.tags && { tags: seoData.tags }),
+          }
+        : meta.openGraph,
     ...(seoData.author && {
       authors: [{ name: seoData.author }],
     }),
@@ -71,13 +69,13 @@ export function generateMetadata(seoData: SEOData, baseUrl: string = 'https://to
 /**
  * Generate JSON-LD schema for Article (Blog posts)
  */
-export function generateArticleSchema(seoData: SEOData, baseUrl: string = 'https://tourwiseai.com'): object {
+export function generateArticleSchema(seoData: SEOData, baseUrl: string = 'https://www.tourwiseai.com'): object {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: seoData.title,
     description: seoData.description,
-    image: seoData.ogImage || `${baseUrl}/og-default.jpg`,
+    image: absoluteUrl(existingPublicImage(seoData.ogImage)),
     datePublished: seoData.publishedTime,
     dateModified: seoData.modifiedTime || seoData.publishedTime,
     author: {
@@ -116,7 +114,7 @@ export function generateDestinationSchema(
       longitude: number;
     };
   },
-  baseUrl: string = 'https://tourwiseai.com'
+  baseUrl: string = 'https://www.tourwiseai.com'
 ): object {
   return {
     '@context': 'https://schema.org',
@@ -145,7 +143,7 @@ export function generateDestinationSchema(
  */
 export function generateBreadcrumbSchema(
   items: Array<{ name: string; url: string }>,
-  baseUrl: string = 'https://tourwiseai.com'
+  baseUrl: string = 'https://www.tourwiseai.com'
 ): object {
   return {
     '@context': 'https://schema.org',
@@ -162,19 +160,16 @@ export function generateBreadcrumbSchema(
 /**
  * Generate JSON-LD schema for WebSite with SearchAction
  */
-export function generateWebsiteSchema(baseUrl: string = 'https://tourwiseai.com'): object {
+export function generateWebsiteSchema(baseUrl: string = 'https://www.tourwiseai.com'): object {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'TourWise AI',
+    name: 'TourWiseAI',
     url: baseUrl,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${baseUrl}/?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
+    publisher: {
+      '@type': 'Organization',
+      name: 'TourWiseAI',
+      url: baseUrl,
     },
   };
 }
@@ -195,7 +190,7 @@ export function generateProductSchema(
     brand?: string;
     category?: string;
   },
-  baseUrl: string = 'https://tourwiseai.com'
+  baseUrl: string = 'https://www.tourwiseai.com'
 ): object {
   return {
     '@context': 'https://schema.org',
@@ -225,7 +220,7 @@ export function generateProductSchema(
  */
 export function generateFAQSchema(
   faqs: Array<{ question: string; answer: string }>,
-  baseUrl: string = 'https://tourwiseai.com'
+  baseUrl: string = 'https://www.tourwiseai.com'
 ): object {
   return {
     '@context': 'https://schema.org',

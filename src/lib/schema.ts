@@ -2,7 +2,7 @@
  * JSON-LD helpers used across pages.
  */
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL || 'https://tourwiseai.com'
+const BASE = 'https://www.tourwiseai.com'
 
 export type BreadcrumbEntry = { name: string; path: string }
 

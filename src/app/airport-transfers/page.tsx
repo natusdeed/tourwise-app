@@ -4,13 +4,13 @@ import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { pageMeta } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Airport Transfers',
-  description:
-    'Plan airport transfers before you fly. Compare transfer tools on TourWiseAI and connect pickups with your trip itinerary.',
-  alternates: { canonical: 'https://tourwiseai.com/airport-transfers' },
-}
+export const metadata: Metadata = pageMeta({
+  title: 'Airport Transfers | TourWiseAI',
+  description: 'Plan airport transfers before you fly with TourWiseAI partner tools. Partner named on site: Kiwitaxi.',
+  path: '/airport-transfers',
+})
 
 export default function AirportTransfersPage() {
   return (
