@@ -79,6 +79,8 @@ export default function HoustonRouteLanding({ route }: Props) {
 
           <AffiliateDisclosure />
           <div className="flex flex-wrap gap-3 text-sm">
+            {route.routePath === '/houston-to-cancun-flights' ? <Link href="/guides/cancun" className="text-neon-cyan underline underline-offset-2">Cancun travel guide</Link> : null}
+            {route.routePath === '/houston-to-lagos-flights' ? <Link href="/guides/lagos" className="text-neon-cyan underline underline-offset-2">Lagos travel guide</Link> : null}
             <Link href="/cheap-flights" className="text-neon-cyan underline underline-offset-2">Cheap Flights</Link>
             <Link href="/cheap-flights-from-houston" className="text-neon-cyan underline underline-offset-2">All Houston Routes</Link>
             <Link href="/ai-travel-planner" className="text-neon-cyan underline underline-offset-2">AI Travel Planner</Link>
