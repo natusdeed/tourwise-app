@@ -74,6 +74,26 @@ export default function VerticalLandingClient({ verticalConfig }: VerticalLandin
           sectionDescription={verticalConfig.description}
         />
 
+        {verticalConfig.slug === 'africa' ? (
+          <section className="relative py-8 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+              <h2 className="text-3xl md:text-4xl font-bold heading-robotic mb-4">
+                <span className="text-gradient">PLANNING GUIDES</span>
+              </h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                <Link href="/guides/lagos" className="glass-strong rounded-xl border border-white/10 p-5 hover:border-neon-cyan/40 transition-colors min-w-0">
+                  <h3 className="text-white font-semibold">Lagos, Nigeria</h3>
+                  <p className="text-sm text-white/70 mt-2 leading-relaxed">Arrival, Island and mainland bases, traffic, and a short outline.</p>
+                </Link>
+                <Link href="/guides/cape-town" className="glass-strong rounded-xl border border-white/10 p-5 hover:border-neon-cyan/40 transition-colors min-w-0">
+                  <h3 className="text-white font-semibold">Cape Town</h3>
+                  <p className="text-sm text-white/70 mt-2 leading-relaxed">Seasons, where to base yourself, and one peninsula day.</p>
+                </Link>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         {/* Featured Destinations */}
         {!loading && featuredDestinations.length > 0 && (
           <section className="relative py-4 px-4 sm:px-6 lg:px-8">

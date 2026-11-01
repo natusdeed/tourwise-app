@@ -96,6 +96,15 @@ export default function CheapFlightsFromHoustonPage() {
             </ul>
           </section>
 
+          <section className={sectionClass}>
+            <h2 className={h2Class}>City guides for these trips</h2>
+            <p className="text-white/70 leading-relaxed">The flight pages cover the route. These guides cover the city after you land.</p>
+            <div className="flex flex-wrap gap-3 text-sm">
+              <Link href="/guides/cancun" className="text-neon-cyan underline underline-offset-2">Cancun travel guide</Link>
+              <Link href="/guides/lagos" className="text-neon-cyan underline underline-offset-2">Lagos travel guide</Link>
+            </div>
+          </section>
+
           <AffiliateDisclosure />
           <div className="max-w-6xl"><FAQAccordion title="Houston Flights FAQ" items={hubFaqs} /></div>
         </div>

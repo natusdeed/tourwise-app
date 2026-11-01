@@ -27,6 +27,12 @@ TourWiseAI may earn a commission when users book through partner links, at no ex
 - ${origin}/vatican-rome-christian-travel-guide — Vatican / Christian Rome guide
 - ${origin}/vatican-rome-christian-itinerary — Rome and Vatican itinerary
 
+## Destination guides
+- ${origin}/guides — Cancun, Lagos, and Cape Town planning guides
+- ${origin}/guides/cancun — Cancun travel guide, including Houston arrivals
+- ${origin}/guides/lagos — Lagos, Nigeria travel guide
+- ${origin}/guides/cape-town — Cape Town travel guide
+
 ## Destination hubs (on-site)
 - ${origin}/africa
 - ${origin}/budget
