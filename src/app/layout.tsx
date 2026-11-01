@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    google: 'l9MIF-ubDVb3oevo60dCZoLEKeDqevejMJLRnL1R_nM',
     other: {
       'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || '',
     },
