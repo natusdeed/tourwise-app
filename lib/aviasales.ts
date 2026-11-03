@@ -126,6 +126,31 @@ function compareYmd(a: YMD, b: YMD): number {
   return a.d - b.d
 }
 
+function daysBetween(start: YMD, end: YMD): number {
+  const ms = Date.UTC(end.y, end.m - 1, end.d) - Date.UTC(start.y, start.m - 1, start.d)
+  return Math.round(ms / 86400000)
+}
+
+/**
+ * Departure must be tomorrow or later. If a date is already past, keep the
+ * same trip length and start it tomorrow so a cached page cannot reopen a
+ * search Aviasales will reject.
+ */
+function clampTripToTomorrow(depart: YMD, ret: YMD): { depart: YMD; ret: YMD } {
+  const nights = Math.max(1, daysBetween(depart, ret))
+  const earliest = addDays(utcToday(), 1)
+  let nextDepart = depart
+  let nextReturn = ret
+  if (compareYmd(nextDepart, earliest) < 0) {
+    nextDepart = earliest
+    nextReturn = addDays(nextDepart, nights)
+  }
+  if (compareYmd(nextReturn, nextDepart) <= 0) {
+    nextReturn = addDays(nextDepart, DEFAULT_NIGHTS)
+  }
+  return { depart: nextDepart, ret: nextReturn }
+}
+
 /**
  * Build an Aviasales URL that opens a real search.
  * With both cities, this is the results page. With only an origin, this is
@@ -142,9 +167,12 @@ export function buildAviasalesSearchUrl(input: AviasalesSearchInput = {}): strin
   let url: URL
 
   if (destination) {
-    const depart = parseDateInput(input.departDate) ?? addDays(utcToday(), DEPART_OFFSET_DAYS)
-    let ret = parseDateInput(input.returnDate) ?? addDays(depart, DEFAULT_NIGHTS)
-    if (compareYmd(ret, depart) <= 0) ret = addDays(depart, DEFAULT_NIGHTS)
+    const requestedDepart = parseDateInput(input.departDate) ?? addDays(utcToday(), DEPART_OFFSET_DAYS)
+    let requestedReturn = parseDateInput(input.returnDate) ?? addDays(requestedDepart, DEFAULT_NIGHTS)
+    if (compareYmd(requestedReturn, requestedDepart) <= 0) {
+      requestedReturn = addDays(requestedDepart, DEFAULT_NIGHTS)
+    }
+    const { depart, ret } = clampTripToTomorrow(requestedDepart, requestedReturn)
     params = `${origin}${formatDDMM(depart)}${destination}${formatDDMM(ret)}${cabin}${adults}`
     url = new URL(`https://www.aviasales.com/search/${params}`)
   } else {
@@ -154,6 +182,27 @@ export function buildAviasalesSearchUrl(input: AviasalesSearchInput = {}): strin
     url.searchParams.set('params', params)
   }
 
+  const marker = getAviasalesMarker()
+  if (marker) url.searchParams.set('marker', marker)
+  return url.toString()
+}
+
+/**
+ * Search form with the cities filled in and no dates.
+ * This string does not change from day to day, so it is safe to put in
+ * static HTML. The click handler replaces it with a fresh dated search.
+ */
+export function buildAviasalesCityPrefillUrl(
+  input: Pick<AviasalesSearchInput, 'origin' | 'destination' | 'adults' | 'tripClass'> = {}
+): string {
+  const adults = clampAdults(input.adults)
+  const tripClass = input.tripClass ?? 'economy'
+  const origin = normalizeIata(input.origin) || HOUSTON_ORIGIN_IATA
+  const destination = normalizeIata(input.destination)
+  const cabin = classLetter(tripClass)
+  const params = destination ? `${origin}${destination}${cabin}${adults}` : `${origin}${cabin}${adults}`
+  const url = new URL('https://www.aviasales.com/')
+  url.searchParams.set('params', params)
   const marker = getAviasalesMarker()
   if (marker) url.searchParams.set('marker', marker)
   return url.toString()

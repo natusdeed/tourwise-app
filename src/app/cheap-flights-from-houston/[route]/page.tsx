@@ -6,7 +6,7 @@ import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
-import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import { HOUSTON_ROUTES, houstonChecklistMetadata, houstonRouteDestinationIata } from '@/lib/houston-routes'
 import { generateFAQSchema } from '@/lib/seo'
 
@@ -30,10 +30,6 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
 
   const sectionClass = 'glass-strong rounded-xl border border-white/10 p-6 space-y-3'
   const h2Class = 'text-xl font-semibold text-white heading-robotic'
-  const flightSearchUrl = buildAviasalesSearchUrl({
-    origin: 'HOU',
-    destination: houstonRouteDestinationIata(params.route),
-  })
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
@@ -58,7 +54,7 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
           </section>
 
           <div className="flex flex-wrap gap-3">
-            <ExternalAffiliateLink href={flightSearchUrl} trackingLabel={`${params.route}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Search Flights</ExternalAffiliateLink>
+            <AviasalesSearchLink origin="HOU" destination={houstonRouteDestinationIata(params.route)} trackingLabel={`${params.route}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Search Flights</AviasalesSearchLink>
             <ExternalAffiliateLink href={AFFILIATE_LINKS.transfers.kiwitaxi.url} trackingLabel={`${params.route}-transfers`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Book Airport Transfer</ExternalAffiliateLink>
             {route.international ? (
               <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${params.route}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get Travel eSIM</ExternalAffiliateLink>

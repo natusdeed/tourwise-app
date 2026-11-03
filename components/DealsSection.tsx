@@ -5,9 +5,8 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { ArrowRight, Clock, Users, Sparkles } from 'lucide-react'
 import type { NicheColorScheme } from '@/lib/niche-config'
-import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import { iataFromPlaceLabel } from '@/lib/iata-codes'
-import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { trackCTA } from '@/utils/analytics'
 
 interface Deal {
@@ -349,11 +348,9 @@ export default function DealsSection({ colors }: DealsSectionProps) {
                   </div>
 
                   {/* CTA Button */}
-                  <ExternalAffiliateLink
-                    href={buildAviasalesSearchUrl({
-                      origin: 'HOU',
-                      destination: iataFromPlaceLabel(deal.destination),
-                    })}
+                  <AviasalesSearchLink
+                    origin="HOU"
+                    destination={iataFromPlaceLabel(deal.destination)}
                     trackingLabel={`deal_${deal.destination}`}
                     analyticsPrice={deal.salePrice}
                     aria-label={`View travel deal for ${deal.destination} — find cheap flights on Aviasales in a new tab`}
@@ -382,7 +379,7 @@ export default function DealsSection({ colors }: DealsSectionProps) {
                       whileHover={{ x: '100%' }}
                       transition={{ duration: 0.6 }}
                     />
-                  </ExternalAffiliateLink>
+                  </AviasalesSearchLink>
                 </div>
 
                 {/* Hover Glow Effect */}

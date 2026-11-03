@@ -7,7 +7,7 @@ import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import FlightSearchWidget from '@/components/FlightSearchWidget'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
-import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import { houstonRouteDestinationIata } from '@/lib/houston-routes'
 import { breadcrumbListSchema } from '@/lib/schema'
 import { pageMeta } from '@/lib/site'
@@ -143,17 +143,15 @@ export default function CheapFlightsPage() {
               >
                 <h3 className="heading-robotic text-lg font-semibold text-white">{item.route}</h3>
                 <p className="mt-3 text-sm text-white/70 flex-grow">{item.useCase}</p>
-                <ExternalAffiliateLink
-                  href={buildAviasalesSearchUrl({
-                    origin: 'HOU',
-                    destination: houstonRouteDestinationIata(item.href.replace(/^\//, '')),
-                  })}
+                <AviasalesSearchLink
+                  origin="HOU"
+                  destination={houstonRouteDestinationIata(item.href.replace(/^\//, ''))}
                   trackingLabel={`cheap_flights_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
                   className="mt-4 inline-flex items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors"
                   aria-label={`Check flight deals for ${item.route}, opens in a new tab`}
                 >
                   Check Flight Options
-                </ExternalAffiliateLink>
+                </AviasalesSearchLink>
                 <Link
                   href={item.href}
                   className="mt-2 text-xs text-neon-cyan underline underline-offset-2"
