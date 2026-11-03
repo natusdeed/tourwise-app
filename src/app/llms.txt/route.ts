@@ -28,10 +28,16 @@ TourWiseAI may earn a commission when users book through partner links, at no ex
 - ${origin}/vatican-rome-christian-itinerary — Rome and Vatican itinerary
 
 ## Destination guides
-- ${origin}/guides — Cancun, Lagos, and Cape Town planning guides
+- ${origin}/guides — Cancun, Lagos, Cape Town, London, Paris, Rome, Dubai, Accra, and Kenya planning guides
 - ${origin}/guides/cancun — Cancun travel guide, including Houston arrivals
 - ${origin}/guides/lagos — Lagos, Nigeria travel guide
 - ${origin}/guides/cape-town — Cape Town travel guide
+- ${origin}/guides/london — London travel guide, including Houston arrivals
+- ${origin}/guides/paris — Paris travel guide, including Houston arrivals
+- ${origin}/guides/rome — Rome travel guide, including Houston arrivals
+- ${origin}/guides/dubai — Dubai travel guide, including Houston arrivals
+- ${origin}/guides/accra — Accra, Ghana travel guide
+- ${origin}/guides/kenya — Kenya safari planning guide
 
 ## Destination hubs (on-site)
 - ${origin}/africa
@@ -53,7 +59,7 @@ TourWiseAI may earn a commission when users book through partner links, at no ex
 - ${origin}/affiliate-disclosure
 
 ## Partners named on the site
-Aviasales (flights), Klook and Tiqets (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), EKTA (travel insurance), Localrent (car rentals). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
+Aviasales (flights), Klook and Tiqets (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), EKTA (travel insurance), Localrent (car rentals), Stay22 (hotels on destination guides). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
 
 ## Optional
 - Sitemap: ${origin}/sitemap.xml

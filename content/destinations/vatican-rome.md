@@ -68,3 +68,5 @@ Rome has four major papal basilicas:
 ## Planning Your Visit
 
 Plan at least 4-5 days to fully experience Rome's Christian heritage. Book Vatican tickets well in advance, especially during peak season.
+
+For neighborhoods, airports, and a general city outline, see the [Rome travel guide](/guides/rome).

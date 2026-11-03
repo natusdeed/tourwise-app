@@ -81,6 +81,11 @@ export default function HoustonRouteLanding({ route }: Props) {
           <div className="flex flex-wrap gap-3 text-sm">
             {route.routePath === '/houston-to-cancun-flights' ? <Link href="/guides/cancun" className="text-neon-cyan underline underline-offset-2">Cancun travel guide</Link> : null}
             {route.routePath === '/houston-to-lagos-flights' ? <Link href="/guides/lagos" className="text-neon-cyan underline underline-offset-2">Lagos travel guide</Link> : null}
+            {route.routePath === '/houston-to-london-flights' ? <Link href="/guides/london" className="text-neon-cyan underline underline-offset-2">London travel guide</Link> : null}
+            {route.routePath === '/houston-to-paris-flights' ? <Link href="/guides/paris" className="text-neon-cyan underline underline-offset-2">Paris travel guide</Link> : null}
+            {route.routePath === '/houston-to-rome-flights' ? <Link href="/guides/rome" className="text-neon-cyan underline underline-offset-2">Rome travel guide</Link> : null}
+            {route.routePath === '/houston-to-dubai-flights' ? <Link href="/guides/dubai" className="text-neon-cyan underline underline-offset-2">Dubai travel guide</Link> : null}
+            {route.routePath === '/houston-to-accra-flights' ? <Link href="/guides/accra" className="text-neon-cyan underline underline-offset-2">Accra travel guide</Link> : null}
             <Link href="/cheap-flights" className="text-neon-cyan underline underline-offset-2">Cheap Flights</Link>
             <Link href="/cheap-flights-from-houston" className="text-neon-cyan underline underline-offset-2">All Houston Routes</Link>
             <Link href="/ai-travel-planner" className="text-neon-cyan underline underline-offset-2">AI Travel Planner</Link>

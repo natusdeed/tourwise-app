@@ -46,6 +46,10 @@ export default function AffiliateDisclosurePage() {
           text: 'We work with Travelpayouts, which connects us with major travel partners including Aviasales, Booking.com, and other travel booking platforms.',
         },
         {
+          subtitle: 'Stay22',
+          text: 'Destination guides include a hotel link through Stay22, an accommodation affiliate network. The link opens a partner site where you can compare places to stay. We may earn a commission if you book, at no extra cost to you.',
+        },
+        {
           subtitle: 'Transparency',
           text: 'We only partner with reputable travel companies that we trust and would recommend to our users.',
         },
