@@ -5,7 +5,8 @@ import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { ArrowRight, Clock, Users, Sparkles } from 'lucide-react'
 import type { NicheColorScheme } from '@/lib/niche-config'
-import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { iataFromPlaceLabel } from '@/lib/iata-codes'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import { trackCTA } from '@/utils/analytics'
 
@@ -349,7 +350,10 @@ export default function DealsSection({ colors }: DealsSectionProps) {
 
                   {/* CTA Button */}
                   <ExternalAffiliateLink
-                    href={AFFILIATE_LINKS.flights.aviasales.url}
+                    href={buildAviasalesSearchUrl({
+                      origin: 'HOU',
+                      destination: iataFromPlaceLabel(deal.destination),
+                    })}
                     trackingLabel={`deal_${deal.destination}`}
                     analyticsPrice={deal.salePrice}
                     aria-label={`View travel deal for ${deal.destination} — find cheap flights on Aviasales in a new tab`}

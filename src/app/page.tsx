@@ -180,9 +180,9 @@ export default function Home() {
         />
 
         {/* Aviasales flight search — primary conversion tool, near top of page */}
-        <section className="relative z-20 -mt-6 md:-mt-10 px-4 sm:px-6 lg:px-8 pb-6">
-          <div className="max-w-4xl mx-auto w-full">
-            <FlightSearchWidget />
+        <section className="relative z-20 -mt-6 md:-mt-10 px-4 sm:px-6 lg:px-8 pb-6 overflow-x-clip">
+          <div className="max-w-4xl mx-auto w-full min-w-0">
+            <FlightSearchWidget className="min-w-0 max-w-full" />
           </div>
         </section>
 

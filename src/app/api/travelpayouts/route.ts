@@ -1,18 +1,16 @@
 /**
  * Travelpayouts API Route
  *
- * For flight / tour / activity categories we redirect to the curated
- * Travelpayouts short links (tp.st). These are the only affiliate URLs
- * we use site-wide and they keep our private marker / API token off the
- * client. For hotel category we still call the Travelpayouts Partner
- * Links API (Hotellook) since there is no tp.st short link for hotels.
- *
- * No tokens, marker IDs or dashboard URLs are ever returned to the
- * browser — they only travel server -> Travelpayouts.
+ * Flight clicks redirect to an Aviasales search deep link that keeps the
+ * existing Travelpayouts marker. Tour and activity clicks still use the
+ * curated tp.st short links. Hotel clicks use the Travelpayouts Partner
+ * Links API (Hotellook). The API token stays on the server.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { getIATACode } from '@/lib/iata-codes'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,6 +20,7 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
     const destination = searchParams.get('destination')
+    const origin = searchParams.get('origin')
     const category = searchParams.get('category') as
       | 'hotel'
       | 'tour'
@@ -29,9 +28,17 @@ export async function GET(request: NextRequest) {
       | 'activity'
       | null
 
-    // Flights -> Aviasales tp.st short link (no token / marker exposure).
+    const flightRedirect = () =>
+      NextResponse.redirect(
+        buildAviasalesSearchUrl({
+          origin: (origin && getIATACode(origin)) || 'HOU',
+          destination: destination ? getIATACode(destination) : null,
+        })
+      )
+
+    // Flights -> prefilled Aviasales search (Houston when no origin is given).
     if (category === 'flight' || (!category && !destination)) {
-      return NextResponse.redirect(AFFILIATE_LINKS.flights.aviasales.url)
+      return flightRedirect()
     }
 
     // Tours / activities -> Klook tp.st short link.
@@ -44,10 +51,10 @@ export async function GET(request: NextRequest) {
       return await buildHotelLink(destination)
     }
 
-    return NextResponse.redirect(AFFILIATE_LINKS.flights.aviasales.url)
+    return flightRedirect()
   } catch (error) {
     console.error('Unexpected error in Travelpayouts route:', error)
-    return NextResponse.redirect(AFFILIATE_LINKS.flights.aviasales.url)
+    return NextResponse.redirect(buildAviasalesSearchUrl({ origin: 'HOU' }))
   }
 }
 

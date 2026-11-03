@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
+import { AVIASALES_WIDGET_SRC } from '@/lib/aviasales'
 
 /**
  * Exact Aviasales / Travelpayouts search widget for TourWiseAI.
- * Do not alter the URL — every query param is account- and brand-specific.
+ * The embed URL lives in lib/aviasales.ts so the account marker is not copied
+ * a second time. searchUrl is www.aviasales.com/search, which is the results
+ * prefix Aviasales documents (the widget appends the route path).
  */
-const AVIASALES_WIDGET_SRC =
-  'https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%23C9922A&color_button=%230A1F44&color_icons=%230A1F44&dark=%23262626&light=%23FFFFFF&secondary=%23FFFFFF&special=%23D8C29A&color_focused=%23C9922A&border_radius=1&plain=false&promo_id=7879&campaign_id=100'
 
 const SCRIPT_ID = 'aviasales-flight-search-widget'
 
@@ -83,7 +84,7 @@ export default function FlightSearchWidget({ className }: Props) {
     <div
       ref={containerRef}
       className={className}
-      style={{ width: '100%', maxWidth: '100%', overflow: 'visible' }}
+      style={{ width: '100%', maxWidth: '100%' }}
     >
       {!widgetReady && (
         <div

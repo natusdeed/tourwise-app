@@ -15,7 +15,9 @@ const ReactMarkdown = dynamic(() => import('react-markdown'), {
 })
 import type { NicheColorScheme } from '@/lib/niche-config'
 import { create3DTextShadow, create3DLightTextShadow } from '@/lib/color-utils'
-import { extractOriginAndDestination, getIATACode, isCityRecognized } from '@/lib/iata-codes'
+import { extractOriginAndDestination, getIATACode } from '@/lib/iata-codes'
+import { buildAviasalesSearchUrl, nightsFromText, type AviasalesTripClass } from '@/lib/aviasales'
+import { extractDateFromQuery } from '@/lib/date-utils'
 import { generateProductSchema } from '@/lib/seo'
 import {
   AFFILIATE_LINKS,
@@ -222,7 +224,34 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       setOriginCode(origin)
       setDestinationCode(effectiveDestination)
 
-      setAviasalesUrl(AFFILIATE_LINKS.flights.aviasales.url)
+      const nights = nightsFromText(tripLength) ?? nightsFromText(composedQuery) ?? 7
+      const parsedDepart = extractDateFromQuery(composedQuery)
+      const departDate = parsedDepart ?? (() => {
+        const now = new Date()
+        return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 21)
+      })()
+      const returnDate = new Date(
+        departDate.getFullYear(),
+        departDate.getMonth(),
+        departDate.getDate() + nights
+      )
+      const tripClass: AviasalesTripClass = /\bbusiness\b/i.test(composedQuery)
+        ? 'business'
+        : /\bfirst class\b/i.test(composedQuery)
+          ? 'first'
+          : 'economy'
+      const searchedOrigin = origin || (detectedCity ? getIATACode(detectedCity) : null) || 'HOU'
+
+      setAviasalesUrl(
+        buildAviasalesSearchUrl({
+          origin: searchedOrigin,
+          destination: effectiveDestination,
+          departDate,
+          returnDate,
+          adults: 1,
+          tripClass,
+        })
+      )
 
       // Call Gemini API to generate travel itinerary
       // Gemini will automatically call searchFlightPrices if user asks about prices/deals
@@ -722,7 +751,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
                     <li>
                       <ExternalAffiliateLink
-                        href={AFFILIATE_LINKS.flights.aviasales.url}
+                        href={aviasalesUrl || AFFILIATE_LINKS.flights.aviasales.url}
                         trackingLabel="hero_post_itin_flights"
                         className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
                         aria-label="Find flights for this trip on Aviasales, opens in a new tab"
@@ -1076,7 +1105,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 aria-label="Find cheap flights on Aviasales in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.05)',
                   border: `1px solid ${colors.primary}20`
@@ -1084,7 +1113,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               >
                 <span className="text-lg md:text-xl">✈️</span>
                 <span 
-                  className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap transition-all duration-300 relative z-10"
+                  className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight transition-all duration-300 relative z-10"
                   style={{
                     color: 'white',
                   }}
@@ -1104,7 +1133,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
 
               {/* Stays — no hotel affiliate yet */}
               <div
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md min-h-[48px] w-full max-w-[200px] opacity-70 cursor-default"
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md min-h-[48px] w-full max-w-full min-w-0 opacity-70 cursor-default"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.03)',
                   border: `1px dashed ${colors.primary}25`
@@ -1113,7 +1142,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 aria-label="Hotels and stays: plan your dates with our AI first, then book on your preferred hotel site"
               >
                 <span className="text-lg md:text-xl">🏨</span>
-                <span className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap text-white/80">
+                <span className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight text-white/80">
                   Stays — plan dates first
                 </span>
               </div>
@@ -1126,7 +1155,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 aria-label="Rent a car on Localrent in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.05)',
                   border: `1px solid ${colors.primary}20`
@@ -1134,7 +1163,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               >
                 <span className="text-lg md:text-xl">🚗</span>
                 <span 
-                  className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap transition-all duration-300 relative z-10"
+                  className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight transition-all duration-300 relative z-10"
                   style={{
                     color: 'white',
                   }}
@@ -1160,7 +1189,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 aria-label="Book activities on Klook in a new tab"
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-[200px]"
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.05)',
                   border: `1px solid ${colors.primary}20`
@@ -1168,7 +1197,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               >
                 <span className="text-lg md:text-xl">🎟️</span>
                 <span 
-                  className="text-xs md:text-sm font-medium heading-robotic whitespace-nowrap transition-all duration-300 relative z-10"
+                  className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight transition-all duration-300 relative z-10"
                   style={{
                     color: 'white',
                   }}

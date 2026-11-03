@@ -903,6 +903,30 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
   },
 }
 
+/**
+ * Where each Houston route guide should send a flight search.
+ * City codes (LON, PAR, ROM, TYO) cover every airport Aviasales groups
+ * under that city. HOU as the origin does the same for Hobby and IAH.
+ */
+export const HOUSTON_ROUTE_DESTINATION_IATA: Record<string, string> = {
+  'houston-to-lagos-flights': 'LOS',
+  'houston-to-cancun-flights': 'CUN',
+  'houston-to-london-flights': 'LON',
+  'houston-to-paris-flights': 'PAR',
+  'houston-to-rome-flights': 'ROM',
+  'houston-to-orlando-flights': 'MCO',
+  'houston-to-accra-flights': 'ACC',
+  'houston-to-mexico-city-flights': 'MEX',
+  'houston-to-dubai-flights': 'DXB',
+  'houston-to-tokyo-flights': 'TYO',
+  'houston-to-madrid-flights': 'MAD',
+  'houston-to-amsterdam-flights': 'AMS',
+}
+
+export function houstonRouteDestinationIata(slug: string): string | null {
+  return HOUSTON_ROUTE_DESTINATION_IATA[slug] ?? null
+}
+
 export function houstonGuideMetadata(route: HoustonRouteDetails): Metadata {
   return pageMeta({
     title: `${route.title} | TourWiseAI`,

@@ -3,6 +3,8 @@
 import { Plane, ShieldCheck, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
+import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { iataFromPlaceLabel } from '@/lib/iata-codes'
 
 interface ActionSidebarProps {
   countryName: string;
@@ -21,7 +23,10 @@ interface ActionSidebarProps {
  * no affiliate relationship with them, so those clicks would earn $0.
  */
 export default function ActionSidebar({ countryName }: ActionSidebarProps) {
-  const flightBookingUrl = AFFILIATE_LINKS.flights.aviasales.url
+  const flightBookingUrl = buildAviasalesSearchUrl({
+    origin: 'HOU',
+    destination: iataFromPlaceLabel(countryName),
+  })
   const insuranceUrl = AFFILIATE_LINKS.insurance.ekta.url
 
   return (
