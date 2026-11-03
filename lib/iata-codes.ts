@@ -12,6 +12,9 @@
 export const CITY_TO_IATA: Record<string, string> = {
   // Major US Cities
   'houston': 'HOU',
+  'orlando': 'MCO',
+  'cancun': 'CUN',
+  'mexico city': 'MEX',
   'new york': 'NYC',
   'new york city': 'NYC',
   'nyc': 'NYC',
@@ -73,6 +76,9 @@ export const CITY_TO_IATA: Record<string, string> = {
   
   // Asian Cities
   'tokyo': 'TYO',
+  'bali': 'DPS',
+  'maldives': 'MLE',
+  'santorini': 'JTR',
   'singapore': 'SIN',
   'bangkok': 'BKK',
   'hong kong': 'HKG',
@@ -245,4 +251,25 @@ export function extractOriginAndDestination(query: string): {
  */
 export function isCityRecognized(cityName: string): boolean {
   return getIATACode(cityName) !== null;
+}
+
+/**
+ * Match a place label such as "Paris, France" to one known city.
+ * Longer names win, so "New York, USA" stays NYC and does not match a shorter city.
+ * Returns null when the label is a country or other text we do not recognize.
+ */
+export function iataFromPlaceLabel(label: string): string | null {
+  if (!label || typeof label !== 'string') return null
+  const normalized = label.toLowerCase().trim()
+  const entries = Object.entries(CITY_TO_IATA).sort((a, b) => b[0].length - a[0].length)
+  for (const [city, code] of entries) {
+    if (
+      normalized === city ||
+      normalized.startsWith(`${city},`) ||
+      normalized.startsWith(`${city} `)
+    ) {
+      return code
+    }
+  }
+  return null
 }

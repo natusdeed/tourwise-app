@@ -2,6 +2,8 @@
  * Central affiliate link registry for TourWiseAI.
  * All partner URLs should come from this file.
  */
+import { buildAviasalesSearchUrl } from './aviasales'
+import { extractOriginAndDestination } from './iata-codes'
 export const AFFILIATE_LINK_REL = 'nofollow sponsored noopener noreferrer' as const
 
 export const AFFILIATE_CATEGORIES = [
@@ -32,8 +34,11 @@ export const AFFILIATE_LINKS = {
     aviasales: {
       name: 'Aviasales',
       category: 'flights',
-      url: 'https://aviasales.tp.st/qpIjGSzy',
-      description: 'Compare flight options and route timing before booking.',
+      // Houston-only form when a button has no route. Dated route links are built
+      // with buildAviasalesSearchUrl at the button that knows the cities.
+      url: buildAviasalesSearchUrl({ origin: 'HOU' }),
+      description:
+        'Opens Aviasales with Houston filled in as the departure city and one adult in economy. Add a destination and dates there. This page does not show a fare.',
       recommendedButtonText: 'Compare flight options',
     },
   },
@@ -290,6 +295,17 @@ export type AffiliateSuggestion = AffiliateLinkItem & {
 
 const joinText = (parts: string[]) => parts.join(' ').toLowerCase()
 
+function flightSuggestion(query: string): AffiliateLinkItem {
+  const { origin, destination } = extractOriginAndDestination(query)
+  return {
+    ...AFFILIATE_LINKS.flights.aviasales,
+    url: buildAviasalesSearchUrl({
+      origin: origin || 'HOU',
+      destination,
+    }),
+  }
+}
+
 /**
  * Lightweight, keyword-based suggestions after an AI itinerary (no extra API calls).
  */
@@ -308,7 +324,7 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
     /\b(flight|fly|flying|airline|airport|ticket|layover|boarding)\b/i.test(text) ||
     /\b(round\s*-?trip|roundtrip|nonstop|layover)\b/i.test(text)
   if (flying) {
-    push('flights', AFFILIATE_LINKS.flights.aviasales, 'Flights or airports came up in your plan.')
+    push('flights', flightSuggestion(query), 'Flights or airports came up in your plan.')
   }
 
   // Stays come up in nearly every itinerary — surface hotel partners when configured.
@@ -364,7 +380,7 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
   }
 
   if (out.length === 0) {
-    push('flights-default', AFFILIATE_LINKS.flights.aviasales, 'Lock dates and compare airfare.')
+    push('flights-default', flightSuggestion(query), 'Lock dates and compare airfare.')
     push('activities-default', AFFILIATE_LINKS.tours.klook, 'Book experiences for your destination.')
   }
 

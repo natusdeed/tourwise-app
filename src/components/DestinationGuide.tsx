@@ -115,7 +115,7 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                     key={partner.name}
                     href={partner.url}
                     trackingLabel={`${guide.slug}-${partner.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="inline-flex max-w-full rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan"
+                    className="inline-flex max-w-full min-w-0 whitespace-normal text-left rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan"
                   >
                     {partner.recommendedButtonText} · {partner.name}
                   </ExternalAffiliateLink>

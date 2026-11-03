@@ -5,9 +5,10 @@ import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
+import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { houstonRouteDestinationIata, type HoustonRouteDetails } from '@/lib/houston-routes'
 import { breadcrumbListSchema } from '@/lib/schema'
 import { generateFAQSchema } from '@/lib/seo'
-import type { HoustonRouteDetails } from '@/lib/houston-routes'
 
 type Props = {
   route: HoustonRouteDetails
@@ -20,6 +21,10 @@ type Props = {
 export default function HoustonRouteLanding({ route }: Props) {
   const sectionClass = 'glass-strong rounded-xl border border-white/10 p-5 md:p-6 space-y-3'
   const h2Class = 'text-xl md:text-2xl font-semibold text-white heading-robotic'
+  const flightSearchUrl = buildAviasalesSearchUrl({
+    origin: 'HOU',
+    destination: houstonRouteDestinationIata(route.slug),
+  })
 
   return (
     <main className="relative min-h-screen pt-20 md:pt-24">
@@ -62,7 +67,7 @@ export default function HoustonRouteLanding({ route }: Props) {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <ExternalAffiliateLink href={AFFILIATE_LINKS.flights.aviasales.url} trackingLabel={`${route.routePath}-flights`} className="inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Compare flight options</ExternalAffiliateLink>
+            <ExternalAffiliateLink href={flightSearchUrl} trackingLabel={`${route.routePath}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Compare flight options</ExternalAffiliateLink>
             <ExternalAffiliateLink href={AFFILIATE_LINKS.transfers.kiwitaxi.url} trackingLabel={`${route.routePath}-transfer`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Book airport transfer</ExternalAffiliateLink>
             {route.international ? <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${route.routePath}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get travel eSIM</ExternalAffiliateLink> : null}
             {route.international ? <ExternalAffiliateLink href={AFFILIATE_LINKS.insurance.ekta.url} trackingLabel={`${route.routePath}-insurance`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get travel insurance</ExternalAffiliateLink> : null}

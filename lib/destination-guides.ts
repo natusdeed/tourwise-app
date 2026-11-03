@@ -1,4 +1,5 @@
 import { AFFILIATE_LINKS, STAY22_GUIDE_LINKS, type AffiliateLinkItem } from './affiliate-links'
+import { buildAviasalesSearchUrl } from './aviasales'
 
 export type GuideSection = {
   heading: string
@@ -111,6 +112,27 @@ const kenyaPartners = [
   AFFILIATE_LINKS.carRentals.localrent,
   AFFILIATE_LINKS.insurance.ekta,
 ]
+
+/**
+ * Flight card for a guide. The link is Houston -> that city's main airport,
+ * with sample dates. The button says Houston so it does not pretend the
+ * reader already chose other cities or a price.
+ */
+function withHoustonFlights(
+  partners: readonly AffiliateLinkItem[],
+  destinationIata: string
+): AffiliateLinkItem[] {
+  return partners.map((partner) => {
+    if (partner.name !== 'Aviasales') return partner
+    return {
+      ...partner,
+      url: buildAviasalesSearchUrl({ origin: 'HOU', destination: destinationIata }),
+      description:
+        'Opens an Aviasales search from Houston to this destination. Dates are a sample about three weeks out for a 7-night economy trip, for one adult. Change the dates on Aviasales before you book. TourWiseAI does not sell the ticket or show a fare.',
+      recommendedButtonText: 'Compare flights from Houston',
+    }
+  })
+}
 
 export const DESTINATION_GUIDES: DestinationGuideContent[] = [
   {
@@ -230,7 +252,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cape-town', label: 'Cape Town travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS.cancun,
-    partners: cancunPartners,
+    partners: withHoustonFlights(cancunPartners, 'CUN'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Mexico.html',
@@ -348,7 +370,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS.lagos,
-    partners: lagosPartners,
+    partners: withHoustonFlights(lagosPartners, 'LOS'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Nigeria.html',
@@ -469,7 +491,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS['cape-town'],
-    partners: capeTownPartners,
+    partners: withHoustonFlights(capeTownPartners, 'CPT'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/SouthAfrica.html',
@@ -591,7 +613,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.london,
-    partners: londonPartners,
+    partners: withHoustonFlights(londonPartners, 'LON'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/UnitedKingdom.html',
@@ -714,7 +736,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.paris,
-    partners: parisPartners,
+    partners: withHoustonFlights(parisPartners, 'PAR'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/France.html',
@@ -836,7 +858,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.rome,
-    partners: romePartners,
+    partners: withHoustonFlights(romePartners, 'ROM'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Italy.html',
@@ -955,7 +977,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.dubai,
-    partners: dubaiPartners,
+    partners: withHoustonFlights(dubaiPartners, 'DXB'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/UnitedArabEmirates.html',
@@ -1073,7 +1095,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.accra,
-    partners: accraPartners,
+    partners: withHoustonFlights(accraPartners, 'ACC'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Ghana.html',
@@ -1198,7 +1220,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.kenya,
-    partners: kenyaPartners,
+    partners: withHoustonFlights(kenyaPartners, 'NBO'),
     officialLinks: [
       {
         href: 'https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages/Kenya.html',
