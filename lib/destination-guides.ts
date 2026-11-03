@@ -1,4 +1,4 @@
-import { AFFILIATE_LINKS, type AffiliateLinkItem } from './affiliate-links'
+import { AFFILIATE_LINKS, STAY22_GUIDE_LINKS, type AffiliateLinkItem } from './affiliate-links'
 
 export type GuideSection = {
   heading: string
@@ -19,6 +19,8 @@ export type DestinationGuideContent = {
   itineraryHeading?: string
   faqs: { question: string; answer: string }[]
   related: { href: string; label: string }[]
+  /** Stay22 hotel search for this destination. */
+  stay: AffiliateLinkItem
   partners: AffiliateLinkItem[]
   officialLinks: { href: string; label: string }[]
 }
@@ -227,6 +229,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/lagos', label: 'Lagos travel guide' },
       { href: '/guides/cape-town', label: 'Cape Town travel guide' },
     ],
+    stay: STAY22_GUIDE_LINKS.cancun,
     partners: cancunPartners,
     officialLinks: [
       {
@@ -344,6 +347,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cape-town', label: 'Cape Town travel guide' },
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
+    stay: STAY22_GUIDE_LINKS.lagos,
     partners: lagosPartners,
     officialLinks: [
       {
@@ -464,6 +468,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/lagos', label: 'Lagos travel guide' },
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
+    stay: STAY22_GUIDE_LINKS['cape-town'],
     partners: capeTownPartners,
     officialLinks: [
       {
@@ -585,6 +590,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/airport-transfers', label: 'Airport transfers' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.london,
     partners: londonPartners,
     officialLinks: [
       {
@@ -707,6 +713,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/travel-esim', label: 'Travel eSIM' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.paris,
     partners: parisPartners,
     officialLinks: [
       {
@@ -828,6 +835,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/christian-travel/destinations/vatican-rome', label: 'Vatican and Rome destination note' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.rome,
     partners: romePartners,
     officialLinks: [
       {
@@ -946,6 +954,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/travel-esim', label: 'Travel eSIM' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.dubai,
     partners: dubaiPartners,
     officialLinks: [
       {
@@ -1063,6 +1072,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/visas/ghana', label: 'Ghana visas' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.accra,
     partners: accraPartners,
     officialLinks: [
       {
@@ -1187,6 +1197,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/cheap-flights-from-houston', label: 'Cheap flights from Houston' },
       { href: '/guides', label: 'Guides hub' },
     ],
+    stay: STAY22_GUIDE_LINKS.kenya,
     partners: kenyaPartners,
     officialLinks: [
       {

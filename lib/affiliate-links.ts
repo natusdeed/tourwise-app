@@ -65,6 +65,7 @@ export const AFFILIATE_LINKS = {
       description: 'Hotel metasearch — compare prices across major booking sites.',
       recommendedButtonText: 'Search hotels',
     },
+    // Stay22 destination links live in STAY22_GUIDE_LINKS. Each guide has its own URL.
   },
   tours: {
     // ---------------------------------------------------------------------------
@@ -253,6 +254,29 @@ export const AFFILIATE_LINKS = {
       recommendedButtonText: 'Explore sea travel options',
     },
   },
+} as const
+
+function stay22GuideLink(city: string, url: string): AffiliateLinkItem {
+  return {
+    name: 'Stay22',
+    category: 'hotels',
+    url,
+    description: 'Compare hotel options for this destination.',
+    recommendedButtonText: `Compare hotels in ${city}`,
+  }
+}
+
+/** Verified Stay22 links, one per destination guide. */
+export const STAY22_GUIDE_LINKS = {
+  cancun: stay22GuideLink('Cancun', 'https://booking.stay22.com/tourwiseai/2aWNlm1sBY'),
+  lagos: stay22GuideLink('Lagos', 'https://booking.stay22.com/tourwiseai/gaIeh5D0-C'),
+  'cape-town': stay22GuideLink('Cape Town', 'https://booking.stay22.com/tourwiseai/DQ2K_dcL9B'),
+  london: stay22GuideLink('London', 'https://booking.stay22.com/tourwiseai/HLDcRcTZLw'),
+  paris: stay22GuideLink('Paris', 'https://booking.stay22.com/tourwiseai/7W8a7OJL75'),
+  rome: stay22GuideLink('Rome', 'https://booking.stay22.com/tourwiseai/pr5mOfO5ZS'),
+  dubai: stay22GuideLink('Dubai', 'https://booking.stay22.com/tourwiseai/vnC8xS_Cpt'),
+  accra: stay22GuideLink('Accra', 'https://booking.stay22.com/tourwiseai/S0yMGwrcQb'),
+  kenya: stay22GuideLink('Kenya', 'https://booking.stay22.com/tourwiseai/3V0IdBZ0Le'),
 } as const
 
 export const AFFILIATE_LINK_LIST = Object.values(AFFILIATE_LINKS).flatMap((group) =>

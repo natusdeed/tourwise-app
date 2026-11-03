@@ -70,6 +70,20 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                   ))}
                 </ul>
               ) : null}
+              {section.heading === 'Where to stay' && guide.stay.url ? (
+                <div className="space-y-3">
+                  <p className="text-white/70 leading-relaxed">
+                    The notes above are areas, not hotel picks. Compare places to stay on the partner site.
+                  </p>
+                  <ExternalAffiliateLink
+                    href={guide.stay.url}
+                    trackingLabel={`${guide.slug}-stay22`}
+                    className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
+                  >
+                    {guide.stay.recommendedButtonText}
+                  </ExternalAffiliateLink>
+                </div>
+              ) : null}
               {section.heading === 'Safety and entry' ? (
                 <ul className="space-y-2 text-sm">
                   {guide.officialLinks.map((link) => (
