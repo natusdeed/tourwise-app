@@ -3,10 +3,11 @@ import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
+import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import { breadcrumbListSchema, articleSchema } from '@/lib/schema'
 import { SITE_ORIGIN } from '@/lib/site'
-import type { DestinationGuideContent } from '@/lib/destination-guides'
+import { guideFlightDestination, type DestinationGuideContent } from '@/lib/destination-guides'
 
 const sectionClass = 'glass-strong rounded-xl border border-white/10 p-5 md:p-6 space-y-3 min-w-0'
 const h2Class = 'text-xl md:text-2xl font-semibold text-white heading-robotic'
@@ -110,16 +111,36 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                 These open partner sites. TourWiseAI may earn a commission if you book, at no extra cost to you.
               </p>
               <div className="flex flex-wrap gap-3">
-                {partners.map((partner) => (
-                  <ExternalAffiliateLink
-                    key={partner.name}
-                    href={partner.url}
-                    trackingLabel={`${guide.slug}-${partner.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="inline-flex max-w-full min-w-0 whitespace-normal text-left rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan"
-                  >
-                    {partner.recommendedButtonText} · {partner.name}
-                  </ExternalAffiliateLink>
-                ))}
+                {partners.map((partner) => {
+                  const flightDestination =
+                    partner.name === 'Aviasales' ? guideFlightDestination(guide.slug) : null
+                  const className =
+                    'inline-flex max-w-full min-w-0 whitespace-normal text-left rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan'
+                  const label = `${guide.slug}-${partner.name.toLowerCase().replace(/\s+/g, '-')}`
+                  if (flightDestination) {
+                    return (
+                      <AviasalesSearchLink
+                        key={partner.name}
+                        origin="HOU"
+                        destination={flightDestination}
+                        trackingLabel={label}
+                        className={className}
+                      >
+                        {partner.recommendedButtonText} · {partner.name}
+                      </AviasalesSearchLink>
+                    )
+                  }
+                  return (
+                    <ExternalAffiliateLink
+                      key={partner.name}
+                      href={partner.url}
+                      trackingLabel={label}
+                      className={className}
+                    >
+                      {partner.recommendedButtonText} · {partner.name}
+                    </ExternalAffiliateLink>
+                  )
+                })}
               </div>
             </div>
           ) : null}

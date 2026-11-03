@@ -1,5 +1,5 @@
 import { AFFILIATE_LINKS, STAY22_GUIDE_LINKS, type AffiliateLinkItem } from './affiliate-links'
-import { buildAviasalesSearchUrl } from './aviasales'
+import { buildAviasalesCityPrefillUrl } from './aviasales'
 
 export type GuideSection = {
   heading: string
@@ -114,10 +114,26 @@ const kenyaPartners = [
 ]
 
 /**
- * Flight card for a guide. The link is Houston -> that city's main airport,
- * with sample dates. The button says Houston so it does not pretend the
- * reader already chose other cities or a price.
+ * Flight card for a guide. The stored URL has the cities and no dates, so a
+ * static build cannot freeze a departure in the past. The page button builds
+ * fresh dates in the browser.
  */
+const GUIDE_FLIGHT_DESTINATION: Record<string, string> = {
+  cancun: 'CUN',
+  lagos: 'LOS',
+  'cape-town': 'CPT',
+  london: 'LON',
+  paris: 'PAR',
+  rome: 'ROM',
+  dubai: 'DXB',
+  accra: 'ACC',
+  kenya: 'NBO',
+}
+
+export function guideFlightDestination(slug: string): string | null {
+  return GUIDE_FLIGHT_DESTINATION[slug] ?? null
+}
+
 function withHoustonFlights(
   partners: readonly AffiliateLinkItem[],
   destinationIata: string
@@ -126,7 +142,7 @@ function withHoustonFlights(
     if (partner.name !== 'Aviasales') return partner
     return {
       ...partner,
-      url: buildAviasalesSearchUrl({ origin: 'HOU', destination: destinationIata }),
+      url: buildAviasalesCityPrefillUrl({ origin: 'HOU', destination: destinationIata }),
       description:
         'Opens an Aviasales search from Houston to this destination. Dates are a sample about three weeks out for a 7-night economy trip, for one adult. Change the dates on Aviasales before you book. TourWiseAI does not sell the ticket or show a fare.',
       recommendedButtonText: 'Compare flights from Houston',

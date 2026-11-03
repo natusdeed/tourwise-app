@@ -3,7 +3,7 @@
 import { Plane, ShieldCheck, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
-import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import { iataFromPlaceLabel } from '@/lib/iata-codes'
 
 interface ActionSidebarProps {
@@ -23,10 +23,6 @@ interface ActionSidebarProps {
  * no affiliate relationship with them, so those clicks would earn $0.
  */
 export default function ActionSidebar({ countryName }: ActionSidebarProps) {
-  const flightBookingUrl = buildAviasalesSearchUrl({
-    origin: 'HOU',
-    destination: iataFromPlaceLabel(countryName),
-  })
   const insuranceUrl = AFFILIATE_LINKS.insurance.ekta.url
 
   return (
@@ -86,15 +82,15 @@ export default function ActionSidebar({ countryName }: ActionSidebarProps) {
               </p>
             </div>
           </div>
-          <a
-            href={flightBookingUrl}
-            target="_blank"
-            rel={AFFILIATE_LINK_REL}
+          <AviasalesSearchLink
+            origin="HOU"
+            destination={iataFromPlaceLabel(countryName)}
+            trackingLabel={`sidebar_flights_${countryName.toLowerCase().replace(/\s+/g, '_')}`}
             className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-neon-cyan to-electric-blue text-black font-bold heading-robotic py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
           >
             Search Flights to {countryName}
             <ExternalLink className="h-4 w-4" />
-          </a>
+          </AviasalesSearchLink>
           <p className="text-xs text-white/50 mt-3 text-center">
             Affiliate partner - we may earn a commission
           </p>
