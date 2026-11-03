@@ -113,7 +113,12 @@ export default function VaticanRomePage() {
             </h1>
             <p className="text-lg text-white/75">
               This page helps Christian travelers plan Rome, the Vatican, catacombs, Assisi, and
-              meaningful day trips with a realistic day-by-day structure.
+              meaningful day trips with a realistic day-by-day structure. For neighborhoods, airports,
+              and city pacing, see the{' '}
+              <Link href="/guides/rome" className="text-neon-cyan underline underline-offset-2">
+                Rome travel guide
+              </Link>
+              .
             </p>
             <Link
               href="/?destination=Rome+Vatican"

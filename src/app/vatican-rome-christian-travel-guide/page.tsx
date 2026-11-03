@@ -29,6 +29,9 @@ export default function VaticanRomeChristianTravelGuidePage() {
             <Link href="/faith-travel" className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">
               Explore Faith Travel Hub
             </Link>
+            <Link href="/guides/rome" className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">
+              Rome travel guide
+            </Link>
           </div>
         </div>
       </section>

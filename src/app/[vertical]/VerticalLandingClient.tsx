@@ -89,6 +89,14 @@ export default function VerticalLandingClient({ verticalConfig }: VerticalLandin
                   <h3 className="text-white font-semibold">Cape Town</h3>
                   <p className="text-sm text-white/70 mt-2 leading-relaxed">Seasons, where to base yourself, and one peninsula day.</p>
                 </Link>
+                <Link href="/guides/accra" className="glass-strong rounded-xl border border-white/10 p-5 hover:border-neon-cyan/40 transition-colors min-w-0">
+                  <h3 className="text-white font-semibold">Accra, Ghana</h3>
+                  <p className="text-sm text-white/70 mt-2 leading-relaxed">Dry-season timing, Osu and airport bases, and a short city outline.</p>
+                </Link>
+                <Link href="/guides/kenya" className="glass-strong rounded-xl border border-white/10 p-5 hover:border-neon-cyan/40 transition-colors min-w-0">
+                  <h3 className="text-white font-semibold">Kenya safari</h3>
+                  <p className="text-sm text-white/70 mt-2 leading-relaxed">Nairobi arrival, one-park pacing, and how to shape a first safari.</p>
+                </Link>
               </div>
             </div>
           </section>

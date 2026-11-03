@@ -62,3 +62,5 @@ Kenya offers various safari experiences, from luxury tented camps to budget-frie
 ## Planning Your Trip
 
 When planning your Kenya safari, consider the timing carefully. The dry season (June to October) offers the best wildlife viewing, while the wet season (November to May) brings lush landscapes and fewer crowds.
+
+For a practical outline of the Nairobi arrival, park pacing, and what to sort before you fly, read the [Kenya safari planning guide](/guides/kenya).

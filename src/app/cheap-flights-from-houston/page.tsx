@@ -102,6 +102,12 @@ export default function CheapFlightsFromHoustonPage() {
             <div className="flex flex-wrap gap-3 text-sm">
               <Link href="/guides/cancun" className="text-neon-cyan underline underline-offset-2">Cancun travel guide</Link>
               <Link href="/guides/lagos" className="text-neon-cyan underline underline-offset-2">Lagos travel guide</Link>
+              <Link href="/guides/london" className="text-neon-cyan underline underline-offset-2">London travel guide</Link>
+              <Link href="/guides/paris" className="text-neon-cyan underline underline-offset-2">Paris travel guide</Link>
+              <Link href="/guides/rome" className="text-neon-cyan underline underline-offset-2">Rome travel guide</Link>
+              <Link href="/guides/dubai" className="text-neon-cyan underline underline-offset-2">Dubai travel guide</Link>
+              <Link href="/guides/accra" className="text-neon-cyan underline underline-offset-2">Accra travel guide</Link>
+              <Link href="/guides/kenya" className="text-neon-cyan underline underline-offset-2">Kenya safari planning guide</Link>
             </div>
           </section>
 

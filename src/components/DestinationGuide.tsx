@@ -111,7 +111,7 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
           ) : null}
 
           <div className={sectionClass}>
-            <h2 className={h2Class}>A simple 3-day outline</h2>
+            <h2 className={h2Class}>{guide.itineraryHeading ?? 'A simple 3-day outline'}</h2>
             <ol className="space-y-4">
               {guide.itinerary.map((day) => (
                 <li key={day.day}>

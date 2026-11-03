@@ -7,7 +7,7 @@ import { pageMeta } from '@/lib/site'
 export const metadata: Metadata = pageMeta({
   title: 'Destination Guides | TourWiseAI',
   description:
-    'Planning guides for Cancun, Lagos, and Cape Town, with seasons, neighborhoods, and partner tools for flights and arrivals.',
+    'Planning guides for London, Paris, Rome, Dubai, Accra, Kenya, Cancun, Lagos, and Cape Town.',
   path: '/guides',
 })
 
