@@ -53,39 +53,57 @@ export async function getCheapestDatesFromHouston(
   const earliest = tomorrowIso()
 
   try {
-    const primary = rankFares(await fetchPricesForDates(token, dest, months), dest, months, earliest)
-    if (primary.length > 0) return primary
-
-    const grouped = rankFares(await fetchGroupedPrices(token, dest, months), dest, months, earliest)
-    if (grouped.length > 0) return grouped
-
-    return rankFares(await fetchMonthMatrix(token, dest, months), dest, months, earliest)
+    // Page 1 is the cheapest offers. If those collapse onto a few departure
+    // days, ask for the next page and then the per-day endpoints so the
+    // list can reach several different dates.
+    let raw = await fetchPricesForDates(token, dest, months, ['1'])
+    let ranked = rankFares(raw, dest, months, earliest)
+    if (ranked.length < 5) {
+      raw = [...raw, ...(await fetchPricesForDates(token, dest, months, ['2']))]
+      ranked = rankFares(raw, dest, months, earliest)
+    }
+    if (ranked.length < 5) {
+      raw = [...raw, ...(await fetchGroupedPrices(token, dest, months))]
+      ranked = rankFares(raw, dest, months, earliest)
+    }
+    if (ranked.length < 5) {
+      raw = [...raw, ...(await fetchMonthMatrix(token, dest, months))]
+      ranked = rankFares(raw, dest, months, earliest)
+    }
+    return ranked
   } catch {
     return []
   }
 }
 
-async function fetchPricesForDates(token: string, destination: string, months: string[]): Promise<RawFare[]> {
+async function fetchPricesForDates(
+  token: string,
+  destination: string,
+  months: string[],
+  pages: string[]
+): Promise<RawFare[]> {
   const batches = await Promise.all(
-    months.map((month) =>
-      travelpayoutsGet(
-        'prices_for_dates',
-        PRICES_FOR_DATES,
-        {
-          origin: HOUSTON_ORIGIN_IATA,
-          destination,
-          departure_at: month,
-          currency: 'usd',
-          cy: 'usd',
-          sorting: 'price',
-          one_way: 'false',
-          unique: 'false',
-          direct: 'false',
-          market: 'us',
-          limit: PAGE_LIMIT,
-          page: '1',
-        },
-        token
+    months.flatMap((month) =>
+      pages.map((page) =>
+        travelpayoutsGet(
+          'prices_for_dates',
+          PRICES_FOR_DATES,
+          {
+            origin: HOUSTON_ORIGIN_IATA,
+            destination,
+            departure_at: month,
+            currency: 'usd',
+            cy: 'usd',
+            sorting: 'price',
+            one_way: 'false',
+            unique: 'false',
+            direct: 'false',
+            market: 'us',
+            limit: PAGE_LIMIT,
+            page,
+          },
+          token
+        )
       )
     )
   )
