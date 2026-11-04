@@ -14,7 +14,6 @@ export const AFFILIATE_CATEGORIES = [
   'transfers',
   'carRentals',
   'bikeRentals',
-  'insurance',
   'compensation',
   'seaTravel',
 ] as const
@@ -224,15 +223,6 @@ export const AFFILIATE_LINKS = {
       recommendedButtonText: 'Explore bike rental options',
     },
   },
-  insurance: {
-    ekta: {
-      name: 'Ekta Travel Insurance',
-      category: 'insurance',
-      url: 'https://ektatraveling.tp.st/k2fRJYNJ',
-      description: 'Travel insurance options for medical and trip protection.',
-      recommendedButtonText: 'Get travel insurance',
-    },
-  },
   compensation: {
     airhelp: {
       name: 'AirHelp',
@@ -416,10 +406,6 @@ export function getContextualAffiliateSuggestions(query: string, itinerary: stri
     }
     push('car-localrent', AFFILIATE_LINKS.carRentals.localrent, 'Road-trip style routing.')
     push('car-compare', AFFILIATE_LINKS.carRentals.economybookings, 'Compare rental rates.')
-  }
-
-  if (/\b(insurance|medical cover|trip protection|cancel(lation)? policy)\b/i.test(text)) {
-    push('insurance-ekta', AFFILIATE_LINKS.insurance.ekta, 'Protection came up in your plan.')
   }
 
   if (/\b(delay|cancellation|denied boarding|compensation|eu ?261|flight disrupt)\b/i.test(text)) {

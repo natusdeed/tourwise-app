@@ -4,7 +4,7 @@ export async function GET() {
   const origin = SITE_ORIGIN
   const content = `# TourWiseAI
 
-> TourWiseAI is an AI-assisted travel planning website. It helps users build trip plans and compare partner booking options for flights, stays, tours and activities, airport transfers, travel eSIMs, car rentals, and travel insurance. Bookings are completed on third-party partner sites. TourWiseAI is not a travel agency and does not process flight or hotel payments directly.
+> TourWiseAI is an AI-assisted travel planning website. It helps users build trip plans and compare partner booking options for flights, stays, tours and activities, airport transfers, travel eSIMs, and car rentals. Bookings are completed on third-party partner sites. TourWiseAI is not a travel agency and does not process flight or hotel payments directly.
 
 TourWiseAI may earn a commission when users book through partner links, at no extra cost to the user. Details: ${origin}/affiliate-disclosure
 
@@ -59,7 +59,7 @@ TourWiseAI may earn a commission when users book through partner links, at no ex
 - ${origin}/affiliate-disclosure
 
 ## Partners named on the site
-Aviasales (flights), Klook, Tiqets, and Viator (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), EKTA (travel insurance), Localrent (car rentals), Stay22 (hotels on destination guides). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
+Aviasales (flights), Klook, Tiqets, and Viator (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), Localrent (car rentals), Stay22 (hotels on destination guides). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
 
 ## Optional
 - Sitemap: ${origin}/sitemap.xml

@@ -849,17 +849,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                         </ExternalAffiliateLink>
                       </li>
                     )}
-                    <li>
-                      <ExternalAffiliateLink
-                        href={AFFILIATE_LINKS.insurance.ekta.url}
-                        trackingLabel="hero_post_itin_insurance"
-                        className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
-                        aria-label="Get travel insurance with Ekta, opens in a new tab"
-                      >
-                        <span className="text-sm font-semibold text-white block">Get travel insurance</span>
-                        <span className="text-xs text-neon-cyan/90">Ekta · Explore protection options</span>
-                      </ExternalAffiliateLink>
-                    </li>
                   </ul>
                 </div>
 

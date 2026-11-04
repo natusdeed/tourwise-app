@@ -59,9 +59,6 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
             {route.international ? (
               <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${params.route}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get Travel eSIM</ExternalAffiliateLink>
             ) : null}
-            {route.international ? (
-              <ExternalAffiliateLink href={AFFILIATE_LINKS.insurance.ekta.url} trackingLabel={`${params.route}-insurance`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get Travel Insurance</ExternalAffiliateLink>
-            ) : null}
           </div>
 
           <section className={sectionClass}>

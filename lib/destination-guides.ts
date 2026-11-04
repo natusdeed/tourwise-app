@@ -40,7 +40,6 @@ const cancunPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const lagosPartners = [
@@ -49,7 +48,6 @@ const lagosPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const capeTownPartners = [
@@ -59,7 +57,6 @@ const capeTownPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const londonPartners = [
@@ -69,7 +66,6 @@ const londonPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const parisPartners = [
@@ -79,7 +75,6 @@ const parisPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const romePartners = [
@@ -89,7 +84,6 @@ const romePartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const dubaiPartners = [
@@ -99,7 +93,6 @@ const dubaiPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const accraPartners = [
@@ -108,7 +101,6 @@ const accraPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 const kenyaPartners = [
@@ -117,7 +109,6 @@ const kenyaPartners = [
   AFFILIATE_LINKS.transfers.kiwitaxi,
   AFFILIATE_LINKS.esim.airalo,
   AFFILIATE_LINKS.carRentals.localrent,
-  AFFILIATE_LINKS.insurance.ekta,
 ]
 
 /**
