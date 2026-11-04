@@ -42,16 +42,16 @@ const tools = [
   },
   {
     name: 'Hotels & stays',
-    description: 'Use TourWise to lock dates, then compare stays on your favorite site',
-    badge: 'Smart prep',
+    description: 'Compare hotel prices for any destination and dates',
+    badge: 'Stay22',
     icon: 'Building2',
-    cta: null as string | null,
-    url: null as string | null,
+    cta: 'Find Hotels',
+    url: AFFILIATE_LINKS.hotels.stay22.url,
     color: 'from-blue-500 to-cyan-500',
     benefits: [
-      'Plan with AI first',
-      'Flexible date options',
-      'Book where you already trust',
+      'Search any destination',
+      'Compare prices and dates',
+      'Book with trusted partners',
     ],
   },
   {
@@ -217,7 +217,7 @@ function ToolCard({ tool, Icon, index }: ToolCardProps) {
             ))}
           </ul>
 
-          {/* CTA Link on Back */}
+          {/* CTA Link on Back — only when a partner URL exists */}
           {tool.url && tool.cta ? (
             <a
               href={tool.url}
@@ -236,15 +236,7 @@ function ToolCard({ tool, Icon, index }: ToolCardProps) {
               </span>
               <ExternalLink className="w-4 h-4" />
             </a>
-          ) : (
-            <p
-              className="mt-6 sm:mt-8 text-xs text-white/55 max-w-xs px-2"
-              onClick={(e) => e.stopPropagation()}
-            >
-              No hotel partner link here yet — use the AI planner to set dates, then book stays on a site
-              you already trust.
-            </p>
-          )}
+          ) : null}
 
           {/* Hover Glow */}
           <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-3 transition-opacity duration-300 pointer-events-none">
