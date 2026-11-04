@@ -1,4 +1,9 @@
-import { AFFILIATE_LINKS, STAY22_GUIDE_LINKS, type AffiliateLinkItem } from './affiliate-links'
+import {
+  AFFILIATE_LINKS,
+  STAY22_GUIDE_LINKS,
+  VIATOR_GUIDE_LINKS,
+  type AffiliateLinkItem,
+} from './affiliate-links'
 import { buildAviasalesCityPrefillUrl } from './aviasales'
 
 export type GuideSection = {
@@ -22,6 +27,8 @@ export type DestinationGuideContent = {
   related: { href: string; label: string }[]
   /** Stay22 hotel search for this destination. */
   stay: AffiliateLinkItem
+  /** Viator tours and activities for this destination. */
+  tours: AffiliateLinkItem
   partners: AffiliateLinkItem[]
   officialLinks: { href: string; label: string }[]
 }
@@ -268,6 +275,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cape-town', label: 'Cape Town travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS.cancun,
+    tours: VIATOR_GUIDE_LINKS.cancun,
     partners: withHoustonFlights(cancunPartners, 'CUN'),
     officialLinks: [
       {
@@ -386,6 +394,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS.lagos,
+    tours: VIATOR_GUIDE_LINKS.lagos,
     partners: withHoustonFlights(lagosPartners, 'LOS'),
     officialLinks: [
       {
@@ -507,6 +516,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides/cancun', label: 'Cancun travel guide' },
     ],
     stay: STAY22_GUIDE_LINKS['cape-town'],
+    tours: VIATOR_GUIDE_LINKS['cape-town'],
     partners: withHoustonFlights(capeTownPartners, 'CPT'),
     officialLinks: [
       {
@@ -629,6 +639,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.london,
+    tours: VIATOR_GUIDE_LINKS.london,
     partners: withHoustonFlights(londonPartners, 'LON'),
     officialLinks: [
       {
@@ -752,6 +763,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.paris,
+    tours: VIATOR_GUIDE_LINKS.paris,
     partners: withHoustonFlights(parisPartners, 'PAR'),
     officialLinks: [
       {
@@ -874,6 +886,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.rome,
+    tours: VIATOR_GUIDE_LINKS.rome,
     partners: withHoustonFlights(romePartners, 'ROM'),
     officialLinks: [
       {
@@ -993,6 +1006,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.dubai,
+    tours: VIATOR_GUIDE_LINKS.dubai,
     partners: withHoustonFlights(dubaiPartners, 'DXB'),
     officialLinks: [
       {
@@ -1111,6 +1125,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.accra,
+    tours: VIATOR_GUIDE_LINKS.accra,
     partners: withHoustonFlights(accraPartners, 'ACC'),
     officialLinks: [
       {
@@ -1236,6 +1251,7 @@ export const DESTINATION_GUIDES: DestinationGuideContent[] = [
       { href: '/guides', label: 'Guides hub' },
     ],
     stay: STAY22_GUIDE_LINKS.kenya,
+    tours: VIATOR_GUIDE_LINKS.kenya,
     partners: withHoustonFlights(kenyaPartners, 'NBO'),
     officialLinks: [
       {

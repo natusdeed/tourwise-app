@@ -85,6 +85,16 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                   </ExternalAffiliateLink>
                 </div>
               ) : null}
+              {section.heading === 'Things to do' && guide.tours.url ? (
+                <ExternalAffiliateLink
+                  href={guide.tours.url}
+                  trackingLabel={`${guide.slug}-viator`}
+                  rel="sponsored noopener noreferrer"
+                  className="inline-flex max-w-full min-w-0 whitespace-normal text-left break-words rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
+                >
+                  {guide.tours.recommendedButtonText}
+                </ExternalAffiliateLink>
+              ) : null}
               {section.heading === 'Safety and entry' ? (
                 <ul className="space-y-2 text-sm">
                   {guide.officialLinks.map((link) => (
