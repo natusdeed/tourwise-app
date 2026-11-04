@@ -74,9 +74,8 @@ export const AFFILIATE_LINKS = {
   },
   tours: {
     // ---------------------------------------------------------------------------
-    // VIATOR — join in Travelpayouts (Programs → Viator → Connect), then paste
-    // your affiliate link as `url`. 8% commission, 30-day cookie, 300k+
-    // experiences. The card stays hidden until you fill it in.
+    // VIATOR — destination guide links live in VIATOR_GUIDE_LINKS. Each guide
+    // has its own URL. This generic card stays hidden until a single url is set.
     // ---------------------------------------------------------------------------
     viator: {
       name: 'Viator',
@@ -282,6 +281,59 @@ export const STAY22_GUIDE_LINKS = {
   dubai: stay22GuideLink('Dubai', 'https://booking.stay22.com/tourwiseai/vnC8xS_Cpt'),
   accra: stay22GuideLink('Accra', 'https://booking.stay22.com/tourwiseai/S0yMGwrcQb'),
   kenya: stay22GuideLink('Kenya', 'https://booking.stay22.com/tourwiseai/3V0IdBZ0Le'),
+} as const
+
+function viatorGuideLink(place: string, url: string): AffiliateLinkItem {
+  return {
+    name: 'Viator',
+    category: 'tours',
+    url,
+    description: 'Tours and activities for this destination.',
+    recommendedButtonText: `Book tours & activities in ${place}`,
+  }
+}
+
+/**
+ * Verified Viator links, one per destination guide.
+ * Lagos opens the Nigeria page. Kenya opens the Nairobi page.
+ */
+export const VIATOR_GUIDE_LINKS = {
+  cancun: viatorGuideLink(
+    'Cancun',
+    'https://www.viator.com/Cancun/d631-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  lagos: viatorGuideLink(
+    'Nigeria',
+    'https://www.viator.com/Nigeria/d22316-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  'cape-town': viatorGuideLink(
+    'Cape Town',
+    'https://www.viator.com/Cape-Town/d318-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  london: viatorGuideLink(
+    'London',
+    'https://www.viator.com/London/d737-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  paris: viatorGuideLink(
+    'Paris',
+    'https://www.viator.com/Paris/d479-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  rome: viatorGuideLink(
+    'Rome',
+    'https://www.viator.com/Rome/d511-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  dubai: viatorGuideLink(
+    'Dubai',
+    'https://www.viator.com/Dubai/d828-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  accra: viatorGuideLink(
+    'Accra',
+    'https://www.viator.com/Accra/d5517-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
+  kenya: viatorGuideLink(
+    'Nairobi',
+    'https://www.viator.com/Nairobi/d5280-ttd?pid=P00322985&mcid=42383&medium=link'
+  ),
 } as const
 
 export const AFFILIATE_LINK_LIST = Object.values(AFFILIATE_LINKS).flatMap((group) =>

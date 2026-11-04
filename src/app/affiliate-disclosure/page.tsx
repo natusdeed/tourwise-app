@@ -50,6 +50,10 @@ export default function AffiliateDisclosurePage() {
           text: 'Destination guides include a hotel link through Stay22, an accommodation affiliate network. The link opens a partner site where you can compare places to stay. We may earn a commission if you book, at no extra cost to you.',
         },
         {
+          subtitle: 'Viator',
+          text: 'Destination guides include a tours and activities link through Viator. The link opens a partner site where you can browse tours and activities. We may earn a commission if you book, at no extra cost to you.',
+        },
+        {
           subtitle: 'Transparency',
           text: 'We only partner with reputable travel companies that we trust and would recommend to our users.',
         },

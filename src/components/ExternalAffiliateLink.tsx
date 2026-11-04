@@ -9,6 +9,8 @@ export type ExternalAffiliateLinkProps = Omit<ComponentProps<'a'>, 'href' | 'tar
   trackingLabel?: string
   /** Optional price for GA affiliate_click events */
   analyticsPrice?: number
+  /** Defaults to the site affiliate rel. Pass a value when a partner requires a specific set. */
+  rel?: string
 }
 
 /**
@@ -18,6 +20,7 @@ export default function ExternalAffiliateLink({
   href,
   trackingLabel,
   analyticsPrice,
+  rel = AFFILIATE_LINK_REL,
   children,
   onClick,
   ...rest
@@ -26,7 +29,7 @@ export default function ExternalAffiliateLink({
     <a
       href={href}
       target="_blank"
-      rel={AFFILIATE_LINK_REL}
+      rel={rel}
       onClick={(e) => {
         trackAffiliateClick(trackingLabel ?? 'external_affiliate', href, analyticsPrice)
         onClick?.(e)
