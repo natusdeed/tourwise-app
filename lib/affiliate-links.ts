@@ -78,7 +78,14 @@ export const AFFILIATE_LINKS = {
       description: 'Hotel metasearch — compare prices across major booking sites.',
       recommendedButtonText: 'Search hotels',
     },
-    // Stay22 destination links live in STAY22_GUIDE_LINKS. Each guide has its own URL.
+    // General Stay22 search (any destination and dates). Per-city guide links live in STAY22_GUIDE_LINKS.
+    stay22: {
+      name: 'Stay22',
+      category: 'hotels',
+      url: 'https://booking.stay22.com/tourwiseai/YlmP-JE5GC',
+      description: 'Compare hotel prices for any destination and dates.',
+      recommendedButtonText: 'Find Hotels',
+    },
   },
   tours: {
     // ---------------------------------------------------------------------------
