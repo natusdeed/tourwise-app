@@ -59,7 +59,7 @@ TourWiseAI may earn a commission when users book through partner links, at no ex
 - ${origin}/affiliate-disclosure
 
 ## Partners named on the site
-Aviasales (flights), Klook, Tiqets, and Viator (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), Localrent (car rentals), Stay22 (hotels on destination guides). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
+Aviasales and Kiwi.com (flights), Klook, Tiqets, Viator, Go City, and KKday (tours/activities), Kiwitaxi (airport transfers), Airalo (eSIM), Localrent (car rentals), Stay22 (hotels on destination guides). Affiliate network mentioned: Travelpayouts. Booking.com is mentioned in the affiliate disclosure and privacy materials.
 
 ## Optional
 - Sitemap: ${origin}/sitemap.xml

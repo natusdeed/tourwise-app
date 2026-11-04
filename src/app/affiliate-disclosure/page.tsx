@@ -54,6 +54,18 @@ export default function AffiliateDisclosurePage() {
           text: 'Destination guides include a tours and activities link through Viator. The link opens a partner site where you can browse tours and activities. We may earn a commission if you book, at no extra cost to you.',
         },
         {
+          subtitle: 'Kiwi.com',
+          text: 'Some flight pages include a second link to Kiwi.com so you can compare flights there as well. The link opens Kiwi.com in a new tab. We may earn a commission if you book, at no extra cost to you.',
+        },
+        {
+          subtitle: 'Go City',
+          text: 'Destination guides include a link to Go City for attraction passes, next to the Viator button. The link opens the partner site. We may earn a commission if you book, at no extra cost to you.',
+        },
+        {
+          subtitle: 'KKday',
+          text: 'Destination guides include a link to KKday for tours and activities, next to the Viator button. The link opens the partner site. We may earn a commission if you book, at no extra cost to you.',
+        },
+        {
           subtitle: 'Transparency',
           text: 'We only partner with reputable travel companies that we trust and would recommend to our users.',
         },
@@ -127,7 +139,7 @@ export default function AffiliateDisclosurePage() {
               Transparency is important to us. This page explains how affiliate relationships work and how they support our free service.
             </p>
             <p className="text-white/50 text-sm md:text-base">
-              Last Updated: January 15, 2026
+              Last Updated: November 4, 2026
             </p>
           </motion.div>
         </div>

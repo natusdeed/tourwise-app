@@ -16,6 +16,27 @@
 export const AVIASALES_WIDGET_SRC =
   'https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&show_hotels=true&powered_by=true&locale=en&searchUrl=www.aviasales.com%2Fsearch&primary_override=%23C9922A&color_button=%230A1F44&color_icons=%230A1F44&dark=%23262626&light=%23FFFFFF&secondary=%23FFFFFF&special=%23D8C29A&color_focused=%23C9922A&border_radius=1&plain=false&promo_id=7879&campaign_id=100'
 
+/**
+ * Aviasales Popular Routes widget. Query string is the account embed.
+ * Do not add or restyle parameters.
+ */
+export const AVIASALES_POPULAR_ROUTES_WIDGET_SRC =
+  'https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&target_host=www.aviasales.com%2Fsearch&locale=en&limit=6&powered_by=true&primary=%230085FF&promo_id=4044&campaign_id=100'
+
+/**
+ * Aviasales flight timetable widget. The account embed is HOU → LON.
+ * Route pages replace only origin and destination.
+ */
+const AVIASALES_SCHEDULE_WIDGET_SRC =
+  'https://tpwidg.com/content?currency=usd&trs=484247&shmarker=692947&color_button=%23FF0000&target_host=www.aviasales.com%2Fsearch&locale=en&powered_by=true&origin=HOU&destination=LON&with_fallback=false&non_direct_flights=true&min_lines=5&border_radius=0&color_background=%23FFFFFF&color_text=%23000000&color_border=%23FFFFFF&promo_id=2811&campaign_id=100'
+
+export function aviasalesScheduleWidgetSrc(origin: string, destination: string): string {
+  const url = new URL(AVIASALES_SCHEDULE_WIDGET_SRC)
+  url.searchParams.set('origin', origin)
+  url.searchParams.set('destination', destination)
+  return url.toString()
+}
+
 /** Houston city code. Aviasales treats this as both Hobby and IAH. */
 export const HOUSTON_ORIGIN_IATA = 'HOU'
 

@@ -1,9 +1,13 @@
+import { Fragment } from 'react'
 import Link from 'next/link'
 import Script from 'next/script'
 import Footer from '@/components/Footer'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
+import KiwiCompareLink from '@/components/KiwiCompareLink'
+import LiveFaresSection from '@/components/LiveFaresSection'
+import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import FAQAccordion from '@/components/FAQAccordion'
 import { breadcrumbListSchema, articleSchema } from '@/lib/schema'
 import { SITE_ORIGIN } from '@/lib/site'
@@ -86,14 +90,34 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                 </div>
               ) : null}
               {section.heading === 'Things to do' && guide.tours.url ? (
-                <ExternalAffiliateLink
-                  href={guide.tours.url}
-                  trackingLabel={`${guide.slug}-viator`}
-                  rel="sponsored noopener noreferrer"
-                  className="inline-flex max-w-full min-w-0 whitespace-normal text-left break-words rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
-                >
-                  {guide.tours.recommendedButtonText}
-                </ExternalAffiliateLink>
+                <div className="flex flex-col items-start gap-3 min-w-0">
+                  <ExternalAffiliateLink
+                    href={guide.tours.url}
+                    trackingLabel={`${guide.slug}-viator`}
+                    rel="sponsored noopener noreferrer"
+                    className="inline-flex max-w-full min-w-0 whitespace-normal text-left break-words rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
+                  >
+                    {guide.tours.recommendedButtonText}
+                  </ExternalAffiliateLink>
+                  <div className="flex flex-wrap gap-x-4 gap-y-2 min-w-0">
+                    <ExternalAffiliateLink
+                      href={AFFILIATE_LINKS.tours.goCity.url}
+                      trackingLabel={`${guide.slug}-gocity`}
+                      rel="sponsored noopener noreferrer"
+                      className="max-w-full text-sm text-white/70 underline underline-offset-2 decoration-white/30 hover:text-neon-cyan break-words"
+                    >
+                      Attraction passes on Go City
+                    </ExternalAffiliateLink>
+                    <ExternalAffiliateLink
+                      href={AFFILIATE_LINKS.tours.kkday.url}
+                      trackingLabel={`${guide.slug}-kkday`}
+                      rel="sponsored noopener noreferrer"
+                      className="max-w-full text-sm text-white/70 underline underline-offset-2 decoration-white/30 hover:text-neon-cyan break-words"
+                    >
+                      Tours on KKday
+                    </ExternalAffiliateLink>
+                  </div>
+                </div>
               ) : null}
               {section.heading === 'Safety and entry' ? (
                 <ul className="space-y-2 text-sm">
@@ -129,15 +153,17 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                   const label = `${guide.slug}-${partner.name.toLowerCase().replace(/\s+/g, '-')}`
                   if (flightDestination) {
                     return (
-                      <AviasalesSearchLink
-                        key={partner.name}
-                        origin="HOU"
-                        destination={flightDestination}
-                        trackingLabel={label}
-                        className={className}
-                      >
-                        {partner.recommendedButtonText} · {partner.name}
-                      </AviasalesSearchLink>
+                      <Fragment key={partner.name}>
+                        <AviasalesSearchLink
+                          origin="HOU"
+                          destination={flightDestination}
+                          trackingLabel={label}
+                          className="inline-flex max-w-full min-w-0 whitespace-normal text-left break-words rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
+                        >
+                          {partner.recommendedButtonText} · {partner.name}
+                        </AviasalesSearchLink>
+                        <KiwiCompareLink trackingLabel={`${guide.slug}-kiwi`} />
+                      </Fragment>
                     )
                   }
                   return (
@@ -185,6 +211,7 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
           <FAQAccordion title="Guide FAQ" items={guide.faqs} />
         </div>
       </section>
+      <LiveFaresSection widthClassName="max-w-5xl" />
       <Footer />
     </main>
   )

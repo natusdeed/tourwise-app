@@ -40,6 +40,15 @@ export const AFFILIATE_LINKS = {
         'Opens Aviasales with Houston filled in as the departure city and one adult in economy. Add a destination and dates there. This page does not show a fare.',
       recommendedButtonText: 'Compare flight options',
     },
+    // Ready-made Kiwi.com link (US main page). Same URL on every flight button.
+    kiwi: {
+      name: 'Kiwi.com',
+      category: 'flights',
+      url: 'https://kiwi.tp.st/iPHSCjdH',
+      description:
+        'Opens Kiwi.com so you can compare flights there too. This page does not show a fare.',
+      recommendedButtonText: 'Also compare on Kiwi.com',
+    },
   },
   hotels: {
     // ---------------------------------------------------------------------------
@@ -82,6 +91,20 @@ export const AFFILIATE_LINKS = {
       url: '',
       description: 'Top-rated tours, activities, and experiences worldwide.',
       recommendedButtonText: 'Explore tours & activities',
+    },
+    goCity: {
+      name: 'Go City',
+      category: 'tours',
+      url: 'https://gocity.tp.st/AHtQpVJT',
+      description: 'Opens Go City attraction passes. This page does not list pass prices.',
+      recommendedButtonText: 'Attraction passes on Go City',
+    },
+    kkday: {
+      name: 'KKday',
+      category: 'tours',
+      url: 'https://kkday.tp.st/bGO0tZuR',
+      description: 'Opens KKday tours and activities. This page does not list tour prices.',
+      recommendedButtonText: 'Tours on KKday',
     },
     klook: {
       name: 'Klook',
