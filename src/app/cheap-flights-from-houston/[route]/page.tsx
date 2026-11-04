@@ -7,6 +7,7 @@ import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
+import CheapestDatesSection from '@/components/CheapestDatesSection'
 import KiwiCompareLink from '@/components/KiwiCompareLink'
 import AviasalesEmbedWidget from '@/components/AviasalesEmbedWidget'
 import { HOUSTON_ROUTES, houstonChecklistMetadata, houstonRouteDestinationIata } from '@/lib/houston-routes'
@@ -39,7 +40,7 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
     <main className="relative min-h-screen pt-20 md:pt-24 overflow-x-hidden">
       <Script id={`${params.route}-faq`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(route.faqs.slice(0, 4))) }} />
       <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-        <div className="max-w-5xl mx-auto space-y-5">
+        <div className="max-w-5xl mx-auto space-y-5 min-w-0">
           <h1 className="text-4xl md:text-5xl font-bold heading-robotic"><span className="text-gradient">{route.title}: Booking Guide</span></h1>
           <p className="text-white/75 text-lg">
             Ready to book {route.title.toLowerCase()}? Work through this checklist before you pay:
@@ -65,6 +66,8 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
               <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${params.route}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get Travel eSIM</ExternalAffiliateLink>
             ) : null}
           </div>
+
+          <CheapestDatesSection destination={destinationIata} />
 
           <section className={sectionClass}>
             <h2 className={h2Class}>Fare tips for this route</h2>
