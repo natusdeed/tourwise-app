@@ -7,7 +7,10 @@ import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
+import KiwiCompareLink from '@/components/KiwiCompareLink'
+import AviasalesEmbedWidget from '@/components/AviasalesEmbedWidget'
 import { HOUSTON_ROUTES, houstonChecklistMetadata, houstonRouteDestinationIata } from '@/lib/houston-routes'
+import { HOUSTON_ORIGIN_IATA, aviasalesScheduleWidgetSrc } from '@/lib/aviasales'
 import { generateFAQSchema } from '@/lib/seo'
 
 export function generateStaticParams() {
@@ -28,11 +31,12 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
   const route = HOUSTON_ROUTES[params.route]
   if (!route) return null
 
+  const destinationIata = houstonRouteDestinationIata(params.route)
   const sectionClass = 'glass-strong rounded-xl border border-white/10 p-6 space-y-3'
   const h2Class = 'text-xl font-semibold text-white heading-robotic'
 
   return (
-    <main className="relative min-h-screen pt-20 md:pt-24">
+    <main className="relative min-h-screen pt-20 md:pt-24 overflow-x-hidden">
       <Script id={`${params.route}-faq`} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(route.faqs.slice(0, 4))) }} />
       <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="max-w-5xl mx-auto space-y-5">
@@ -54,7 +58,8 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
           </section>
 
           <div className="flex flex-wrap gap-3">
-            <AviasalesSearchLink origin="HOU" destination={houstonRouteDestinationIata(params.route)} trackingLabel={`${params.route}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Search Flights</AviasalesSearchLink>
+            <AviasalesSearchLink origin="HOU" destination={destinationIata} trackingLabel={`${params.route}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Search Flights</AviasalesSearchLink>
+            <KiwiCompareLink trackingLabel={`${params.route}-kiwi`} />
             <ExternalAffiliateLink href={AFFILIATE_LINKS.transfers.kiwitaxi.url} trackingLabel={`${params.route}-transfers`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Book Airport Transfer</ExternalAffiliateLink>
             {route.international ? (
               <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${params.route}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get Travel eSIM</ExternalAffiliateLink>
@@ -81,6 +86,22 @@ export default function HoustonRoutePage({ params }: { params: { route: string }
           </div>
         </div>
       </section>
+      {destinationIata ? (
+        <section className="px-4 sm:px-6 lg:px-8 pb-12 overflow-x-hidden">
+          <div className="max-w-5xl mx-auto min-w-0">
+            <h2 className="text-xl md:text-2xl font-semibold text-white heading-robotic mb-2">
+              Flight times on this route
+            </h2>
+            <p className="text-white/60 text-sm mb-4 max-w-3xl">
+              Timetable from Aviasales. Schedules change; confirm with the airline before you book.
+            </p>
+            <AviasalesEmbedWidget
+              src={aviasalesScheduleWidgetSrc(HOUSTON_ORIGIN_IATA, destinationIata)}
+              scriptId={`aviasales-schedule-${HOUSTON_ORIGIN_IATA}-${destinationIata}`}
+            />
+          </div>
+        </section>
+      ) : null}
       <section className="px-4 sm:px-6 lg:px-8 pb-12">
         <div className="max-w-5xl mx-auto">
           <FAQAccordion title="Route FAQ" items={route.faqs.slice(0, 4)} />

@@ -8,6 +8,8 @@ import FlightSearchWidget from '@/components/FlightSearchWidget'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
+import KiwiCompareLink from '@/components/KiwiCompareLink'
+import LiveFaresSection from '@/components/LiveFaresSection'
 import { houstonRouteDestinationIata } from '@/lib/houston-routes'
 import { breadcrumbListSchema } from '@/lib/schema'
 import { pageMeta } from '@/lib/site'
@@ -61,7 +63,7 @@ export default function CheapFlightsPage() {
   ]
 
   return (
-    <main className="relative min-h-screen pt-20 md:pt-24">
+    <main className="relative min-h-screen pt-20 md:pt-24 overflow-x-hidden">
       <Script
         id="cheap-flights-breadcrumb"
         type="application/ld+json"
@@ -143,15 +145,20 @@ export default function CheapFlightsPage() {
               >
                 <h3 className="heading-robotic text-lg font-semibold text-white">{item.route}</h3>
                 <p className="mt-3 text-sm text-white/70 flex-grow">{item.useCase}</p>
-                <AviasalesSearchLink
-                  origin="HOU"
-                  destination={houstonRouteDestinationIata(item.href.replace(/^\//, ''))}
-                  trackingLabel={`cheap_flights_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
-                  className="mt-4 inline-flex items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors"
-                  aria-label={`Check flight deals for ${item.route}, opens in a new tab`}
-                >
-                  Check Flight Options
-                </AviasalesSearchLink>
+                <div className="mt-4 flex flex-col items-stretch gap-2 min-w-0">
+                  <AviasalesSearchLink
+                    origin="HOU"
+                    destination={houstonRouteDestinationIata(item.href.replace(/^\//, ''))}
+                    trackingLabel={`cheap_flights_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
+                    className="inline-flex max-w-full items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors"
+                    aria-label={`Check flight deals for ${item.route}, opens in a new tab`}
+                  >
+                    Check Flight Options
+                  </AviasalesSearchLink>
+                  <KiwiCompareLink
+                    trackingLabel={`cheap_flights_kiwi_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
+                  />
+                </div>
                 <Link
                   href={item.href}
                   className="mt-2 text-xs text-neon-cyan underline underline-offset-2"
@@ -181,13 +188,16 @@ export default function CheapFlightsPage() {
           <p className="text-white/70 text-sm md:text-base mb-6 max-w-3xl">
             Use TourWiseAI to plan the trip, then compare current flight options through our travel partners.
           </p>
-          <ExternalAffiliateLink
-            href={AFFILIATE_LINKS.flights.aviasales.url}
-            trackingLabel="cheap_flights_compare_flights"
-            className="mb-5 inline-flex rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
-          >
-            Compare Flights
-          </ExternalAffiliateLink>
+          <div className="mb-5 flex flex-col sm:flex-row flex-wrap gap-3 min-w-0">
+            <ExternalAffiliateLink
+              href={AFFILIATE_LINKS.flights.aviasales.url}
+              trackingLabel="cheap_flights_compare_flights"
+              className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20"
+            >
+              Compare Flights
+            </ExternalAffiliateLink>
+            <KiwiCompareLink trackingLabel="cheap_flights_kiwi" />
+          </div>
           <FlightSearchWidget />
         </div>
       </section>
@@ -208,6 +218,7 @@ export default function CheapFlightsPage() {
         </div>
       </section>
 
+      <LiveFaresSection />
       <Footer />
     </main>
   )

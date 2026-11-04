@@ -51,13 +51,8 @@ export default function FlightSearchWidget({ className }: Props) {
         return true
       }
 
-      const cascoon = document.querySelector<HTMLElement>('[data-cascoon-id]')
-      if (cascoon && !container.contains(cascoon)) {
-        container.appendChild(cascoon)
-        setWidgetReady(true)
-        return true
-      }
-
+      // Only the node inserted before this script. A page can host more than
+      // one tpwidg embed, and a document-wide query would move the wrong one.
       return false
     }
 
