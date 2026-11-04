@@ -1120,21 +1120,39 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 />
               </motion.a>
 
-              {/* Stays — no hotel affiliate yet */}
-              <div
-                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md min-h-[48px] w-full max-w-full min-w-0 opacity-70 cursor-default"
+              {/* Find Hotels */}
+              <motion.a
+                href={AFFILIATE_LINKS.hotels.stay22.url}
+                target="_blank"
+                rel={AFFILIATE_LINK_REL}
+                aria-label="Find hotels on Stay22 in a new tab"
+                whileHover={{ scale: 1.005, y: -0.2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"
                 style={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                  border: `1px dashed ${colors.primary}25`
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: `1px solid ${colors.primary}20`
                 }}
-                role="note"
-                aria-label="Hotels and stays: plan your dates with our AI first, then book on your preferred hotel site"
               >
                 <span className="text-lg md:text-xl">🏨</span>
-                <span className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight text-white/80">
-                  Stays — plan dates first
+                <span
+                  className="text-xs md:text-sm font-medium heading-robotic whitespace-normal text-center leading-tight transition-all duration-300 relative z-10"
+                  style={{
+                    color: 'white',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
+                  onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
+                >
+                  Find Hotels
                 </span>
-              </div>
+                <div
+                  className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"
+                  style={{
+                    backgroundColor: colors.primary,
+                    boxShadow: `0 0 20px ${colors.primary}, 0 0 40px ${colors.primary}40`
+                  }}
+                />
+              </motion.a>
 
               {/* Rent a Car */}
               <motion.a

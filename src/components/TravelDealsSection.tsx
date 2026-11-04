@@ -10,10 +10,9 @@ type TravelDealCard = {
   title: string
   blurb: string
   icon: LucideIcon
-  cta: string | null
-  href: string | null
-  trackingLabel: string | null
-  isPlaceholder: boolean
+  cta: string
+  href: string
+  trackingLabel: string
 }
 
 const deals: TravelDealCard[] = [
@@ -25,17 +24,15 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.flights.aviasales.recommendedButtonText,
     href: AFFILIATE_LINKS.flights.aviasales.url,
     trackingLabel: 'home_deals_flights',
-    isPlaceholder: false,
   },
   {
     id: 'stays',
     title: 'Stays',
-    blurb: 'Lock trip dates with our planner first, then book your favorite hotel site.',
+    blurb: 'Compare hotel prices for any destination and dates.',
     icon: Hotel,
-    cta: null,
-    href: null,
-    trackingLabel: null,
-    isPlaceholder: true,
+    cta: 'Find Hotels',
+    href: AFFILIATE_LINKS.hotels.stay22.url,
+    trackingLabel: 'home_deals_stays',
   },
   {
     id: 'tours',
@@ -45,7 +42,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.tours.klook.recommendedButtonText,
     href: AFFILIATE_LINKS.tours.klook.url,
     trackingLabel: 'home_deals_tours',
-    isPlaceholder: false,
   },
   {
     id: 'transfers',
@@ -55,7 +51,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.transfers.kiwitaxi.recommendedButtonText,
     href: AFFILIATE_LINKS.transfers.kiwitaxi.url,
     trackingLabel: 'home_deals_transfers',
-    isPlaceholder: false,
   },
   {
     id: 'esim',
@@ -65,7 +60,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.esim.airalo.recommendedButtonText,
     href: AFFILIATE_LINKS.esim.airalo.url,
     trackingLabel: 'home_deals_esim',
-    isPlaceholder: false,
   },
   {
     id: 'cars',
@@ -75,7 +69,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.carRentals.localrent.recommendedButtonText,
     href: AFFILIATE_LINKS.carRentals.localrent.url,
     trackingLabel: 'home_deals_cars',
-    isPlaceholder: false,
   },
   {
     id: 'compensation',
@@ -85,7 +78,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.compensation.airhelp.recommendedButtonText,
     href: AFFILIATE_LINKS.compensation.airhelp.url,
     trackingLabel: 'home_deals_compensation',
-    isPlaceholder: false,
   },
 ]
 
@@ -135,20 +127,14 @@ export default function TravelDealsSection() {
                   <h3 className="text-base font-semibold text-white heading-robotic">{deal.title}</h3>
                 </div>
                 <p className="text-sm text-white/65 leading-relaxed flex-grow mb-4">{deal.blurb}</p>
-                {deal.isPlaceholder ? (
-                  <span className="text-xs text-white/45 font-medium heading-robotic border border-white/10 rounded-lg px-3 py-2 text-center">
-                    Stays — plan dates first
-                  </span>
-                ) : deal.href && deal.cta && deal.trackingLabel ? (
-                  <ExternalAffiliateLink
-                    href={deal.href}
-                    trackingLabel={deal.trackingLabel}
-                    className="inline-flex items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors text-center"
-                    aria-label={`${deal.cta} — opens ${deal.title} partner in a new tab`}
-                  >
-                    {deal.cta}
-                  </ExternalAffiliateLink>
-                ) : null}
+                <ExternalAffiliateLink
+                  href={deal.href}
+                  trackingLabel={deal.trackingLabel}
+                  className="inline-flex items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors text-center"
+                  aria-label={`${deal.cta} — opens ${deal.title} partner in a new tab`}
+                >
+                  {deal.cta}
+                </ExternalAffiliateLink>
               </motion.div>
             )
           })}
