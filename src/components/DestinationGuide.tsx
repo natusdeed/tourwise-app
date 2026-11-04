@@ -6,6 +6,7 @@ import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
 import KiwiCompareLink from '@/components/KiwiCompareLink'
+import CheapestDatesSection from '@/components/CheapestDatesSection'
 import LiveFaresSection from '@/components/LiveFaresSection'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import FAQAccordion from '@/components/FAQAccordion'
@@ -180,6 +181,8 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
               </div>
             </div>
           ) : null}
+
+          <CheapestDatesSection destination={guideFlightDestination(guide.slug)} />
 
           <div className={sectionClass}>
             <h2 className={h2Class}>{guide.itineraryHeading ?? 'A simple 3-day outline'}</h2>
