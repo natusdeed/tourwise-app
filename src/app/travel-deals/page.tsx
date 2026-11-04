@@ -11,7 +11,7 @@ import { pageMeta } from '@/lib/site'
 export const metadata: Metadata = pageMeta({
   title: 'Travel Deals | TourWiseAI',
   description:
-    'Explore travel deals on TourWiseAI for flights, stays, tours, airport transfers, eSIMs, and travel insurance.',
+    'Explore travel deals on TourWiseAI for flights, stays, tours, airport transfers, and eSIMs.',
   path: '/travel-deals',
 })
 
@@ -31,7 +31,6 @@ export default function TravelDealsPage() {
     { title: 'Airport Transfers', cards: [AFFILIATE_LINKS.transfers.kiwitaxi, AFFILIATE_LINKS.transfers.welcomePickups, AFFILIATE_LINKS.transfers.gettransfer] },
     { title: 'Travel eSIM', cards: [AFFILIATE_LINKS.esim.airalo, AFFILIATE_LINKS.esim.yesim, AFFILIATE_LINKS.esim.drimsim] },
     { title: 'Car Rentals', cards: [AFFILIATE_LINKS.carRentals.localrent, AFFILIATE_LINKS.carRentals.economybookings, AFFILIATE_LINKS.carRentals.qeeq] },
-    { title: 'Travel Insurance', cards: [AFFILIATE_LINKS.insurance.ekta] },
     { title: 'Flight Compensation', cards: [AFFILIATE_LINKS.compensation.airhelp, AFFILIATE_LINKS.compensation.compensair] },
     { title: 'Bike Rentals', cards: [AFFILIATE_LINKS.bikeRentals.bikesbooking] },
     { title: 'Sea Travel', cards: [AFFILIATE_LINKS.seaTravel.searadar] },

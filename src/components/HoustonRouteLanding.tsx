@@ -66,7 +66,6 @@ export default function HoustonRouteLanding({ route }: Props) {
             <AviasalesSearchLink origin="HOU" destination={houstonRouteDestinationIata(route.slug)} trackingLabel={`${route.routePath}-flights`} className="inline-flex max-w-full rounded-lg border border-neon-cyan/50 bg-neon-cyan/10 px-4 py-2 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20">Compare flight options</AviasalesSearchLink>
             <ExternalAffiliateLink href={AFFILIATE_LINKS.transfers.kiwitaxi.url} trackingLabel={`${route.routePath}-transfer`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Book airport transfer</ExternalAffiliateLink>
             {route.international ? <ExternalAffiliateLink href={AFFILIATE_LINKS.esim.airalo.url} trackingLabel={`${route.routePath}-esim`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get travel eSIM</ExternalAffiliateLink> : null}
-            {route.international ? <ExternalAffiliateLink href={AFFILIATE_LINKS.insurance.ekta.url} trackingLabel={`${route.routePath}-insurance`} className="inline-flex rounded-lg border border-white/20 bg-white/5 px-4 py-2 text-sm font-semibold text-white/85 hover:border-neon-cyan/40 hover:text-neon-cyan">Get travel insurance</ExternalAffiliateLink> : null}
           </div>
 
           <div className={sectionClass}>

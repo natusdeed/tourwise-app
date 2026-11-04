@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Plane, Hotel, Compass, Car, ShieldAlert, Smartphone, Bus, Scale, type LucideIcon } from 'lucide-react'
+import { Plane, Hotel, Compass, Car, Smartphone, Bus, Scale, type LucideIcon } from 'lucide-react'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 
@@ -75,16 +75,6 @@ const deals: TravelDealCard[] = [
     cta: AFFILIATE_LINKS.carRentals.localrent.recommendedButtonText,
     href: AFFILIATE_LINKS.carRentals.localrent.url,
     trackingLabel: 'home_deals_cars',
-    isPlaceholder: false,
-  },
-  {
-    id: 'insurance',
-    title: 'Travel insurance',
-    blurb: 'Medical and trip protection.',
-    icon: ShieldAlert,
-    cta: AFFILIATE_LINKS.insurance.ekta.recommendedButtonText,
-    href: AFFILIATE_LINKS.insurance.ekta.url,
-    trackingLabel: 'home_deals_insurance',
     isPlaceholder: false,
   },
   {

@@ -176,7 +176,7 @@ export async function POST(req: NextRequest) {
           ${markdownToEmailHtml(capped)}
           <p style="margin-top:20px;">Next step: lock in the essentials for your dates —</p>
           <ul style="padding-left:20px;">
-            <li><a href="${baseUrl}/travel-deals">Compare flights, stays, tours, transfers, eSIMs and insurance</a></li>
+            <li><a href="${baseUrl}/travel-deals">Compare flights, stays, tours, transfers, and eSIMs</a></li>
             <li><a href="${baseUrl}/cheap-flights">Find cheap flights</a></li>
           </ul>
           <p><strong>TourWiseAI</strong><br/>Smarter travel planning, zero guesswork.</p>
@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
             <li><strong>Stays:</strong> always compare the same hotel across 2–3 booking sites; the same room often differs by 10–20% — <a href="${baseUrl}/travel-deals">check travel deals</a>.</li>
             <li><strong>eSIM:</strong> buy your data plan before you fly; airport kiosks routinely cost double — <a href="${baseUrl}/travel-esim">compare eSIM options</a>.</li>
             <li><strong>Transfers:</strong> pre-book your airport pickup; curbside taxis are the classic arrival rip-off — <a href="${baseUrl}/airport-transfers">compare transfers</a>.</li>
-            <li><strong>Insurance:</strong> a week of medical + trip cover usually costs less than one airport meal — <a href="${baseUrl}/travel-insurance">get covered</a>.</li>
+            <li><strong>Before you pay:</strong> read a policy for medical costs and trip changes before non-refundable bookings — <a href="${baseUrl}/travel-insurance">travel insurance notes</a>.</li>
           </ul>
           <p>Plan your next trip with the free AI planner any time: <a href="${baseUrl}/ai-travel-planner">${baseUrl}/ai-travel-planner</a></p>
           <p><strong>TourWiseAI</strong><br/>Smarter travel planning, zero guesswork.</p>

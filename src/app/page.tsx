@@ -349,7 +349,7 @@ export default function Home() {
               </h2>
               <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
                 TourWise AI compares live prices across our trusted travel partners — flights, stays,
-                tours, transfers, eSIMs, and insurance — so you book each part of your trip at the
+                tours, transfers, and eSIMs — so you book each part of your trip at the
                 best available price, all in one place.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 text-left">
@@ -361,7 +361,6 @@ export default function Home() {
                   { icon: '🎟️', title: 'Tours & activities', text: 'Attraction tickets and local experiences', partner: 'Klook · Tiqets' },
                   { icon: '🚕', title: 'Airport transfers', text: 'Pre-booked pickup, no taxi lines', partner: 'Kiwitaxi' },
                   { icon: '📱', title: 'Travel eSIM', text: 'Land with data from ~$5', partner: 'Airalo' },
-                  { icon: '🛡️', title: 'Travel insurance', text: 'Medical and trip protection', partner: 'EKTA' },
                   { icon: '🚗', title: 'Car rentals', text: 'Self-drive options by destination', partner: 'Localrent' },
                 ].map((card) => (
                   <div
