@@ -8,7 +8,7 @@
  */
 import 'server-only'
 
-import { HOUSTON_ORIGIN_IATA, buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { HOUSTON_ORIGIN_IATA, buildExactAviasalesRoundTrip } from '@/lib/aviasales'
 import { getServerEnv } from '@/lib/server-env'
 
 const PRICES_FOR_DATES = 'https://api.travelpayouts.com/aviasales/v3/prices_for_dates'
@@ -257,18 +257,27 @@ function rankFares(
   return [...cheapestByDeparture.values()]
     .sort((a, b) => a.price - b.price || a.departDate.localeCompare(b.departDate))
     .slice(0, MAX_DATES)
-    .map((fare) => ({
-      departDate: fare.departDate,
-      returnDate: fare.returnDate,
-      price: fare.price,
-      airline: fare.airline,
-      searchUrl: buildAviasalesSearchUrl({
+    .flatMap((fare) => {
+      if (!fare.returnDate) return []
+      const exact = buildExactAviasalesRoundTrip({
         origin: HOUSTON_ORIGIN_IATA,
         destination,
         departDate: fare.departDate,
         returnDate: fare.returnDate,
-      }),
-    }))
+        adults: 1,
+        tripClass: 'economy',
+      })
+      if (!exact.ok) return []
+      return [
+        {
+          departDate: fare.departDate,
+          returnDate: fare.returnDate,
+          price: fare.price,
+          airline: fare.airline,
+          searchUrl: exact.url,
+        },
+      ]
+    })
 }
 
 function isBetterFare(next: RawFare, current: RawFare): boolean {

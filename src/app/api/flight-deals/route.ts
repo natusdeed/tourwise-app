@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       source: 'fallback',
-      message: 'Live pricing is unavailable in this environment.',
+      message: 'Indicative monthly prices are unavailable in this environment.',
       deals: [],
     })
   }

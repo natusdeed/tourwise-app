@@ -22,10 +22,12 @@ export default async function CheapestDatesSection({ destination }: Props) {
       className="glass-strong rounded-xl border border-white/10 p-5 md:p-6 min-w-0 overflow-hidden"
     >
       <h2 className="text-xl md:text-2xl font-semibold text-white heading-robotic break-words">
-        Cheapest dates to fly from Houston
+        Indicative dates from Houston
       </h2>
       <p className="text-white/60 text-sm mt-2 max-w-3xl">
-        Recent fares found by Aviasales travelers. Prices change; confirm at booking.
+        Indicative monthly samples for one adult in economy, not live or exact fares. The figure is
+        not a quote for your trip. Confirm airports, dates, bags, and the total on the partner site.
+        Fares are set by the partner and may change.
       </p>
       <ol className="mt-4 divide-y divide-white/10 list-none m-0 p-0">
         {fares.map((fare) => (

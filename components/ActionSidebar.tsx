@@ -40,7 +40,7 @@ export default function ActionSidebar({ countryName }: ActionSidebarProps) {
                 BOOK FLIGHTS
               </h3>
               <p className="text-sm text-white/70">
-                Find the best deals to {countryName}
+                Search flights to {countryName}. Choose airports and dates on Aviasales.
               </p>
             </div>
           </div>

@@ -2,7 +2,7 @@
  * Central affiliate link registry for TourWiseAI.
  * All partner URLs should come from this file.
  */
-import { buildAviasalesSearchUrl } from './aviasales'
+import { buildAviasalesCityPrefillUrl } from './aviasales'
 import { extractOriginAndDestination } from './iata-codes'
 export const AFFILIATE_LINK_REL = 'nofollow sponsored noopener noreferrer' as const
 
@@ -34,10 +34,10 @@ export const AFFILIATE_LINKS = {
       name: 'Aviasales',
       category: 'flights',
       // Houston-only form when a button has no route. Dated route links are built
-      // with buildAviasalesSearchUrl at the button that knows the cities.
-      url: buildAviasalesSearchUrl({ origin: 'HOU' }),
+      // only from an exact airport-and-date selection.
+      url: buildAviasalesCityPrefillUrl({ origin: 'HOU' }),
       description:
-        'Opens Aviasales with Houston filled in as the departure city and one adult in economy. Add a destination and dates there. This page does not show a fare.',
+        'Opens Aviasales with Houston (HOU) filled in and no dates. Choose the destination airport and dates there. This is not an exact-trip quote.',
       recommendedButtonText: 'Compare flight options',
     },
     // Ready-made Kiwi.com link (US main page). Same URL on every flight button.
@@ -46,7 +46,7 @@ export const AFFILIATE_LINKS = {
       category: 'flights',
       url: 'https://kiwi.tp.st/iPHSCjdH',
       description:
-        'Opens Kiwi.com so you can compare flights there too. This page does not show a fare.',
+        'Opens Kiwi.com. Enter the same airports, departure and return dates, travelers, and bags there. This trip is not prefilled.',
       recommendedButtonText: 'Also compare on Kiwi.com',
     },
   },
@@ -371,8 +371,8 @@ function flightSuggestion(query: string): AffiliateLinkItem {
   const { origin, destination } = extractOriginAndDestination(query)
   return {
     ...AFFILIATE_LINKS.flights.aviasales,
-    url: buildAviasalesSearchUrl({
-      origin: origin || 'HOU',
+    url: buildAviasalesCityPrefillUrl({
+      origin: origin || undefined,
       destination,
     }),
   }

@@ -15,10 +15,13 @@ export default function LiveFaresSection({ widthClassName = 'max-w-6xl' }: Props
     <section className="relative px-4 sm:px-6 lg:px-8 pb-12 overflow-x-hidden">
       <div className={`${widthClassName} mx-auto min-w-0`}>
         <h2 className="heading-robotic text-2xl md:text-3xl font-bold text-white mb-2">
-          Cheapest flights people are finding right now
+          Aviasales popular-route examples
         </h2>
         <p className="text-white/60 text-sm mb-4 max-w-3xl">
-          Live prices from Aviasales searches. Prices change; check at booking.
+          Indicative examples from Aviasales. These may use different dates or airports, and they are
+          not live or exact fares for a trip you selected. Confirm every detail on the partner site.
+          Fares are set by the partner and may change. Baggage and fare rules vary by airline and must
+          be checked there.
         </p>
         <AviasalesEmbedWidget
           src={AVIASALES_POPULAR_ROUTES_WIDGET_SRC}

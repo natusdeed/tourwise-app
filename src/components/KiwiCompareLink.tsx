@@ -12,14 +12,20 @@ type Props = {
 /** Secondary flight button. Aviasales stays the filled primary button. */
 export default function KiwiCompareLink({ trackingLabel, className }: Props) {
   return (
+    <>
     <ExternalAffiliateLink
       href={AFFILIATE_LINKS.flights.kiwi.url}
       trackingLabel={trackingLabel}
       rel="sponsored noopener noreferrer"
       className={className ?? secondaryClass}
-      aria-label="Also compare on Kiwi.com, opens in a new tab"
+      aria-label="Opens Kiwi.com in a new tab. Your airports, dates, travelers, and bags are not prefilled."
     >
       Also compare on Kiwi.com
     </ExternalAffiliateLink>
+    <span className="basis-full text-xs leading-relaxed text-white/50">
+      Opens Kiwi.com. Enter the same airports, departure and return dates, travelers, and bags there.
+      This trip is not prefilled.
+    </span>
+    </>
   )
 }

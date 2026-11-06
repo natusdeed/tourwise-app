@@ -207,9 +207,8 @@ export function generateProductSchema(
       '@type': 'Offer',
       price: product.price,
       priceCurrency: product.currency,
-      availability: product.availability || 'https://schema.org/InStock',
+      ...(product.availability ? { availability: product.availability } : {}),
       url: product.url || baseUrl,
-      priceValidUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Valid for 7 days
     },
   };
 }

@@ -32,7 +32,7 @@ interface SEOProps {
  */
 export default function SEO({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
-  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
+  description = "Get personalized travel itineraries and compare flight and hotel options with AI-powered trip planning.",
   canonical,
   image = "/og-image.jpg",
   type = "website",
@@ -87,7 +87,7 @@ export default function SEO({
  */
 export function generateSEOMetadata({
   title = "TourWise AI - Plan Your Perfect Trip with AI in 60 Seconds",
-  description = "Get personalized travel itineraries, find the cheapest flights, and discover exclusive hotel deals with AI-powered trip planning.",
+  description = "Get personalized travel itineraries and compare flight and hotel options with AI-powered trip planning.",
   canonical,
   image = "/og-image.jpg",
   type = "website",

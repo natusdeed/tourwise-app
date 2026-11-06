@@ -76,11 +76,13 @@ export default function FlightSearchWidget({ className }: Props) {
   }, [scriptLoaded])
 
   return (
-    <div
-      ref={containerRef}
-      className={className}
-      style={{ width: '100%', maxWidth: '100%' }}
-    >
+    <div className={className} style={{ width: '100%', maxWidth: '100%' }}>
+      <p className="mb-3 max-w-3xl text-sm leading-relaxed text-white/60">
+        This is Aviasales&apos; own search form. TourWiseAI does not choose airports or dates here.
+        Fares are set by the partner and may change. Baggage and fare rules vary by airline and must
+        be checked on the partner site.
+      </p>
+      <div ref={containerRef} style={{ width: '100%', maxWidth: '100%' }}>
       {!widgetReady && (
         <div
           className="w-full h-[90px] rounded-md bg-white/10 animate-pulse"
@@ -94,6 +96,7 @@ export default function FlightSearchWidget({ className }: Props) {
         charSet="utf-8"
         onLoad={() => setScriptLoaded(true)}
       />
+      </div>
     </div>
   )
 }

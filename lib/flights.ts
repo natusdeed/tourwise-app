@@ -1,13 +1,12 @@
 /**
- * Flight utilities for fetching real-time flight prices from Travelpayouts API
- * Requires TRAVELPAYOUTS_TOKEN environment variable
+ * Monthly partner price samples from the Travelpayouts prices API.
+ * Requires TRAVELPAYOUTS_TOKEN. These figures are not live fares and not
+ * exact prices for a traveler's selected dates.
  */
 
 /**
- * Fetch cheapest flight deals from Travelpayouts API
- * @param destinationCode - IATA airport code (e.g., 'LOS' for Lagos)
- * @param originCode - Optional origin IATA code (defaults to popular hubs if not provided)
- * @returns Flight deals data or null if error
+ * Lowest figure in next month's partner sample for a route.
+ * The result is an indicative monthly sample, not a bookable quote.
  */
 export async function fetchCheapestDeals(destinationCode: string, originCode?: string) {
   try {
@@ -59,9 +58,7 @@ export async function fetchCheapestDeals(destinationCode: string, originCode?: s
 
     const data = await response.json();
 
-    // Extract cheapest deal from response
     if (data.data && Array.isArray(data.data) && data.data.length > 0) {
-      // Sort by price and get cheapest
       const cheapest = data.data.sort((a: any, b: any) => {
         const priceA = typeof a.value === 'number' ? a.value : parseFloat(a.value) || Infinity;
         const priceB = typeof b.value === 'number' ? b.value : parseFloat(b.value) || Infinity;
@@ -69,6 +66,9 @@ export async function fetchCheapestDeals(destinationCode: string, originCode?: s
       })[0];
 
       return {
+        priceBasis: 'indicative_month' as const,
+        priceLabel:
+          'Indicative monthly sample. Not a live fare and not an exact fare for selected dates.',
         price: Math.round(cheapest.value || 0),
         currency: cheapest.currency || 'USD',
         airline: cheapest.airline || 'Multiple Airlines',

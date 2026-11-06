@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import FlightSearchWidget from '@/components/FlightSearchWidget'
+import ExactFlightSearch from '@/components/ExactFlightSearch'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
@@ -186,8 +187,9 @@ export default function CheapFlightsPage() {
             Search Flight Deals
           </h2>
           <p className="text-white/70 text-sm md:text-base mb-6 max-w-3xl">
-            Use TourWiseAI to plan the trip, then compare current flight options through our travel partners.
+            Use the round-trip fields to keep the airports and dates you choose. The partner form below is separate and starts blank.
           </p>
+          <ExactFlightSearch />
           <div className="mb-5 flex flex-col sm:flex-row flex-wrap gap-3 min-w-0">
             <ExternalAffiliateLink
               href={AFFILIATE_LINKS.flights.aviasales.url}

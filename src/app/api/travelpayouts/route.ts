@@ -1,20 +1,28 @@
 /**
  * Travelpayouts API Route
  *
- * Flight clicks redirect to an Aviasales search deep link that keeps the
- * existing Travelpayouts marker. Tour and activity clicks still use the
+ * Flight clicks open an Aviasales link. A complete round trip keeps the
+ * airport codes and both dates. Anything less stays a date-free form, or
+ * returns the validation message. Tour and activity clicks still use the
  * curated tp.st short links. Hotel clicks use the Travelpayouts Partner
  * Links API (Hotellook). The API token stays on the server.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
-import { buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { buildAviasalesCityPrefillUrl, flightHandoffDecision } from '@/lib/aviasales'
 import { getIATACode } from '@/lib/iata-codes'
 
 export const dynamic = 'force-dynamic'
 
 const HOTELLOOK_BASE = 'https://hotellook.com'
+
+function discoveryCode(value: string | null): string | null {
+  if (!value || !value.trim()) return null
+  const trimmed = value.trim()
+  if (/^[A-Za-z]{3}$/.test(trimmed)) return trimmed.toUpperCase()
+  return getIATACode(trimmed)
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -28,15 +36,31 @@ export async function GET(request: NextRequest) {
       | 'activity'
       | null
 
-    const flightRedirect = () =>
-      NextResponse.redirect(
-        buildAviasalesSearchUrl({
-          origin: (origin && getIATACode(origin)) || 'HOU',
-          destination: destination ? getIATACode(destination) : null,
+    const flightRedirect = () => {
+      const decision = flightHandoffDecision({
+        origin: origin,
+        destination: destination,
+        departDate: searchParams.get('departDate'),
+        returnDate: searchParams.get('returnDate'),
+        adults: searchParams.get('adults'),
+        tripClass: searchParams.get('tripClass'),
+      })
+      if (decision.type === 'invalid') {
+        return new NextResponse(decision.errors.join('\n'), {
+          status: 400,
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        })
+      }
+      if (decision.type === 'exact') return NextResponse.redirect(decision.url)
+      return NextResponse.redirect(
+        buildAviasalesCityPrefillUrl({
+          origin: discoveryCode(origin),
+          destination: discoveryCode(destination),
         })
       )
+    }
 
-    // Flights -> prefilled Aviasales search (Houston when no origin is given).
+    // Flights -> Aviasales. Dates are forwarded only when the exact contract passes.
     if (category === 'flight' || (!category && !destination)) {
       return flightRedirect()
     }
@@ -54,7 +78,7 @@ export async function GET(request: NextRequest) {
     return flightRedirect()
   } catch (error) {
     console.error('Unexpected error in Travelpayouts route:', error)
-    return NextResponse.redirect(buildAviasalesSearchUrl({ origin: 'HOU' }))
+    return NextResponse.redirect(buildAviasalesCityPrefillUrl({ origin: 'HOU' }))
   }
 }
 

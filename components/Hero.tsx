@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { Search, Send, AlertCircle, Sparkles, Plane, ArrowRight, Shield, Check } from 'lucide-react'
 import { useState, FormEvent, useEffect, useRef, lazy, Suspense } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import Script from 'next/script'
 // Lazy load heavy dependencies to improve initial page load
 import remarkGfm from 'remark-gfm'
 import rehypeSanitize from 'rehype-sanitize'
@@ -16,9 +16,6 @@ const ReactMarkdown = dynamic(() => import('react-markdown'), {
 import type { NicheColorScheme } from '@/lib/niche-config'
 import { create3DTextShadow, create3DLightTextShadow } from '@/lib/color-utils'
 import { extractOriginAndDestination, getIATACode } from '@/lib/iata-codes'
-import { buildAviasalesSearchUrl, nightsFromText, type AviasalesTripClass } from '@/lib/aviasales'
-import { extractDateFromQuery } from '@/lib/date-utils'
-import { generateProductSchema } from '@/lib/seo'
 import {
   AFFILIATE_LINKS,
   AFFILIATE_LINK_REL,
@@ -39,7 +36,6 @@ interface HeroProps {
 export default function Hero({ title, subtitle, placeholder, description, colors, backgroundImage }: HeroProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [isAccessingMarketData, setIsAccessingMarketData] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [itinerary, setItinerary] = useState<string | null>(null)
   // Planner email gate (soft gate — the itinerary stays visible regardless of signup)
@@ -47,11 +43,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
   const [gateStatus, setGateStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [gateError, setGateError] = useState<string | null>(null)
   const [gateDismissed, setGateDismissed] = useState(false)
-  const [flightData, setFlightData] = useState<{ price: number; currency: string; airline: string; destination: string; origin?: string } | null>(null)
-  const [destinationCode, setDestinationCode] = useState<string | null>(null)
-  const [originCode, setOriginCode] = useState<string | null>(null)
   const [cityError, setCityError] = useState<string | null>(null)
-  const [aviasalesUrl, setAviasalesUrl] = useState<string | null>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [detectedCity, setDetectedCity] = useState<string | null>(null)
   const [locationDetected, setLocationDetected] = useState(false)
@@ -167,10 +159,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
     setError(null)
     setCityError(null)
     setItinerary(null)
-    setFlightData(null)
-    setDestinationCode(null)
-    setOriginCode(null)
-    setAviasalesUrl(null)
     // Reset the email gate for the new itinerary
     setGateStatus('idle')
     setGateError(null)
@@ -180,21 +168,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       // Check if we're online first (only in browser)
       if (typeof window !== 'undefined' && typeof navigator !== 'undefined' && !navigator.onLine) {
         throw new Error('No internet connection. Please check your network settings.')
-      }
-
-      // Check if query mentions price/deals to show market data indicator
-      const queryLower = searchQuery.trim().toLowerCase()
-      const shouldAccessMarketData = queryLower.includes('cheap') || 
-                                    queryLower.includes('deal') || 
-                                    queryLower.includes('price') || 
-                                    queryLower.includes('cost') || 
-                                    queryLower.includes('affordable') || 
-                                    queryLower.includes('budget') ||
-                                    queryLower.includes('best price')
-      
-      // Set market data indicator after a short delay to show it's happening
-      if (shouldAccessMarketData) {
-        setTimeout(() => setIsAccessingMarketData(true), 2000) // Show after 2 seconds of loading
       }
 
       const composedQuery = [
@@ -220,38 +193,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
         setIsLoading(false)
         return
       }
-
-      setOriginCode(origin)
-      setDestinationCode(effectiveDestination)
-
-      const nights = nightsFromText(tripLength) ?? nightsFromText(composedQuery) ?? 7
-      const parsedDepart = extractDateFromQuery(composedQuery)
-      const departDate = parsedDepart ?? (() => {
-        const now = new Date()
-        return new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 21)
-      })()
-      const returnDate = new Date(
-        departDate.getFullYear(),
-        departDate.getMonth(),
-        departDate.getDate() + nights
-      )
-      const tripClass: AviasalesTripClass = /\bbusiness\b/i.test(composedQuery)
-        ? 'business'
-        : /\bfirst class\b/i.test(composedQuery)
-          ? 'first'
-          : 'economy'
-      const searchedOrigin = origin || (detectedCity ? getIATACode(detectedCity) : null) || 'HOU'
-
-      setAviasalesUrl(
-        buildAviasalesSearchUrl({
-          origin: searchedOrigin,
-          destination: effectiveDestination,
-          departDate,
-          returnDate,
-          adults: 1,
-          tripClass,
-        })
-      )
 
       // Call Gemini API to generate travel itinerary
       // Gemini will automatically call searchFlightPrices if user asks about prices/deals
@@ -305,21 +246,10 @@ export default function Hero({ title, subtitle, placeholder, description, colors
         const budget = budgetMatch ? parseInt(budgetMatch[1].replace('k', '000')) : undefined
         
         trackItineraryCreation(
-          effectiveDestination || data.flightData?.destination || 'Unknown',
+          effectiveDestination || 'Unknown',
           duration,
           budget
         )
-        
-        // Update flight data if Gemini found live pricing
-        if (data.flightData) {
-          setFlightData({
-            price: data.flightData.price,
-            currency: data.flightData.currency || 'USD',
-            airline: data.flightData.airline || 'Multiple Airlines',
-            destination: data.flightData.destination || destination || '',
-            origin: data.flightData.origin || origin || '',
-          })
-        }
       } else {
         // If response doesn't have success flag, check for error message
         const errorMsg = data.error || 'Unable to generate itinerary. Please try again.'
@@ -341,7 +271,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       }
     } finally {
       setIsLoading(false)
-      setIsAccessingMarketData(false)
     }
   }
 
@@ -507,11 +436,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   }}
                 >
                   <span>
-                    {isAccessingMarketData 
-                      ? 'CHECKING AVAILABLE MARKET DATA...' 
-                      : isLoading 
-                        ? 'THINKING...' 
-                        : 'PLAN TRIP'}
+                    {isLoading ? 'THINKING...' : 'PLAN TRIP'}
                   </span>
                   {isLoading ? (
                     <Sparkles className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
@@ -550,9 +475,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
               >
                 <Sparkles className="w-5 h-5 animate-pulse" style={{ color: colors.primary }} />
                 <p className="text-white/90 text-sm md:text-base heading-robotic font-medium" style={{ color: colors.primary }}>
-                  {isAccessingMarketData 
-                    ? '🔍 Checking available market data for this route...' 
-                    : '✨ Our AI travel expert is crafting your perfect itinerary...'}
+                  ✨ Our AI travel expert is crafting your perfect itinerary...
                 </p>
               </div>
             </motion.div>
@@ -750,15 +673,14 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </p>
                   <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 list-none p-0 m-0">
                     <li>
-                      <ExternalAffiliateLink
-                        href={aviasalesUrl || AFFILIATE_LINKS.flights.aviasales.url}
-                        trackingLabel="hero_post_itin_flights"
+                      <Link
+                        href="/cheap-flights#exact-flight-search"
                         className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
-                        aria-label="Find flights for this trip on Aviasales, opens in a new tab"
+                        aria-label="Enter airport codes and dates for this trip"
                       >
-                        <span className="text-sm font-semibold text-white block">Find flights for this trip</span>
-                        <span className="text-xs text-neon-cyan/90">Aviasales · Compare options</span>
-                      </ExternalAffiliateLink>
+                        <span className="text-sm font-semibold text-white block">Enter airports and dates</span>
+                        <span className="text-xs text-neon-cyan/90">Round trip search. We do not guess missing airports or dates.</span>
+                      </Link>
                     </li>
                     {(AFFILIATE_LINKS.hotels.tripcom.url || AFFILIATE_LINKS.hotels.bookingcom.url) && (
                       <li>
@@ -852,128 +774,6 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </ul>
                 </div>
 
-                {/* Product Schema for AI Overviews - Critical for 2026 SEO */}
-                {flightData && flightData.price && (
-                  <Script
-                    id="product-schema"
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                      __html: JSON.stringify(
-                        generateProductSchema({
-                          name: `Flight Deal: ${flightData.origin || 'Various'} to ${flightData.destination}`,
-                          description: `Real-time flight deal from ${flightData.airline} for ${flightData.origin || 'Various'} to ${flightData.destination}`,
-                          price: flightData.price,
-                          currency: flightData.currency || 'USD',
-                          availability: 'https://schema.org/InStock',
-                          url: aviasalesUrl || AFFILIATE_LINKS.flights.aviasales.url,
-                          brand: flightData.airline,
-                          category: 'Travel',
-                        })
-                      ),
-                    }}
-                  />
-                )}
-
-                {/* LIVE DEAL Card - Enhanced with BOOK NOW button */}
-                {flightData && flightData.price && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: -10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.5, type: 'spring' }}
-                    className="mt-6 mb-6 p-6 rounded-xl border-2 relative overflow-hidden"
-                    style={{
-                      borderColor: '#10b981',
-                      backgroundColor: 'rgba(16, 185, 129, 0.15)',
-                      boxShadow: '0 0 40px rgba(16, 185, 129, 0.5), 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-                    }}
-                  >
-                    {/* Animated background glow */}
-                    <div 
-                      className="absolute inset-0 opacity-20 animate-pulse"
-                      style={{
-                        background: 'radial-gradient(circle at center, rgba(16, 185, 129, 0.4) 0%, transparent 70%)',
-                      }}
-                    />
-                    
-                    <div className="relative z-10">
-                      {/* Header with LIVE DEAL badge */}
-                      <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold heading-robotic text-white animate-pulse"
-                            style={{
-                              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                              boxShadow: '0 0 20px rgba(16, 185, 129, 0.8), 0 0 40px rgba(16, 185, 129, 0.4)'
-                            }}
-                          >
-                            <span className="relative flex h-2 w-2 mr-2">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                            </span>
-                            ✈️ LIVE DEAL
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Price and Route Info */}
-                      <div className="mb-4">
-                        <div className="flex items-baseline gap-2 mb-2">
-                          <span className="text-4xl md:text-5xl font-bold heading-robotic" style={{ color: '#10b981' }}>
-                            ${flightData.price}
-                          </span>
-                          <span className="text-white/70 text-sm md:text-base">
-                            {flightData.currency || 'USD'}
-                          </span>
-                        </div>
-                        <p className="text-white/90 text-sm md:text-base mb-1">
-                          <span className="font-semibold">{flightData.airline}</span>
-                          {flightData.origin && flightData.destination && (
-                            <span className="text-white/70">
-                              {' '}• {flightData.origin} → {flightData.destination}
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-white/60 text-xs md:text-sm">
-                          Real-time price • May change soon
-                        </p>
-                      </div>
-
-                      {/* BOOK NOW Button */}
-                      {aviasalesUrl && (
-                        <ExternalAffiliateLink
-                          href={aviasalesUrl}
-                          trackingLabel="hero_book_now_deal"
-                          className="block w-full"
-                          aria-label="Book this flight deal on Aviasales in a new tab"
-                          onClick={() => trackCTA('hero_book_now', 'hero_flight_deal')}
-                        >
-                          <motion.span
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="block w-full px-6 py-4 rounded-lg font-bold heading-robotic text-lg md:text-xl text-white transition-all duration-300 relative overflow-hidden min-h-[48px] cursor-pointer text-center"
-                            style={{
-                              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                              boxShadow:
-                                '0 0 30px rgba(16, 185, 129, 0.6), 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-                            }}
-                          >
-                            <span className="relative z-10 flex items-center justify-center gap-3 font-bold">
-                              <span>🚀</span>
-                              <span>BOOK THIS DEAL NOW</span>
-                              <span>→</span>
-                            </span>
-                            <motion.span
-                              className="absolute inset-0 bg-white/20 block"
-                              initial={{ x: '-100%' }}
-                              whileHover={{ x: '100%' }}
-                              transition={{ duration: 0.6 }}
-                            />
-                          </motion.span>
-                        </ExternalAffiliateLink>
-                      )}
-                    </div>
-                  </motion.div>
-                )}
-
                 {/* Action Buttons */}
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
                   <button
@@ -1027,20 +827,17 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   </button>
                 </div>
 
-                {/* Search Live Deals CTA */}
-                {aviasalesUrl && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="mt-6"
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="mt-6"
+                >
+                  <Link
+                    href="/cheap-flights#exact-flight-search"
+                    className="block w-full"
+                    aria-label="Enter origin and destination airport codes and both dates"
                   >
-                    <ExternalAffiliateLink
-                      href={aviasalesUrl}
-                      trackingLabel="hero_search_live_aviasales"
-                      className="block w-full"
-                      aria-label="Find cheap flights on Aviasales in a new tab"
-                    >
                       <motion.span
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -1052,7 +849,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                       >
                         <span className="relative z-10 flex items-center justify-center gap-3">
                           <span>✈️</span>
-                          <span>FIND CHEAP FLIGHTS</span>
+                          <span>ENTER AIRPORTS AND DATES</span>
                           <span>→</span>
                         </span>
                         <motion.span
@@ -1062,9 +859,8 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                           transition={{ duration: 0.6 }}
                         />
                       </motion.span>
-                    </ExternalAffiliateLink>
-                  </motion.div>
-                )}
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           )}
@@ -1091,7 +887,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 href={AFFILIATE_LINKS.flights.aviasales.url}
                 target="_blank"
                 rel={AFFILIATE_LINK_REL}
-                aria-label="Find cheap flights on Aviasales in a new tab"
+                aria-label="Opens Aviasales with Houston filled in and no dates. Not an exact-trip quote."
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"
@@ -1109,7 +905,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   onMouseEnter={(e) => e.currentTarget.style.color = colors.primary}
                   onMouseLeave={(e) => e.currentTarget.style.color = 'white'}
                 >
-                  Find Cheap Flights
+                  Search Flights
                 </span>
                 <div 
                   className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-10 transition-opacity duration-300 blur-md pointer-events-none"

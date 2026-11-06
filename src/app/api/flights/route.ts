@@ -1,7 +1,7 @@
 /**
  * Flight Deals API Route
  * 
- * Fetches real-time flight prices from Travelpayouts API
+ * Returns an indicative monthly partner sample, not a live or exact fare.
  * Requires TRAVELPAYOUTS_TOKEN environment variable
  */
 

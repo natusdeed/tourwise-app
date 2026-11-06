@@ -88,9 +88,9 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
   }
 
   const benefits = [
-    'Weekly mistake fares & flash sales',
-    'Insider tips from travel experts',
-    'Exclusive subscriber-only discounts',
+    'Trip planning notes by email',
+    'Packing checklists and route ideas',
+    'Links to partner flight and stay search',
     'Free downloadable packing checklists',
   ]
 
@@ -111,7 +111,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
           
           {/* Subtitle */}
           <p className="text-white/90 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
-            Unlock exclusive deals on flights, hotels, and tours — free travel hacks for smarter trips
+            Travel planning ideas by email — itinerary tips, packing notes, and links to partner search
           </p>
 
           {/* Benefits List */}

@@ -110,18 +110,18 @@ export default function Home() {
     },
     {
       icon: 'PlaneDeparture',
-      title: 'Find the Cheapest Flights—Automatically',
-      description: 'We scan 500+ airlines in real-time to find you unbeatable prices. Get instant price drop alerts and never overpay for flights again.',
-      stat: '💰 Travelers save an average of $347 per trip',
-      cta: 'Start Saving Now',
+      title: 'Explore flight options with Aviasales',
+      description: 'Open a partner flight search, then confirm the airports, dates, and fare rules on the partner site before you book.',
+      stat: 'Fares are set by the partner and may change',
+      cta: 'Search Flights',
       color: 'from-[#32A8DD] to-[#00FFFF]',
       image: '/feature-flight.jpg.png',
     },
     {
       icon: 'Hotel',
-      title: 'Exclusive Hotel Deals Up to 50% Off',
-      description: 'Unlock member-only rates and secret deals from our premium partner hotels worldwide. Luxury stays at budget-friendly prices.',
-      stat: '🏨 Access to 15,000+ properties globally',
+      title: 'Compare hotel options with booking partners',
+      description: 'Open a partner stay search and confirm the property, dates, and total on the booking site.',
+      stat: 'Prices are set by the partner and may change',
       cta: 'Browse Hotel Deals',
       color: 'from-[#00FFFF] via-[#32A8DD] to-[#00FFFF]',
       image: '/feature-hotel.jpg.png',
@@ -172,9 +172,9 @@ export default function Home() {
         {/* Default Hero for Homepage */}
         <Hero
           title="Your Dream Trip, Planned by AI in 60 Seconds"
-          subtitle="Stop wasting hours on research. Get personalized itineraries, exclusive deals, and hidden local gems—all in one click."
+          subtitle="Plan a trip with a personalized itinerary, then compare partner options for the parts you want to book."
           placeholder="I want to go to Tokyo for 5 days, budget is $2k..."
-          description="Experience the future of travel planning. Our AI crafts your perfect itinerary, finds unbeatable flight deals, and reveals hidden gems you'd never discover alone."
+          description="TourWiseAI builds a trip plan and links you to partner sites. Fares and stay prices are set by those partners and may change."
           colors={defaultColors}
           backgroundImage="/header-banner.jpg.png"
         />
@@ -348,13 +348,12 @@ export default function Home() {
                 <span className="text-gradient">One trip, every booking covered</span>
               </h2>
               <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-                TourWise AI compares live prices across our trusted travel partners — flights, stays,
-                tours, transfers, and eSIMs — so you book each part of your trip at the
-                best available price, all in one place.
+                TourWiseAI links you to partner sites for flights, stays, tours, transfers, and eSIMs.
+                Each partner sets its own price. Confirm the total on the booking site.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 text-left">
                 {[
-                  { icon: '✈️', title: 'Flights', text: 'Live fares across hundreds of airlines', partner: 'Aviasales' },
+                  { icon: '✈️', title: 'Flights', text: 'Partner flight search. Confirm airports, dates, and fare rules there.', partner: 'Aviasales' },
                   ...(AFFILIATE_LINKS.hotels.bookingcom.url || AFFILIATE_LINKS.hotels.tripcom.url
                     ? [{ icon: '🏨', title: 'Stays', text: 'Hotels and apartments worldwide', partner: 'Booking.com · Trip.com' }]
                     : []),
