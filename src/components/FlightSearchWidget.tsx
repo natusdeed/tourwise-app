@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
+import { useConsent } from '@/components/useConsent'
 import { AVIASALES_WIDGET_SRC } from '@/lib/aviasales'
 
 /**
@@ -25,6 +26,7 @@ type Props = {
  * widget node into this container so it appears where the component is placed.
  */
 export default function FlightSearchWidget({ className }: Props) {
+  const consent = useConsent()
   const [scriptLoaded, setScriptLoaded] = useState(false)
   const [widgetReady, setWidgetReady] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -83,19 +85,23 @@ export default function FlightSearchWidget({ className }: Props) {
         be checked on the partner site.
       </p>
       <div ref={containerRef} style={{ width: '100%', maxWidth: '100%' }}>
-      {!widgetReady && (
+      {consent === 'accepted' && !widgetReady && (
         <div
           className="w-full h-[90px] rounded-md bg-white/10 animate-pulse"
           aria-hidden="true"
         />
       )}
-      <Script
-        id={SCRIPT_ID}
-        src={AVIASALES_WIDGET_SRC}
-        strategy="afterInteractive"
-        charSet="utf-8"
-        onLoad={() => setScriptLoaded(true)}
-      />
+      {consent === 'accepted' ? (
+        <Script
+          id={SCRIPT_ID}
+          src={AVIASALES_WIDGET_SRC}
+          strategy="afterInteractive"
+          charSet="utf-8"
+          onLoad={() => setScriptLoaded(true)}
+        />
+      ) : (
+        <p className="text-sm text-white/60">The Aviasales form loads after you accept cookies.</p>
+      )}
       </div>
     </div>
   )

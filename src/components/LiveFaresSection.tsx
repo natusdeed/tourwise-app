@@ -15,7 +15,7 @@ export default function LiveFaresSection({ widthClassName = 'max-w-6xl' }: Props
     <section className="relative px-4 sm:px-6 lg:px-8 pb-12 overflow-x-hidden">
       <div className={`${widthClassName} mx-auto min-w-0`}>
         <h2 className="heading-robotic text-2xl md:text-3xl font-bold text-white mb-2">
-          Aviasales popular-route examples
+          Popular routes on Aviasales (examples)
         </h2>
         <p className="text-white/60 text-sm mb-4 max-w-3xl">
           Indicative examples from Aviasales. These may use different dates or airports, and they are

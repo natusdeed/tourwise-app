@@ -88,10 +88,9 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
   }
 
   const benefits = [
-    'Trip planning notes by email',
-    'Packing checklists and route ideas',
-    'Links to partner flight and stay search',
-    'Free downloadable packing checklists',
+    'Notes on flights, stays, eSIMs, transfers, and insurance',
+    'Links to those pages on TourWiseAI',
+    'A link to the AI trip planner',
   ]
 
   return (
@@ -111,7 +110,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
           
           {/* Subtitle */}
           <p className="text-white/90 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
-            Travel planning ideas by email — itinerary tips, packing notes, and links to partner search
+            A travel-hacks email with notes on flights, stays, eSIMs, transfers, and insurance, plus links to those pages on TourWiseAI
           </p>
 
           {/* Benefits List */}

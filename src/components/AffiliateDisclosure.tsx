@@ -13,7 +13,7 @@ export default function AffiliateDisclosure({ className = '', variant = 'inline'
       travel services). When you click certain links and make a purchase, we may earn a commission at no
       extra cost to you. Some links may earn us a commission at no extra cost to you. This helps keep our
       AI travel planner free.{' '}
-      <Link href="/affiliate-disclosure" className="text-neon-cyan hover:underline">
+      <Link href="/affiliate-disclosure" className="text-neon-cyan underline underline-offset-2">
         Read our full disclosure
       </Link>
       .

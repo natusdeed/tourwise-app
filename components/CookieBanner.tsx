@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
+import { CONSENT_COOKIE, notifyConsent } from '@/lib/consent'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, X } from 'lucide-react'
@@ -11,7 +12,7 @@ export default function CookieBanner() {
 
   useEffect(() => {
     // Check if the user has already made a choice
-    const consent = Cookies.get('tourwise_consent')
+    const consent = Cookies.get(CONSENT_COOKIE)
     if (!consent) {
       // Defer cookie banner to avoid blocking initial render
       // Use requestIdleCallback if available for better performance
@@ -38,14 +39,15 @@ export default function CookieBanner() {
 
   const handleAccept = () => {
     // Set a cookie for 365 days
-    Cookies.set('tourwise_consent', 'accepted', { expires: 365, sameSite: 'lax' })
+    Cookies.set(CONSENT_COOKIE, 'accepted', { expires: 365, sameSite: 'lax' })
+    notifyConsent()
     setShowBanner(false)
-    // 2026 Pro Tip: Refresh page or trigger script loading here
     window.location.reload()
   }
 
   const handleDecline = () => {
-    Cookies.set('tourwise_consent', 'declined', { expires: 365, sameSite: 'lax' })
+    Cookies.set(CONSENT_COOKIE, 'declined', { expires: 365, sameSite: 'lax' })
+    notifyConsent()
     setShowBanner(false)
   }
 

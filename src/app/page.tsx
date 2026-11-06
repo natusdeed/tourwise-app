@@ -123,6 +123,7 @@ export default function Home() {
       description: 'Open a partner stay search and confirm the property, dates, and total on the booking site.',
       stat: 'Prices are set by the partner and may change',
       cta: 'Browse Hotel Deals',
+      href: AFFILIATE_LINKS.hotels.stay22.url,
       color: 'from-[#00FFFF] via-[#32A8DD] to-[#00FFFF]',
       image: '/feature-hotel.jpg.png',
     },
@@ -164,11 +165,7 @@ export default function Home() {
       />
       <ConnectionStatus />
       
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div>
         {/* Default Hero for Homepage */}
         <Hero
           title="Your Dream Trip, Planned by AI in 60 Seconds"
@@ -483,7 +480,7 @@ export default function Home() {
                           target="_blank"
                           rel={AFFILIATE_LINK_REL}
                           className="cta-secondary w-full"
-                          aria-label={`Find cheap flights related to ${vertical.shortName}, opens in a new tab`}
+                          aria-label={`Find ${vertical.shortName.replace(' Tours', '').replace('Travel', '')} Deals, opens in a new tab`}
                           onClick={() => {
                             if (typeof window !== 'undefined' && window.gtag) {
                               window.gtag('event', 'cta_click', {
@@ -570,7 +567,7 @@ export default function Home() {
             content="TourWise AI values your privacy. We use cookies to track affiliate referrals and improve user experience. We do not sell your data."
           />
         )}
-      </motion.div>
+      </div>
     </main>
   )
 }

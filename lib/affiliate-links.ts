@@ -37,7 +37,7 @@ export const AFFILIATE_LINKS = {
       // only from an exact airport-and-date selection.
       url: buildAviasalesCityPrefillUrl({ origin: 'HOU' }),
       description:
-        'Opens Aviasales with Houston (HOU) filled in and no dates. Choose the destination airport and dates there. This is not an exact-trip quote.',
+        "Opens Aviasales with Houston (HOU) filled in and no dates. Choose the destination airport and dates there. This link doesn't hold a specific trip or price.",
       recommendedButtonText: 'Compare flight options',
     },
     // Ready-made Kiwi.com link (US main page). Same URL on every flight button.

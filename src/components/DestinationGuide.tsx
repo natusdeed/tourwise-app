@@ -49,9 +49,9 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
       <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
         <div className="max-w-5xl mx-auto space-y-5 min-w-0">
           <p className="text-sm text-white/60">
-            <Link href="/" className="text-neon-cyan hover:underline">Home</Link>
+            <Link href="/" className="text-neon-cyan underline underline-offset-2">Home</Link>
             <span className="px-2">/</span>
-            <Link href="/guides" className="text-neon-cyan hover:underline">Guides</Link>
+            <Link href="/guides" className="text-neon-cyan underline underline-offset-2">Guides</Link>
             <span className="px-2">/</span>
             <span>{guide.h1}</span>
           </p>
@@ -128,7 +128,7 @@ export default function DestinationGuide({ guide }: { guide: DestinationGuideCon
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-neon-cyan hover:underline break-words"
+                        className="text-neon-cyan underline underline-offset-2 break-words"
                       >
                         {link.label}
                       </a>

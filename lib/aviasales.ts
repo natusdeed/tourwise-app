@@ -91,7 +91,7 @@ export const PARTNER_FARE_NOTE =
   'Fares are set by the partner and may change. Baggage and fare rules vary by airline and must be checked on the partner site.'
 
 export const DISCOVERY_HANDOFF_NOTE =
-  'Choose your airports and dates on Aviasales. This link is not an exact-trip quote. ' +
+  "Choose your airports and dates on Aviasales. This link doesn't hold a specific trip or price. " +
   PARTNER_FARE_NOTE
 
 export type AviasalesSearchInput = {
@@ -262,7 +262,11 @@ export type ExactRoundTripResult = ExactRoundTripSuccess | { ok: false; errors: 
 
 function readAirport(value: string | null | undefined, label: string, errors: string[]): string | null {
   if (value == null || value.trim() === '') {
-    errors.push(`${label} airport code is required. We will not guess it.`)
+    errors.push(
+      label === 'Origin'
+        ? 'Enter an origin airport code (for example, IAH).'
+        : 'Enter a destination airport code.'
+    )
     return null
   }
   const code = value.trim().toUpperCase()
@@ -271,7 +275,7 @@ function readAirport(value: string | null | undefined, label: string, errors: st
     return null
   }
   if (METRO_CODES.has(code)) {
-    errors.push(`${code} is a city code, not one airport. Enter a single airport code. We will not pick one for you.`)
+    errors.push(`${code} covers more than one airport. Enter one airport code, such as IAH or HOU.`)
     return null
   }
   return code
@@ -279,7 +283,7 @@ function readAirport(value: string | null | undefined, label: string, errors: st
 
 function readIso(value: string | null | undefined, label: string, errors: string[]): YMD | null {
   if (value == null || value.trim() === '') {
-    errors.push(`${label} date is required. We will not guess it.`)
+    errors.push(label === 'Departure' ? 'Choose a departure date.' : 'Choose a return date.')
     return null
   }
   const trimmed = value.trim()
@@ -294,7 +298,7 @@ function readIso(value: string | null | undefined, label: string, errors: string
   }
   if (parsed.m === 2 && parsed.d === 29) {
     errors.push(
-      'February 29 cannot be locked in an Aviasales link, because the link has no year. Enter that date on the partner site.'
+      "Aviasales links don't include a year, so February 29 can't be set. Choose another date or search directly on Aviasales."
     )
     return null
   }
@@ -329,9 +333,9 @@ function readCabin(tripClass: string | null | undefined, errors: string[]): Avia
 function yearMismatch(label: string, requested: YMD, resolved: YMD | null): string {
   const requestedText = formatCalendarDate(formatIso(requested))
   if (!resolved) {
-    return `${label} ${requestedText} cannot be kept in an Aviasales link. Enter that date on the partner site.`
+    return `Aviasales links save only the day and month, so ${requestedText} can't be set from here. We didn't create this link. You can set this date directly on Aviasales.`
   }
-  return `${label} ${requestedText} would open as ${formatCalendarDate(formatIso(resolved))}. Aviasales links store the day and month only, so this link is not created.`
+  return `Aviasales links save only the day and month, so ${requestedText} would open as ${formatCalendarDate(formatIso(resolved))}. We didn't create this link. You can set this date directly on Aviasales.`
 }
 
 /**
@@ -365,10 +369,10 @@ export function buildExactAviasalesRoundTrip(input: ExactRoundTripInput): ExactR
     return { ok: false, errors }
   }
   if (compareYmd(depart, todayYmd) <= 0) {
-    errors.push('Departure must be after today (America/Chicago). We will not move the date.')
+    errors.push('Choose a departure date after today (Central Time).')
   }
   if (compareYmd(ret, depart) <= 0) {
-    errors.push('Return date must be after the departure date. We will not move either date.')
+    errors.push('Choose a return date after your departure date.')
   }
   if (errors.length > 0) return { ok: false, errors }
 

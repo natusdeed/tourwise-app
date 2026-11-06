@@ -8,9 +8,10 @@ import type { NicheFeature, NicheColorScheme } from '@/lib/niche-config'
 import { getIconByName } from '@/lib/icon-map'
 import { create3DTextShadow, create3DLightTextShadow, hexToRgba } from '@/lib/color-utils'
 import { trackCTA } from '@/utils/analytics'
+import { AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 interface FeatureGridProps {
-  features: (NicheFeature & { image?: string; stat?: string; cta?: string })[]
+  features: (NicheFeature & { image?: string; stat?: string; cta?: string; href?: string })[]
   colors: NicheColorScheme
   sectionTitle?: string
   sectionDescription?: string
@@ -135,7 +136,32 @@ export default function FeatureGrid({
                     )}
 
                     {/* CTA Button */}
-                    {feature.cta && (
+                    {feature.cta && feature.href ? (
+                      <a
+                        href={feature.href}
+                        target="_blank"
+                        rel={AFFILIATE_LINK_REL}
+                        aria-label={`${feature.cta}, opens in a new tab`}
+                        onClick={() => trackCTA(`feature_${feature.title.toLowerCase().replace(/\s+/g, '_')}`, 'feature_grid')}
+                        className="mt-auto px-4 py-2 text-sm font-semibold heading-robotic rounded-lg flex items-center justify-center gap-2 border transition-all duration-300 group/btn min-h-[44px] min-w-[44px]"
+                        style={{
+                          backgroundColor: 'transparent',
+                          borderColor: `${colors.primary}40`,
+                          color: colors.primary
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = `${colors.primary}20`
+                          e.currentTarget.style.borderColor = colors.primary
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'transparent'
+                          e.currentTarget.style.borderColor = `${colors.primary}40`
+                        }}
+                      >
+                        <span>{feature.cta}</span>
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      </a>
+                    ) : feature.cta ? (
                       <button
                         onClick={() => trackCTA(`feature_${feature.title.toLowerCase().replace(/\s+/g, '_')}`, 'feature_grid')}
                         className="mt-auto px-4 py-2 text-sm font-semibold heading-robotic rounded-lg flex items-center justify-center gap-2 border transition-all duration-300 group/btn min-h-[44px] min-w-[44px]"
@@ -156,7 +182,7 @@ export default function FeatureGrid({
                         <span>{feature.cta}</span>
                         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                       </button>
-                    )}
+                    ) : null}
                   </div>
 
                   {/* Hover Glow Effect - Neon Border */}

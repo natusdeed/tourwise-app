@@ -142,8 +142,42 @@ test('airport and passenger mistakes are rejected instead of substituted', () =>
     assert.equal(result.ok, false, JSON.stringify(overrides))
     if (!result.ok) {
       assert.equal(result.errors.join(' ').includes('DCA'), false)
-      assert.equal(result.errors.join(' ').includes('HOU'), false)
     }
+  }
+})
+
+test('validation wording matches the approved lines', () => {
+  const missing = exactFixture({ origin: '', destination: '', departDate: '', returnDate: '' })
+  assert.equal(missing.ok, false)
+  if (!missing.ok) {
+    assert.match(missing.errors.join('\n'), /Enter an origin airport code \(for example, IAH\)\./)
+    assert.match(missing.errors.join('\n'), /Enter a destination airport code\./)
+    assert.match(missing.errors.join('\n'), /Choose a departure date\./)
+    assert.match(missing.errors.join('\n'), /Choose a return date\./)
+  }
+  const past = exactFixture({ departDate: '2026-11-01' })
+  assert.equal(past.ok, false)
+  if (!past.ok) assert.match(past.errors.join(' '), /Choose a departure date after today \(Central Time\)\./)
+  const reversed = exactFixture({ departDate: '2026-12-20', returnDate: '2026-12-01' })
+  assert.equal(reversed.ok, false)
+  if (!reversed.ok) assert.match(reversed.errors.join(' '), /Choose a return date after your departure date\./)
+  const city = exactFixture({ origin: 'LON' })
+  assert.equal(city.ok, false)
+  if (!city.ok) {
+    assert.match(city.errors.join(' '), /LON covers more than one airport\. Enter one airport code, such as IAH or HOU\./)
+  }
+  const leap = exactFixture({ departDate: '2028-02-29', returnDate: '2028-03-02' })
+  assert.equal(leap.ok, false)
+  if (!leap.ok) {
+    assert.match(leap.errors.join(' '), /Aviasales links don't include a year, so February 29 can't be set/)
+  }
+  const shifted = exactFixture({ departDate: '2027-11-16', returnDate: '2027-11-20' })
+  assert.equal(shifted.ok, false)
+  if (!shifted.ok) {
+    assert.match(
+      shifted.errors.join(' '),
+      /Aviasales links save only the day and month, so November 16, 2027 would open as November 16, 2026/
+    )
   }
 })
 

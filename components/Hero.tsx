@@ -337,24 +337,18 @@ export default function Hero({ title, subtitle, placeholder, description, colors
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
         {/* Main Headline */}
         <div className="flex flex-col items-center justify-center mb-4 sm:mb-6 md:mb-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+          <h1
             className="hero-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold heading-robotic px-2 text-center"
           >
             <span className="text-gradient">
               {title}
             </span>
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+          </h1>
+          <h2
             className="hero-subheadline text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mt-4 sm:mt-6 px-2 text-center max-w-3xl"
           >
             {subtitle}
-          </motion.h2>
+          </h2>
           <motion.button
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -676,7 +670,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                       <Link
                         href="/cheap-flights#exact-flight-search"
                         className="block glass-strong rounded-lg border border-white/10 p-3 hover:border-neon-cyan/40 transition-colors"
-                        aria-label="Enter airport codes and dates for this trip"
+                        aria-label="Enter airports and dates"
                       >
                         <span className="text-sm font-semibold text-white block">Enter airports and dates</span>
                         <span className="text-xs text-neon-cyan/90">Round trip search. We do not guess missing airports or dates.</span>
@@ -836,7 +830,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                   <Link
                     href="/cheap-flights#exact-flight-search"
                     className="block w-full"
-                    aria-label="Enter origin and destination airport codes and both dates"
+                    aria-label="ENTER AIRPORTS AND DATES"
                   >
                       <motion.span
                         whileHover={{ scale: 1.02 }}
@@ -887,7 +881,7 @@ export default function Hero({ title, subtitle, placeholder, description, colors
                 href={AFFILIATE_LINKS.flights.aviasales.url}
                 target="_blank"
                 rel={AFFILIATE_LINK_REL}
-                aria-label="Opens Aviasales with Houston filled in and no dates. Not an exact-trip quote."
+                aria-label="Search Flights. Opens Aviasales with Houston filled in and no dates. This link doesn't hold a specific trip or price."
                 whileHover={{ scale: 1.005, y: -0.2 }}
                 whileTap={{ scale: 0.98 }}
                 className="group relative flex items-center justify-center gap-2 px-3 md:px-4 py-3 rounded-md transition-all duration-300 cursor-pointer min-h-[48px] w-full max-w-full min-w-0"

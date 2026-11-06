@@ -152,7 +152,7 @@ export default function CheapFlightsPage() {
                     destination={houstonRouteDestinationIata(item.href.replace(/^\//, ''))}
                     trackingLabel={`cheap_flights_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
                     className="inline-flex max-w-full items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors"
-                    aria-label={`Check flight deals for ${item.route}, opens in a new tab`}
+                    aria-label={`Check Flight Options for ${item.route}, opens in a new tab`}
                   >
                     Check Flight Options
                   </AviasalesSearchLink>

@@ -1,4 +1,5 @@
 import { AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
+import { formatCalendarDate } from '@/lib/aviasales'
 import { getCheapestDatesFromHouston, type HoustonFareDate } from '@/lib/travelpayouts-data'
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -15,6 +16,7 @@ type Props = {
 export default async function CheapestDatesSection({ destination }: Props) {
   const fares = await getCheapestDatesFromHouston(destination)
   if (fares.length === 0) return null
+  const capturedOn = latestCapture(fares)
 
   return (
     <section
@@ -22,12 +24,12 @@ export default async function CheapestDatesSection({ destination }: Props) {
       className="glass-strong rounded-xl border border-white/10 p-5 md:p-6 min-w-0 overflow-hidden"
     >
       <h2 className="text-xl md:text-2xl font-semibold text-white heading-robotic break-words">
-        Indicative dates from Houston
+        {capturedOn ? 'Sample fares by month from Houston' : 'Indicative dates from Houston'}
       </h2>
       <p className="text-white/60 text-sm mt-2 max-w-3xl">
-        Indicative monthly samples for one adult in economy, not live or exact fares. The figure is
-        not a quote for your trip. Confirm airports, dates, bags, and the total on the partner site.
-        Fares are set by the partner and may change.
+        {capturedOn
+          ? `Indicative monthly samples for one adult in economy. Not live or exact fares. Source: Aviasales, as of ${formatCalendarDate(capturedOn)}.`
+          : 'Indicative monthly samples for one adult in economy, not live or exact fares. The figure is not a quote for your trip. Confirm airports, dates, bags, and the total on the partner site. Fares are set by the partner and may change. Source: Aviasales.'}
       </p>
       <ol className="mt-4 divide-y divide-white/10 list-none m-0 p-0">
         {fares.map((fare) => (
@@ -57,6 +59,12 @@ export default async function CheapestDatesSection({ destination }: Props) {
       </ol>
     </section>
   )
+}
+
+function latestCapture(fares: HoustonFareDate[]): string | null {
+  const dates = fares.map((fare) => fare.capturedOn).filter((date): date is string => Boolean(date))
+  if (dates.length === 0) return null
+  return dates.sort()[dates.length - 1] ?? null
 }
 
 function fareKey(fare: HoustonFareDate): string {
@@ -91,9 +99,7 @@ function formatMonthDay(iso: string): string {
 }
 
 function fareAriaLabel(fare: HoustonFareDate): string {
-  const when = fare.returnDate
-    ? `Depart ${formatDay(fare.departDate)}, return ${formatDay(fare.returnDate)}`
-    : `Depart ${formatDay(fare.departDate)}`
-  const airline = fare.airline ? `, airline ${fare.airline}` : ''
-  return `${when}${airline}, ${formatUsd(fare.price)}. Opens Aviasales in a new tab.`
+  const visible = `${formatFareRange(fare)}, ${formatUsd(fare.price)}`
+  const airline = fare.airline ? ` Airline ${fare.airline}.` : ''
+  return `${visible}.${airline} Opens Aviasales in a new tab.`
 }

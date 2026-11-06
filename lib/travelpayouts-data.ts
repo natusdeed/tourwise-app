@@ -26,6 +26,8 @@ export type HoustonFareDate = {
   price: number
   airline: string | null
   searchUrl: string
+  /** Calendar date the partner sample was captured, when the payload includes one. */
+  capturedOn: string | null
 }
 
 type RawFare = {
@@ -33,6 +35,7 @@ type RawFare = {
   returnDate: string | null
   price: number
   airline: string | null
+  capturedOn: string | null
 }
 
 /**
@@ -235,6 +238,7 @@ function fareFromRecord(record: Record<string, unknown> | null, fallbackDate?: s
     returnDate: returnRaw && returnRaw > departDate ? returnRaw : null,
     price,
     airline: airlineCode(record.airline),
+    capturedOn: dateOnly(record.found_at) || dateOnly(record.foundAt),
   }
 }
 
@@ -275,6 +279,7 @@ function rankFares(
           price: fare.price,
           airline: fare.airline,
           searchUrl: exact.url,
+          capturedOn: fare.capturedOn,
         },
       ]
     })

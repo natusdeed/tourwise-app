@@ -18,7 +18,7 @@ export default function KiwiCompareLink({ trackingLabel, className }: Props) {
       trackingLabel={trackingLabel}
       rel="sponsored noopener noreferrer"
       className={className ?? secondaryClass}
-      aria-label="Opens Kiwi.com in a new tab. Your airports, dates, travelers, and bags are not prefilled."
+      aria-label="Also compare on Kiwi.com. Opens in a new tab. Your airports, dates, travelers, and bags are not prefilled."
     >
       Also compare on Kiwi.com
     </ExternalAffiliateLink>

@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import CookieBanner from '@/components/CookieBanner'
+import ConsentScripts from '@/components/ConsentScripts'
 import ExitIntentPopup from '@/components/ExitIntentPopup'
 import Script from 'next/script'
 import { SITE_ORIGIN, pageMeta } from '@/lib/site'
@@ -145,11 +146,6 @@ export default function RootLayout({
     operatingSystem: 'Web',
     description:
       'AI travel planner for building itineraries and comparing partner options for flights, stays, tours, transfers, eSIMs, car rentals, and insurance. TourWiseAI is not a travel agency.',
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-    },
     provider: {
       '@type': 'Organization',
       name: 'TourWiseAI',
@@ -166,32 +162,7 @@ export default function RootLayout({
         {/* Defer non-critical preconnects */}
         <link rel="dns-prefetch" href="https://api.travelpayouts.com" />
         <link rel="dns-prefetch" href="https://api.resend.com" />
-        <link rel="dns-prefetch" href="https://tpwidg.com" />
-        <link rel="dns-prefetch" href="https://tp-em.com" />
         <link rel="dns-prefetch" href="https://ipinfo.io" />
-        {/* Google Analytics preconnect - only if consent given */}
-        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-        {/* Travelpayouts Drive — loads on every page (affiliate tracking) */}
-        <Script
-          id="travelpayouts-drive"
-          src="https://tp-em.com/NDg0MjQ3.js?t=484247"
-          strategy="beforeInteractive"
-        />
-        {gaId ? (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga-init" strategy="afterInteractive">{`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gaId}');
-            `}</Script>
-          </>
-        ) : null}
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <Script
@@ -209,6 +180,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
         />
+        <ConsentScripts gaId={gaId} />
         <Navbar />
         {children}
         <CookieBanner />
