@@ -97,7 +97,7 @@ export default function AffiliateDisclosurePage() {
   ]
 
   return (
-    <main className="relative min-h-screen pt-20 md:pt-24">
+    <main className="relative min-h-screen pt-20 md:pt-24 overflow-x-clip">
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />
       
@@ -128,7 +128,7 @@ export default function AffiliateDisclosurePage() {
                 <span className="text-sm heading-robotic text-neon-cyan">AFFILIATE DISCLOSURE</span>
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold heading-robotic mb-6">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold heading-robotic mb-6 break-words">
               <span className="text-gradient">AFFILIATE DISCLOSURE</span>
             </h1>
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-4" />
@@ -157,30 +157,30 @@ export default function AffiliateDisclosurePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: sectionIndex * 0.1 }}
-                className="glass-strong rounded-2xl p-6 md:p-10 border border-neon-cyan/30 border-glow-hover"
+                className="glass-strong rounded-2xl p-6 md:p-10 border border-neon-cyan/30 border-glow-hover min-w-0 overflow-hidden"
               >
-                <div className="flex items-start gap-4 mb-6">
+                <div className="flex items-start gap-4 mb-6 min-w-0">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/30 flex items-center justify-center">
                       <Icon className="w-6 h-6 text-neon-cyan" />
                     </div>
                   </div>
-                  <div className="flex-1">
-                    <h2 className="text-2xl md:text-3xl font-bold heading-robotic mb-6 text-white">
+                  <div className="flex-1 min-w-0">
+                    <h2 className="text-2xl md:text-3xl font-bold heading-robotic mb-6 text-white break-words">
                       <span className="text-gradient">{section.title}</span>
                     </h2>
                     <div className="space-y-6">
                       {section.content.map((item, itemIndex) => (
                         <motion.div
                           key={itemIndex}
-                          initial={{ opacity: 0, x: -20 }}
+                          initial={{ opacity: 0, y: 8 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: sectionIndex * 0.1 + itemIndex * 0.1 }}
-                          className="glass rounded-xl p-5 md:p-6 border border-neon-cyan/10 hover:border-neon-cyan/30 transition-all duration-300"
+                          className="glass min-w-0 rounded-xl p-5 md:p-6 border border-neon-cyan/10 hover:border-neon-cyan/30 transition-all duration-300"
                         >
                           {'subtitle' in item && item.subtitle && (
-                            <h3 className="text-lg md:text-xl font-semibold heading-robotic mb-3 text-neon-cyan">
+                            <h3 className="text-lg md:text-xl font-semibold heading-robotic mb-3 text-neon-cyan break-words">
                               {item.subtitle}
                             </h3>
                           )}
@@ -206,7 +206,7 @@ export default function AffiliateDisclosurePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="glass-strong rounded-2xl p-8 md:p-12 border border-electric-blue/30 border-glow-hover text-center"
+            className="glass-strong rounded-2xl p-6 md:p-12 border border-electric-blue/30 border-glow-hover text-center min-w-0 overflow-hidden"
           >
             <Shield className="w-16 h-16 text-electric-blue mx-auto mb-6" />
             <h2 className="text-2xl md:text-3xl font-bold heading-robotic mb-4 text-white">
@@ -217,7 +217,7 @@ export default function AffiliateDisclosurePage() {
             </p>
             <a
               href="mailto:don@tourwiseai.com"
-              className="inline-block px-8 py-4 rounded-lg bg-gradient-to-r from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/40 hover:border-neon-cyan/60 text-neon-cyan font-semibold heading-robotic transition-all duration-300 hover:scale-105"
+              className="inline-block max-w-full whitespace-normal break-words px-4 sm:px-8 py-4 rounded-lg bg-gradient-to-r from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/40 hover:border-neon-cyan/60 text-neon-cyan font-semibold heading-robotic transition-all duration-300"
             >
               Contact Us: don@tourwiseai.com
             </a>

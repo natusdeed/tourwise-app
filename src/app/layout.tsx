@@ -4,7 +4,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import CookieBanner from '@/components/CookieBanner'
 import ConsentScripts from '@/components/ConsentScripts'
-import ExitIntentPopup from '@/components/ExitIntentPopup'
+import DeferredExitIntent from '@/components/DeferredExitIntent'
 import Script from 'next/script'
 import { SITE_ORIGIN, pageMeta } from '@/lib/site'
 
@@ -165,6 +165,13 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.travelpayouts.com" />
         <link rel="dns-prefetch" href="https://api.resend.com" />
         <link rel="dns-prefetch" href="https://ipinfo.io" />
+        <Script id="consent-flag" strategy="beforeInteractive">{`
+          try {
+            if (/(?:^|; )tourwise_consent=/.test(document.cookie)) {
+              document.documentElement.setAttribute('data-consent', '1')
+            }
+          } catch (e) {}
+        `}</Script>
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <Script
@@ -186,7 +193,7 @@ export default function RootLayout({
         <Navbar />
         {children}
         <CookieBanner />
-        <ExitIntentPopup />
+        <DeferredExitIntent />
       </body>
     </html>
   )

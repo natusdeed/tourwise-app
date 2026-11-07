@@ -11,6 +11,7 @@ import FlightSearchWidget from '@/components/FlightSearchWidget'
 import Hero from '@/components/Hero'
 import IdleMount from '@/components/IdleMount'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
+import { textOnDark } from '@/lib/niche-config'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
 const loadFeatureGrid = () => import('@/components/FeatureGrid')
@@ -419,7 +420,7 @@ export default function Home() {
                             style={{ 
                               backgroundColor: `${vertical.colors.primary}20`,
                               borderColor: vertical.colors.primary,
-                              color: vertical.colors.primary
+                              color: textOnDark(vertical.colors)
                             }}
                           >
                             Most Popular
@@ -473,7 +474,7 @@ export default function Home() {
                             style={{
                               backgroundColor: 'transparent',
                               borderColor: `${vertical.colors.primary}40`,
-                              color: vertical.colors.primary
+                              color: textOnDark(vertical.colors)
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.backgroundColor = `${vertical.colors.primary}20`

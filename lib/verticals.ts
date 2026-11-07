@@ -46,6 +46,7 @@ export const verticals: Record<string, VerticalConfig> = {
       accent: '#32CD32',
       textGradient: 'from-[#228B22] to-[#32CD32]',
       glowColor: '#228B22',
+      onDark: '#459e45',
     },
     features: [
       {
@@ -222,6 +223,7 @@ export const verticals: Record<string, VerticalConfig> = {
       accent: '#F1FAEE',
       textGradient: 'from-[#E63946] to-[#457B9D]',
       glowColor: '#E63946',
+      onDark: '#ea5964',
     },
     features: [
       {

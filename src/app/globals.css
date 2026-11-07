@@ -26,6 +26,27 @@ body {
   overflow-x: hidden;
 }
 
+/* Set by the head script when a consent cookie already exists, before paint. */
+html[data-consent] .cookie-banner {
+  display: none;
+}
+
+.nav-sparkle {
+  animation: nav-sparkle-spin 20s linear infinite;
+  flex-shrink: 0;
+}
+
+@media (max-width: 380px) {
+  .nav-wordmark {
+    font-size: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+@keyframes nav-sparkle-spin {
+  to { transform: rotate(360deg); }
+}
+
 @layer utilities {
   .glass {
     background: rgba(255, 255, 255, 0.06);

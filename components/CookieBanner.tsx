@@ -4,37 +4,15 @@ import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { CONSENT_COOKIE, notifyConsent } from '@/lib/consent'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, X } from 'lucide-react'
 
 export default function CookieBanner() {
-  const [showBanner, setShowBanner] = useState(false)
+  // Present in the first HTML so it paints with the page. A late idle reveal
+  // was becoming the largest contentful paint on shorter pages.
+  const [showBanner, setShowBanner] = useState(true)
 
   useEffect(() => {
-    // Check if the user has already made a choice
-    const consent = Cookies.get(CONSENT_COOKIE)
-    if (!consent) {
-      // Defer cookie banner to avoid blocking initial render
-      // Use requestIdleCallback if available for better performance
-      const showBanner = () => setShowBanner(true)
-      let timeoutId: ReturnType<typeof setTimeout> | number | null = null
-      
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        timeoutId = requestIdleCallback(showBanner, { timeout: 3000 }) as unknown as number
-      } else {
-        timeoutId = setTimeout(showBanner, 2000)
-      }
-      
-      return () => {
-        if (timeoutId !== null) {
-          if (typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
-            cancelIdleCallback(timeoutId as number)
-          } else {
-            clearTimeout(timeoutId as ReturnType<typeof setTimeout>)
-          }
-        }
-      }
-    }
+    if (Cookies.get(CONSENT_COOKIE)) setShowBanner(false)
   }, [])
 
   const handleAccept = () => {
@@ -51,15 +29,11 @@ export default function CookieBanner() {
     setShowBanner(false)
   }
 
+  if (!showBanner) return null
+
   return (
-    <AnimatePresence>
-      {showBanner && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-2xl"
+        <div
+          className="cookie-banner fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-2xl"
         >
           <div className="glass-strong border border-neon-cyan/30 border-glow-hover rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-md relative">
             {/* Close Button */}
@@ -72,7 +46,7 @@ export default function CookieBanner() {
             </button>
 
             {/* Content */}
-            <div className="flex flex-col md:flex-row items-start gap-4 pr-8">
+            <div className="flex min-w-0 flex-col md:flex-row items-start gap-4 pr-8">
               {/* Icon */}
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/30 flex items-center justify-center">
@@ -81,7 +55,7 @@ export default function CookieBanner() {
               </div>
 
               {/* Text Content */}
-              <div className="flex-1 text-white">
+              <div className="min-w-0 flex-1 text-white">
                 <h3 className="text-base md:text-lg font-bold heading-robotic mb-2 text-gradient">
                   🍪 We Value Your Travel Privacy
                 </h3>
@@ -92,7 +66,7 @@ export default function CookieBanner() {
                 </p>
 
                 {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex min-w-0 flex-col sm:flex-row gap-3">
                   <button
                     onClick={handleDecline}
                     className="px-6 py-2.5 text-sm font-semibold heading-robotic text-white/80 hover:text-white border border-neon-cyan/30 hover:border-neon-cyan/50 rounded-lg transition-all duration-300 glass hover:bg-white/5"
@@ -109,8 +83,6 @@ export default function CookieBanner() {
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
   )
 }

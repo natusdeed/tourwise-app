@@ -11,6 +11,13 @@ export interface NicheColorScheme {
   accent: string;       // Accent/highlight color
   textGradient: string; // Gradient for text effects (e.g., "from-[color] to-[color]")
   glowColor: string;    // Color for glow effects (hex or CSS color)
+  /** Text color on the dark glass cards. Set when primary is below WCAG AA 4.5:1. */
+  onDark?: string;
+}
+
+/** Label color for text on the dark glass surface. Borders stay on `primary`. */
+export function textOnDark(colors: NicheColorScheme): string {
+  return colors.onDark ?? colors.primary
 }
 
 export interface NicheFeature {

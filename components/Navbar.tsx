@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { Menu, X, Sparkles, ChevronDown, FileText, Plane, Building2, AlertTriangle } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -97,10 +96,7 @@ export default function Navbar() {
   ]
 
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
+    <nav
       className="fixed top-0 left-0 right-0 z-[100] border-b border-neon-cyan/20 overflow-visible"
       style={{ 
         background: 'rgba(8, 12, 24, 0.85)',
@@ -112,33 +108,20 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex-shrink-0"
-          >
+          <div className="min-w-0">
             <Link
               href="/"
               className="flex items-center gap-2 md:gap-3 group"
             >
               {/* Sparkle Icon with Animation */}
-              <motion.div
-                animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="text-neon-cyan"
-              >
+              <div className="nav-sparkle text-neon-cyan">
                 <Sparkles className="h-8 w-8 md:h-10 md:w-10" />
-              </motion.div>
+              </div>
               
               {/* Logo container with AI badge at the end */}
               <div className="flex items-center gap-2 md:gap-3">
                 {/* Enhanced Text Logo - Clear and Sharp */}
-                <span className="text-3xl md:text-5xl lg:text-6xl font-bold heading-robotic relative z-10">
+                <span className="nav-wordmark text-3xl md:text-5xl lg:text-6xl font-bold heading-robotic relative z-10">
                   {/* Gradient overlay - 100% visible, no lighting effects */}
                   <span 
                     className="relative"
@@ -155,40 +138,28 @@ export default function Navbar() {
                 </span>
                 
                 {/* AI Badge - At the end of the text */}
-                <motion.span
-                  whileHover={{ scale: 1.1 }}
-                  className="text-xs md:text-sm font-bold heading-robotic bg-gradient-to-r from-neon-cyan to-electric-blue text-black px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-neon-cyan/50 shadow-lg shadow-cyan-500/50"
-                >
+                <span className="text-xs md:text-sm font-bold heading-robotic bg-gradient-to-r from-neon-cyan to-electric-blue text-black px-2 md:px-3 py-1 md:py-1.5 rounded-full border border-neon-cyan/50 shadow-lg shadow-cyan-500/50">
                   AI
-                </motion.span>
+                </span>
               </div>
             </Link>
-          </motion.div>
+          </div>
 
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10 lg:space-x-12" style={{ marginLeft: '20px' }}>
-            {navLinks.map((link, index) => (
+            {navLinks.map((link) => (
               link.name === 'Features' ? (
-                <motion.a
+                <Link
                   key={link.name}
                   href="/#features"
                   onClick={handleFeaturesClick}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 + 0.3 }}
-                  whileHover={{ scale: 1.1 }}
                   className="text-base lg:text-lg heading-robotic font-bold text-white hover:text-[#00FFFF] transition-colors duration-300 cursor-pointer"
                 >
                   {link.name}
-                </motion.a>
+                </Link>
               ) : link.href.startsWith('/') ? (
-                <motion.span
-                  key={link.name}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 + 0.3 }}
-                >
+                <span key={link.name}>
                   <Link
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
@@ -196,18 +167,12 @@ export default function Navbar() {
                   >
                     {link.name}
                   </Link>
-                </motion.span>
+                </span>
               ) : null
             ))}
             
             {/* Travel Docs Dropdown */}
-            <motion.div
-              ref={travelDocsRef}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="relative"
-            >
+            <div ref={travelDocsRef} className="relative">
               <button
                 type="button"
                 onClick={() => setIsTravelDocsOpen(!isTravelDocsOpen)}
@@ -223,11 +188,7 @@ export default function Navbar() {
               </button>
               
               {isTravelDocsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
+                <div
                   onMouseLeave={() => setIsTravelDocsOpen(false)}
                   className="absolute top-full right-0 mt-2 min-w-[200px] w-64 glass-strong rounded-lg border border-gray-700 shadow-xl overflow-hidden z-[100]"
                   style={{
@@ -256,9 +217,9 @@ export default function Navbar() {
                       </Link>
                     )
                   })}
-                </motion.div>
+                </div>
               )}
-            </motion.div>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -277,12 +238,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden py-4 space-y-2 overflow-x-hidden"
-          >
+          <div className="md:hidden py-4 space-y-2 overflow-x-hidden">
             {navLinks.map((link) => (
               link.name === 'Features' ? (
                 <Link
@@ -326,13 +282,7 @@ export default function Navbar() {
 
               {/* Accordion Content */}
               {isMobileDocsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden"
-                >
+                <div className="overflow-hidden">
                   <div className="bg-white/5 border-l-2 border-neon-cyan/30 mt-1">
                     {travelDocsLinks.map((link, index) => {
                       const Icon = link.icon
@@ -357,12 +307,12 @@ export default function Navbar() {
                       )
                     })}
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </nav>
   )
 }

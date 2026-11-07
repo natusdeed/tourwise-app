@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
-import type { NicheFeature, NicheColorScheme } from '@/lib/niche-config'
+import { textOnDark, type NicheFeature, type NicheColorScheme } from '@/lib/niche-config'
 import { getIconByName } from '@/lib/icon-map'
 import { create3DTextShadow, create3DLightTextShadow, hexToRgba } from '@/lib/color-utils'
 import { trackCTA } from '@/utils/analytics'
@@ -147,7 +147,7 @@ export default function FeatureGrid({
                         style={{
                           backgroundColor: 'transparent',
                           borderColor: `${colors.primary}40`,
-                          color: colors.primary
+                          color: textOnDark(colors)
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.backgroundColor = `${colors.primary}20`
@@ -168,7 +168,7 @@ export default function FeatureGrid({
                         style={{
                           backgroundColor: 'transparent',
                           borderColor: `${colors.primary}40`,
-                          color: colors.primary
+                          color: textOnDark(colors)
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.backgroundColor = `${colors.primary}20`
