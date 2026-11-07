@@ -10,16 +10,14 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Keep the hero's existing quality={85}. Next 16 otherwise allows only 75.
+    qualities: [75, 85],
     minimumCacheTTL: 60,
   },
   
   // Enable compression
   compress: true,
-  
-  // Optimize fonts (enabled by default in Next.js, but explicitly set for clarity)
-  // Note: Next.js automatically optimizes fonts, this is for documentation
-  optimizeFonts: true,
-  
+
   // Enable experimental features for better performance
   // Note: optimizeCss requires 'critters' package - disabled for now to avoid build errors
   // experimental: {

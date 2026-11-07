@@ -285,14 +285,14 @@ export default function Navbar() {
           >
             {navLinks.map((link) => (
               link.name === 'Features' ? (
-                <a
+                <Link
                   key={link.name}
                   href="/#features"
                   onClick={handleFeaturesClick}
                   className="block min-h-[44px] flex items-center text-base heading-robotic font-bold text-white hover:text-neon-cyan transition-colors duration-300 py-3 px-4"
                 >
                   {link.name}
-                </a>
+                </Link>
               ) : link.href.startsWith('/') ? (
                 <Link
                   key={link.name}

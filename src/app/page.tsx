@@ -5,47 +5,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Star } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
 import FlightSearchWidget from '@/components/FlightSearchWidget'
+import Hero from '@/components/Hero'
+import IdleMount from '@/components/IdleMount'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
-// Lazy load heavy components to improve initial page load  
-const Hero = dynamic(() => import('@/components/Hero'), {
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="text-white/70">Loading...</div></div>,
-  ssr: true, // Enable SSR for Hero component
-})
-
-const FeatureGrid = dynamic(() => import('@/components/FeatureGrid'), {
-  loading: () => <div className="min-h-[400px]" />,
-  ssr: false,
-})
-
-const ToolsSection = dynamic(() => import('@/components/ToolsSection'), {
-  loading: () => <div className="min-h-[300px]" />,
-  ssr: false,
-})
-
-const TravelDealsSection = dynamic(() => import('@/components/TravelDealsSection'), {
-  loading: () => <div className="min-h-[180px]" />,
-  ssr: false,
-})
-
-const Footer = dynamic(() => import('@/components/Footer'), {
-  loading: () => <div className="min-h-[200px]" />,
-  ssr: false,
-})
-
-const EmailCapture = dynamic(() => import('@/components/EmailCapture'), {
-  loading: () => <div className="min-h-[400px]" />,
-  ssr: false,
-})
-
-const LegalModal = dynamic(() => import('@/components/LegalModal'), {
-  ssr: false,
-})
+const loadFeatureGrid = () => import('@/components/FeatureGrid')
+const loadToolsSection = () => import('@/components/ToolsSection')
+const loadTravelDealsSection = () => import('@/components/TravelDealsSection')
+const loadFooter = () => import('@/components/Footer')
+const loadEmailCapture = () => import('@/components/EmailCapture')
+const loadLegalModal = () => import('@/components/LegalModal')
 
 export default function Home() {
   // Use state to ensure verticals are only loaded on client side
@@ -183,6 +156,7 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="cv-auto">
         <section className="relative py-8 md:py-10 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-7 md:mb-8 max-w-3xl mx-auto">
@@ -540,33 +514,50 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Default Features Section */}
-        <FeatureGrid
-          features={defaultFeatures}
-          colors={defaultColors}
-          sectionTitle="POWERFUL FEATURES"
-          sectionDescription="Everything you need to plan the perfect trip, powered by cutting-edge AI"
+        <IdleMount
+          load={loadFeatureGrid}
+          fallback={<div className="min-h-[400px]" />}
+          componentProps={{
+            features: defaultFeatures,
+            colors: defaultColors,
+            sectionTitle: 'POWERFUL FEATURES',
+            sectionDescription: 'Everything you need to plan the perfect trip, powered by cutting-edge AI',
+          }}
         />
 
-        <TravelDealsSection />
+        <IdleMount
+          load={loadTravelDealsSection}
+          fallback={<div className="min-h-[180px]" />}
+        />
 
-        <ToolsSection />
-        
-        {/* Email Capture Section - Enhanced Newsletter Signup */}
-        <EmailCapture colors={defaultColors} />
-        
-        {/* Footer */}
-        <Footer />
+        <IdleMount
+          load={loadToolsSection}
+          fallback={<div className="min-h-[300px]" />}
+        />
+
+        <IdleMount
+          load={loadEmailCapture}
+          fallback={<div className="min-h-[400px]" />}
+          componentProps={{ colors: defaultColors }}
+        />
+
+        <IdleMount load={loadFooter} fallback={<div className="min-h-[200px]" />} />
         
         {/* Privacy Policy Modal */}
         {showPrivacyModal && (
-          <LegalModal
-            isOpen={showPrivacyModal}
-            onClose={() => setShowPrivacyModal(false)}
-            title="Privacy Policy"
-            content="TourWise AI values your privacy. We use cookies to track affiliate referrals and improve user experience. We do not sell your data."
+          <IdleMount
+            load={loadLegalModal}
+            fallback={null}
+            componentProps={{
+              isOpen: showPrivacyModal,
+              onClose: () => setShowPrivacyModal(false),
+              title: 'Privacy Policy',
+              content:
+                'TourWise AI values your privacy. We use cookies to track affiliate referrals and improve user experience. We do not sell your data.',
+            }}
           />
         )}
+        </div>
       </div>
     </main>
   )

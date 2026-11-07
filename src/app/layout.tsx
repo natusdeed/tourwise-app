@@ -8,10 +8,12 @@ import ExitIntentPopup from '@/components/ExitIntentPopup'
 import Script from 'next/script'
 import { SITE_ORIGIN, pageMeta } from '@/lib/site'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
+  preload: true,
+  adjustFontFallback: true,
 })
 
 const homeTitle = 'TourWiseAI | AI Travel Planner & Flight Deals'

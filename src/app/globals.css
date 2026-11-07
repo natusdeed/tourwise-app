@@ -384,6 +384,12 @@ body {
   }
 }
 
+/* Skip layout of below-the-fold homepage sections until they are near the screen. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
 /* Hide placeholder when image is loaded */
 .lazy-image-wrapper:has(.lazy-image.loaded) .image-placeholder {
   display: none;

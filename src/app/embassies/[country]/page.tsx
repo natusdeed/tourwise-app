@@ -15,12 +15,13 @@ import { MapPin, ExternalLink, Building2, Phone, Globe } from 'lucide-react'
 import Link from 'next/link'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     country: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { country } = params
   const countryData = getCountryBySlug(country)
 
@@ -46,7 +47,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default async function EmbassyPage({ params }: PageProps) {
+export default async function EmbassyPage(props: PageProps) {
+  const params = await props.params;
   const { country } = params
   const countryData = getCountryBySlug(country)
 
