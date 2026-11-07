@@ -13,15 +13,16 @@ import { generateMetadata as generateSEOMetadata } from '@/lib/seo';
 import { MapPin, ArrowRight } from 'lucide-react';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     vertical: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
-  
+
   if (!verticalConfig) {
     return { title: { absolute: 'Page Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
@@ -34,7 +35,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function DestinationsPage({ params }: PageProps) {
+export default async function DestinationsPage(props: PageProps) {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
 

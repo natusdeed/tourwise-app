@@ -51,12 +51,12 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Because demand is steady year-round and competition is limited, fares on this route rarely collapse the way they do on leisure routes. The travelers who pay the least are the ones who book early, stay flexible on the connecting city, and avoid the mid-December to early-January peak unless that is exactly when they need to travel.',
     ],
     airlines:
-      'United does not fly Houston\u2013Lagos nonstop but sells the journey via its hubs (Newark, Washington Dulles) and Star Alliance partners. The most common one-stop routings are British Airways via London Heathrow, Turkish Airlines via Istanbul, Ethiopian Airlines via Addis Ababa, Qatar Airways via Doha, KLM via Amsterdam, and Lufthansa via Frankfurt. Compare at least three different connecting cities \u2014 the cheapest routing changes month to month.',
+      'United does not fly Houston\u2013Lagos nonstop but sells the journey via its hubs (Newark, Washington Dulles) and Star Alliance partners. The most common one-stop routings are British Airways via London Heathrow, Turkish Airlines via Istanbul, Ethiopian Airlines via Addis Ababa, Qatar Airways via Doha, KLM via Amsterdam, and Lufthansa via Frankfurt. Compare at least three different connecting cities \u2014 which routing costs less changes month to month. That is not a verified lowest fare.',
     bestTimeToBook:
-      'For most of the year, booking 6\u201312 weeks ahead hits the sweet spot. For mid-December travel, treat September as late: Detty December demand fills flights early and fares climb steeply from October. If your dates are flexible, mid-January through March and September through early November are typically the calmest \u2014 and cheapest \u2014 windows.',
+      'For most of the year, booking 6\u201312 weeks ahead hits the sweet spot. For mid-December travel, treat September as late: Detty December demand fills flights early and fares climb steeply from October. If your dates are flexible, mid-January through March and September through early November are often quieter windows. That is not a verified lowest fare.',
     moneyTips: [
       'Compare connecting cities, not just dates. Istanbul, Addis Ababa, and Doha routings often undercut London by a wide margin.',
-      'Check the baggage allowance before you fall in love with a fare \u2014 most long-haul tickets include two checked bags, but the cheapest consolidator fares sometimes do not.',
+      'Check the baggage allowance before you fall in love with a fare \u2014 bag rules vary by airline and fare, and a low headline fare may not include a checked bag. Check both directions on the ticket.',
       'Avoid separate tickets for the connection unless the savings are dramatic. On a single ticket, the airline rebooks you if a leg is delayed; on separate tickets, a missed connection is your problem.',
       'US passport holders need a Nigerian visa in advance (ECOWAS citizens are exempt for up to 90 days). Do not book a non-refundable fare before the visa is sorted \u2014 factor the fee and processing time into your planning.',
       'A yellow fever vaccination certificate is required for entry into Nigeria. Get vaccinated at least 10 days before travel.',
@@ -87,7 +87,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Lagos?',
         answer:
-          'Mid-January through March and September through early November are typically the cheapest windows. Mid-December to early January is the most expensive period of the year by a wide margin.',
+          'Mid-January through March and September through early November are often quieter periods. That is not a verified lowest fare. Mid-December to early January is the most expensive period of the year by a wide margin.',
       },
       {
         question: 'Which Houston airport do I fly from?',
@@ -104,7 +104,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Confirm your Nigerian visa is approved before booking a non-refundable fare.',
       'Get your yellow fever certificate at least 10 days before departure.',
       'Compare one-stop routings via at least three connecting cities (London, Istanbul, Addis Ababa, Doha).',
-      'Verify two checked bags are included \u2014 diaspora trips are rarely light.',
+      'Check the bag allowance in both directions. Diaspora trips are rarely light.',
       'Book a single ticket (not separate tickets) so misconnections are the airline\u2019s problem.',
       'Pre-book your LOS airport transfer and buy your Nigeria eSIM before you fly.',
       'For December travel, book by September; for off-peak, 6\u201312 weeks ahead is the sweet spot.',
@@ -119,11 +119,11 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
     international: true,
     flightTime: 'About 2.5 hours nonstop',
     overview: [
-      'Houston to Cancun is one of the shortest and cheapest international hops from Texas \u2014 about 2.5 hours gate to gate. United flies nonstop from IAH and Southwest flies nonstop from Houston Hobby (HOU), so genuine competition on the route keeps fares honest most of the year.',
+      'Houston to Cancun is one of the shortest international hops from Texas \u2014 about 2.5 hours gate to gate. United flies nonstop from IAH and Southwest flies nonstop from Houston Hobby (HOU), so genuine competition on the route keeps fares honest most of the year.',
       'It is a classic beach-leisure route, which means pricing follows the North American holiday calendar: spring break and Christmas/New Year spike hard, while hurricane season (roughly June\u2013November) dips. The sweet spot is late April\u2013May and late November\u2013early December: warm water, thinner crowds, lower fares.',
     ],
     airlines:
-      'United (IAH\u2013CUN nonstop) and Southwest (HOU\u2013CUN nonstop) anchor the route, with American and others offering one-stop options via DFW, Charlotte, or Phoenix. Southwest includes two free checked bags \u2014 on a beach trip with dive gear or extra luggage, that alone can erase a fare difference. Always compare IAH and HOU: they are different airports with different airlines and often different prices.',
+      'United (IAH\u2013CUN nonstop) and Southwest (HOU\u2013CUN nonstop) anchor the route, with American and others offering one-stop options via DFW, Charlotte, or Phoenix. Southwest bag rules depend on the fare. On a beach trip with dive gear or extra luggage, check the bag fees before you compare totals. Always compare IAH and HOU: they are different airports with different airlines and often different prices.',
     bestTimeToBook:
       'For peak dates (spring break, Christmas), book 3\u20136 months ahead. For off-peak travel, 4\u20138 weeks is usually plenty. If you are flexible, watch for fare drops in September\u2013October \u2014 that is when the deals appear, with the honest caveat that it is hurricane season, so buy travel insurance.',
     moneyTips: [
@@ -149,7 +149,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'Which Houston airport is better for Cancun?',
         answer:
-          'Both work well. Southwest at Hobby (HOU) often wins on total price with two free checked bags; United at IAH (George Bush Intercontinental) offers more daily frequency and schedule flexibility.',
+          'Both work well. Southwest at Hobby (HOU) is one option to compare on total price, including whatever bags that fare charges; United at IAH (George Bush Intercontinental) offers more daily frequency and schedule flexibility.',
       },
       {
         question: 'Do I need a passport for Cancun?',
@@ -159,7 +159,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is hurricane season in Cancun?',
         answer:
-          'Roughly June through November, peaking August\u2013October. Fares are lowest then, but buy travel insurance and have a flexible mindset.',
+          'Roughly June through November, peaking August\u2013October. Fares have often been lower then. That is not a verified lowest fare. Buy travel insurance and have a flexible mindset.',
       },
       {
         question: 'Is an all-inclusive resort worth it in Cancun?',
@@ -231,7 +231,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to London?',
         answer:
-          'January through March and November (outside Thanksgiving week) are reliably the cheapest months. Summer and the Christmas fortnight are the most expensive.',
+          'January through March and November (outside Thanksgiving week) are often lower-demand months. That is not a verified lowest fare. Summer and the Christmas fortnight are the most expensive.',
       },
       {
         question: 'How do I get from Heathrow to central London?',
@@ -415,8 +415,8 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
     bestTimeToBook:
       'Orlando pricing follows the school calendar: spring break, summer, and Christmas are peaks; September\u2013November (hurricane-season caveat) and January\u2013February are value season. For peak weeks, book 2\u20134 months ahead; off-peak, 3\u20136 weeks is usually fine.',
     moneyTips: [
-      'Do the ultra-low-cost total-price math: fare plus bag plus seat versus Southwest (two free bags included). For families, Southwest usually wins.',
-      'HOU vs IAH: Southwest\u2019s Hobby operation is often the cheapest all-in; United\u2019s IAH frequency wins for schedule flexibility and connections.',
+      'Do the ultra-low-cost total-price math: fare plus bag plus seat versus Southwest, and check the bag fees on each fare. A lower headline fare is not automatically the lower total.',
+      'HOU vs IAH: Southwest\u2019s Hobby operation is sometimes lower once bag fees are included. Check the current total; United\u2019s IAH frequency wins for schedule flexibility and connections.',
       'MCO to Disney: compare rideshare and shuttles against a rental car based on where you are staying. Off-site hotels with free parking can make the rental car the winner.',
       'The Brightline train connects MCO to South Florida (including Miami) \u2014 worth knowing for combo trips.',
       'Cruise plus parks combo: fly in the day before sailing, not the morning of. Port Canaveral is about an hour from MCO.',
@@ -437,7 +437,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'Which Houston airport should I use for Orlando?',
         answer:
-          'Southwest at Hobby (HOU) is often the cheapest all-in with two free bags; United at IAH offers more frequencies and better rebooking options. Spirit and Frontier serve both at various times \u2014 do the total-price math with bags.',
+          'Southwest at Hobby (HOU) is one option to compare after bag fees; United at IAH offers more frequencies and better rebooking options. Spirit and Frontier serve both at various times \u2014 do the total-price math with bags.',
       },
       {
         question: 'Are Spirit and Frontier worth it for Houston to Orlando?',
@@ -461,7 +461,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       },
     ],
     bookingChecklist: [
-      'Compare Southwest (HOU, bags included) vs United (IAH, frequency) vs ULCCs on total price with bags.',
+      'Compare Southwest (HOU) vs United (IAH) vs ULCCs on the total, including the bag fees for that fare.',
       'For spring break, summer, or Christmas, book 2\u20134 months ahead; off-peak, 3\u20136 weeks.',
       'Buy travel insurance for June\u2013November trips (hurricane season).',
       'Decide MCO\u2192hotel transport in advance: rental car, rideshare, or pre-booked shuttle.',
@@ -482,12 +482,12 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'There is no nonstop service; every itinerary connects once, most often in Europe or via Addis Ababa. Fares behave like Lagos: steady year-round demand, limited competition, and a sharp December spike. Booking early and staying flexible on the connecting city are the two levers that actually move the price.',
     ],
     airlines:
-      'The most common one-stop routings are British Airways via London Heathrow, KLM via Amsterdam, Turkish Airlines via Istanbul, Ethiopian Airlines via Addis Ababa, and Qatar Airways via Doha, with United selling connections on Star Alliance partners. Compare at least three connecting cities \u2014 the cheapest routing shifts month to month, and Addis Ababa or Istanbul routings often undercut London.',
+      'The most common one-stop routings are British Airways via London Heathrow, KLM via Amsterdam, Turkish Airlines via Istanbul, Ethiopian Airlines via Addis Ababa, and Qatar Airways via Doha, with United selling connections on Star Alliance partners. Compare at least three connecting cities \u2014 which routing costs less changes from month to month. That is not a verified lowest fare. Addis Ababa or Istanbul routings often undercut London.',
     bestTimeToBook:
-      'For most of the year, 6\u201312 weeks ahead is the sweet spot. For mid-December travel, book by September: diaspora demand fills the limited one-stop capacity early and fares climb steeply from October. Mid-January through March and September through early November are typically the calmest \u2014 and cheapest \u2014 windows.',
+      'For most of the year, 6\u201312 weeks ahead is the sweet spot. For mid-December travel, book by September: diaspora demand fills the limited one-stop capacity early and fares climb steeply from October. Mid-January through March and September through early November are often quieter windows. That is not a verified lowest fare.',
     moneyTips: [
       'Compare connecting cities, not just dates. Addis Ababa and Istanbul routings often price well below London.',
-      'Check baggage allowance before booking \u2014 most long-haul tickets include two checked bags, but the cheapest consolidator fares sometimes do not, and diaspora trips are rarely light.',
+      'Check baggage allowance before booking \u2014 bag rules vary by airline and fare. A low headline fare may not include a checked bag, and diaspora trips are rarely light.',
       'Avoid separate tickets for the connection unless savings are dramatic. On a single ticket the airline rebooks you after a delay; on separate tickets a missed connection is your problem.',
       'US passport holders need a Ghanaian visa in advance. Do not book a non-refundable fare before the visa is approved \u2014 factor the fee and processing time into your planning.',
       'A yellow fever vaccination certificate is required for entry into Ghana. Get vaccinated at least 10 days before travel.',
@@ -518,7 +518,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Accra?',
         answer:
-          'Mid-January through March and September through early November are typically the cheapest windows. Mid-December to early January is the most expensive period of the year by a wide margin.',
+          'Mid-January through March and September through early November are often quieter periods. That is not a verified lowest fare. Mid-December to early January is the most expensive period of the year by a wide margin.',
       },
       {
         question: 'Which Houston airport do I fly from?',
@@ -535,7 +535,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Confirm your Ghanaian visa is approved before booking a non-refundable fare.',
       'Get your yellow fever certificate at least 10 days before departure.',
       'Compare one-stop routings via at least three connecting cities (London, Amsterdam, Istanbul, Addis Ababa).',
-      'Verify two checked bags are included \u2014 diaspora trips are rarely light.',
+      'Check the bag allowance in both directions. Diaspora trips are rarely light.',
       'Book a single ticket (not separate tickets) so misconnections are the airline\u2019s problem.',
       'Pre-book your ACC airport transfer and buy your Ghana eSIM before you fly.',
       'For December travel, book by September; for off-peak, 6\u201312 weeks ahead is the sweet spot.',
@@ -551,15 +551,15 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
     flightTime: 'About 2.5\u20133 hours nonstop',
     overview: [
       'Houston to Mexico City is one of the highest-frequency international routes from Texas \u2014 barely 2.5 hours gate to gate, with multiple daily nonstops. United flies it from IAH and the route also sees Aerom\u00e9xico, Viva Aerobus, and Volaris capacity, so genuine competition keeps fares honest most of the year.',
-      'It is equal parts business corridor, VFR route, and city-break destination, which means pricing is steadier than pure leisure routes \u2014 but Mexican holidays (notably D\u00eda de Muertos in late October/early November, Christmas, and Semana Santa) spike demand. Mid-week departures are consistently the cheapest seats on the route.',
+      'It is equal parts business corridor, VFR route, and city-break destination, which means pricing is steadier than pure leisure routes \u2014 but Mexican holidays (notably D\u00eda de Muertos in late October/early November, Christmas, and Semana Santa) spike demand. Mid-week departures are often lower than weekends. That is not a verified lowest fare.',
     ],
     airlines:
-      'United operates nonstop from IAH, and Aerom\u00e9xico, Viva Aerobus, and Volaris also serve the Houston\u2013Mexico City market with varying frequency. Compare United\u2019s included-bags fare against the Mexican ULCCs\u2019 base fares plus bag fees \u2014 the \u201Ccheap\u201D fare is not always cheaper once bags are added.',
+      'United operates nonstop from IAH, and Aerom\u00e9xico, Viva Aerobus, and Volaris also serve the Houston\u2013Mexico City market with varying frequency. Compare United\u2019s fare, including its bag rules, against the Mexican ULCCs\u2019 base fares plus bag fees \u2014 the \u201Ccheap\u201D fare is not always cheaper once bags are added.',
     bestTimeToBook:
-      'For most of the year, 3\u20136 weeks ahead is plenty. For D\u00eda de Muertos (late Oct\u2013early Nov), Christmas/New Year, and Semana Santa (the week before Easter), book 2\u20133 months ahead. Late January through March (outside Semana Santa) is typically the cheapest window.',
+      'For most of the year, 3\u20136 weeks ahead is plenty. For D\u00eda de Muertos (late Oct\u2013early Nov), Christmas/New Year, and Semana Santa (the week before Easter), book 2\u20133 months ahead. Late January through March (outside Semana Santa) is often a lower-demand period. That is not a verified lowest fare.',
     moneyTips: [
       'Compare total price with bags: Mexican ULCC base fares look cheap until you add checked and carry-on bag fees.',
-      'Tuesday and Wednesday departures are consistently the cheapest on this route.',
+      'Tuesday and Wednesday departures are often lower than weekends. That is not a verified lowest fare.',
       'Note the airport: most flights use MEX (Benito Ju\u00e1rez). A few use Felipe \u00c1ngeles (NLU) \u2014 much farther from the city center, so factor the transfer cost and time.',
       'US passport holders do not need a visa for tourist stays up to 180 days, but you do need a valid passport \u2014 check the expiry date now.',
       'Mexico City sits at 7,350 feet. Give yourself an easy first day; altitude headaches are real for sea-level Houstonians.',
@@ -590,7 +590,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Mexico City?',
         answer:
-          'Late January through March (outside Semana Santa) is typically cheapest. Avoid D\u00eda de Muertos week, Christmas/New Year, and Semana Santa unless those are your dates.',
+          'Late January through March (outside Semana Santa) is often lower demand. That is not a verified lowest fare. Avoid D\u00eda de Muertos week, Christmas/New Year, and Semana Santa unless those are your dates.',
       },
       {
         question: 'Which Houston airport flies to Mexico City?',
@@ -604,7 +604,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       },
     ],
     bookingChecklist: [
-      'Compare United (bags included) vs Aerom\u00e9xico/Viva/Volaris (add bag fees) on total price.',
+      'Compare United vs Aerom\u00e9xico/Viva/Volaris on the total, including bag fees for each fare.',
       'Confirm which Mexico City airport (MEX vs NLU) your flight uses.',
       'For D\u00eda de Muertos, Christmas, or Semana Santa, book 2\u20133 months ahead.',
       'Check your passport expiry \u2014 no visa needed for US tourists, but the passport must be valid.',
@@ -633,7 +633,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Price the Emirates nonstop against one-stop routings before deciding \u2014 the nonstop premium is real, and a one-stop via Istanbul or Doha can save enough for days of hotel.',
       'Summer (Jun\u2013Sep) is furnace-hot but genuinely cheap: luxury hotels discount steeply. If you can handle 110\u00b0F, it is the budget play.',
       'US passport holders get a free 30-day visa on arrival in the UAE \u2014 no advance paperwork.',
-      'Emirates includes generous baggage (often two checked bags) even in economy \u2014 factor that against ULCC-style one-stop fares with bag fees.',
+      'Check the Emirates bag allowance on the exact fare, then compare it with one-stop fares that charge for bags.',
       'Consider a stopover: Emirates and Qatar both offer stopover programs that let you break the journey in Dubai or Doha for little extra.',
       'Book hotels with free cancellation. Dubai hotel prices swing hard with events and season; re-check rates closer to departure.',
     ],
@@ -657,7 +657,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Dubai?',
         answer:
-          'Summer (June\u2013September) is cheapest \u2014 extreme heat drives prices down. Winter (November\u2013March) is peak season with the highest fares.',
+          'Summer (June\u2013September) is often lower demand because of the heat. That is not a verified lowest fare. Winter (November\u2013March) is peak season with the highest fares.',
       },
       {
         question: 'How long is the layover option via Europe?',
@@ -679,7 +679,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Compare the Emirates nonstop vs one-stop routings (Istanbul, Doha, London) on total price.',
       'For winter travel book 2\u20134 months ahead; summer 6\u20138 weeks is fine.',
       'No visa paperwork needed \u2014 US passport gets 30 days on arrival.',
-      'Check baggage included: Emirates economy usually includes two checked bags.',
+      'Check the bag allowance on the exact Emirates fare. Do not assume economy includes two checked bags.',
       'Consider a stopover program if continuing to Asia or Africa.',
       'Buy your eSIM before flying; remember VoIP restrictions on local networks.',
       'Book hotels with free cancellation and re-check rates before departure.',
@@ -695,7 +695,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
     flightTime: 'About 13\u201314 hours nonstop, or 17\u201322 hours with one stop',
     overview: [
       'Houston to Tokyo is the premier Asia corridor from Texas \u2014 ANA and United both fly it nonstop from IAH in about 13\u201314 hours. Japan\u2019s post-reopening tourism boom made this one of the most searched long-haul routes from Houston, with cherry-blossom season and autumn foliage driving the biggest spikes.',
-      'The nonstops are convenient but rarely the cheapest; one-stop routings via the West Coast (LAX, SFO, SEA) or via Taipei and Seoul often undercut them. Fares follow Japan\u2019s seasons hard: late March\u2013early April (sakura) and November (autumn color) are peak; June (rainy season) and late January\u2013February are the value windows.',
+      'The nonstops are convenient but not always the lower fare; one-stop routings via the West Coast (LAX, SFO, SEA) or via Taipei and Seoul often undercut them. Fares follow Japan\u2019s seasons hard: late March\u2013early April (sakura) and November (autumn color) are peak; June (rainy season) and late January\u2013February are the value windows.',
     ],
     airlines:
       'ANA and United operate nonstop from IAH (mostly to Narita, some Haneda). One-stop options include American/JAL via Dallas, Delta/Korean Air via Seattle, EVA Air via Taipei, and Asiana via Seoul. Compare the nonstop against West Coast one-stops \u2014 the savings are often significant enough to justify the extra hours.',
@@ -734,7 +734,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Tokyo?',
         answer:
-          'June (rainy season) and late January\u2013February are typically cheapest. Cherry-blossom season and November foliage are the most expensive.',
+          'June (rainy season) and late January\u2013February are often lower demand. That is not a verified lowest fare. Cherry-blossom season and November foliage are the most expensive.',
       },
       {
         question: 'How far ahead should I book for cherry-blossom season?',
@@ -801,7 +801,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Madrid?',
         answer:
-          'November through February is typically cheapest. Summer (June\u2013August) is peak season with the highest fares \u2014 and serious heat.',
+          'November through February is often lower demand. That is not a verified lowest fare. Summer (June\u2013August) is peak season with the highest fares \u2014 and serious heat.',
       },
       {
         question: 'Can I use Madrid as a base for the rest of Europe?',
@@ -825,7 +825,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'No visa needed for US tourists (Schengen 90/180 rule) \u2014 just a valid passport.',
       'Allow 2+ hours for connections at Barajas; it is a big airport.',
       'Buy your EU eSIM before you fly \u2014 one SIM covers Spain and onward countries.',
-      'Book onward intra-Europe flights early for the cheapest fares.',
+      'Book onward intra-Europe flights early if you want more fare options.',
       'Plan dinners late (9\u201310pm) \u2014 that is when Madrid actually eats.',
     ],
   },
@@ -842,7 +842,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       'Fares follow the northern-European calendar: late April\u2013May (tulip season) and summer are peak; November\u2013February is the value window \u2014 gray but cheap, with Christmas markets as the consolation prize. KLM\u2019s nonstop usually prices competitively against one-stop routings, which is not always true on other routes.',
     ],
     airlines:
-      'KLM operates the nonstop from IAH (with United codeshares). One-stop alternatives include United via Newark/Washington, American via Dallas or Philadelphia, and routings via London, Paris, or Frankfurt. Price the KLM nonstop first \u2014 it is often within striking distance of the cheapest one-stop, making it the obvious pick.',
+      'KLM operates the nonstop from IAH (with United codeshares). One-stop alternatives include United via Newark/Washington, American via Dallas or Philadelphia, and routings via London, Paris, or Frankfurt. Price the KLM nonstop first \u2014 it is often within striking distance of a lower one-stop fare, making it the obvious pick.',
     bestTimeToBook:
       'For tulip season (mid-Apr\u2013early May) and summer, book 2\u20134 months ahead. For winter (Nov\u2013Feb), 6\u20138 weeks is usually enough. September\u2013October is the sweet spot: decent weather, thinner crowds, softer fares.',
     moneyTips: [
@@ -873,7 +873,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       {
         question: 'When is the cheapest time to fly Houston to Amsterdam?',
         answer:
-          'November through February is typically cheapest. Tulip season (mid-April\u2013early May) and summer are the most expensive.',
+          'November through February is often lower demand. That is not a verified lowest fare. Tulip season (mid-April\u2013early May) and summer are the most expensive.',
       },
       {
         question: 'How do I get from Schiphol to central Amsterdam?',
@@ -892,7 +892,7 @@ export const HOUSTON_ROUTES: Record<string, HoustonRouteDetails> = {
       },
     ],
     bookingChecklist: [
-      'Price the KLM nonstop first \u2014 it is often close to the cheapest one-stop.',
+      'Price the KLM nonstop first \u2014 it is often close to a lower one-stop fare.',
       'For tulip season or summer, book 2\u20134 months ahead; winter 6\u20138 weeks.',
       'No visa needed for US tourists (Schengen 90/180 rule) \u2014 just a valid passport.',
       'If going for tulips, lock accommodation when you book the flight.',

@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import ExternalAffiliateLink from '@/components/ExternalAffiliateLink'
 import AffiliateDisclosure from '@/components/AffiliateDisclosure'
 import FlightSearchWidget from '@/components/FlightSearchWidget'
+import ExactFlightSearch from '@/components/ExactFlightSearch'
 import FAQAccordion from '@/components/FAQAccordion'
 import { AFFILIATE_LINKS } from '@/lib/affiliate-links'
 import AviasalesSearchLink from '@/components/AviasalesSearchLink'
@@ -151,7 +152,7 @@ export default function CheapFlightsPage() {
                     destination={houstonRouteDestinationIata(item.href.replace(/^\//, ''))}
                     trackingLabel={`cheap_flights_${item.route.toLowerCase().replace(/\s+/g, '_')}`}
                     className="inline-flex max-w-full items-center justify-center rounded-lg border border-neon-cyan/40 bg-neon-cyan/10 px-3 py-2.5 text-sm font-semibold text-neon-cyan hover:bg-neon-cyan/20 transition-colors"
-                    aria-label={`Check flight deals for ${item.route}, opens in a new tab`}
+                    aria-label={`Check Flight Options for ${item.route}, opens in a new tab`}
                   >
                     Check Flight Options
                   </AviasalesSearchLink>
@@ -186,8 +187,9 @@ export default function CheapFlightsPage() {
             Search Flight Deals
           </h2>
           <p className="text-white/70 text-sm md:text-base mb-6 max-w-3xl">
-            Use TourWiseAI to plan the trip, then compare current flight options through our travel partners.
+            Use the round-trip fields to keep the airports and dates you choose. The partner form below is separate and starts blank.
           </p>
+          <ExactFlightSearch />
           <div className="mb-5 flex flex-col sm:flex-row flex-wrap gap-3 min-w-0">
             <ExternalAffiliateLink
               href={AFFILIATE_LINKS.flights.aviasales.url}

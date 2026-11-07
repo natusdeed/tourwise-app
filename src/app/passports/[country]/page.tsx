@@ -16,12 +16,13 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     country: string
-  }
+  }>
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { country } = params
   const countryData = getCountryBySlug(country)
 
@@ -47,7 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default async function PassportPage({ params }: PageProps) {
+export default async function PassportPage(props: PageProps) {
+  const params = await props.params;
   const { country } = params
   const countryData = getCountryBySlug(country)
 

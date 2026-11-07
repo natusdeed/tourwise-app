@@ -5,47 +5,21 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Star } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import Script from 'next/script'
 import ConnectionStatus from '@/components/ConnectionStatus'
 import FlightSearchWidget from '@/components/FlightSearchWidget'
+import Hero from '@/components/Hero'
+import IdleMount from '@/components/IdleMount'
 import { getAllVerticals, type VerticalConfig } from '@/lib/verticals'
+import { textOnDark } from '@/lib/niche-config'
 import { AFFILIATE_LINKS, AFFILIATE_LINK_REL } from '@/lib/affiliate-links'
 
-// Lazy load heavy components to improve initial page load  
-const Hero = dynamic(() => import('@/components/Hero'), {
-  loading: () => <div className="min-h-screen flex items-center justify-center"><div className="text-white/70">Loading...</div></div>,
-  ssr: true, // Enable SSR for Hero component
-})
-
-const FeatureGrid = dynamic(() => import('@/components/FeatureGrid'), {
-  loading: () => <div className="min-h-[400px]" />,
-  ssr: false,
-})
-
-const ToolsSection = dynamic(() => import('@/components/ToolsSection'), {
-  loading: () => <div className="min-h-[300px]" />,
-  ssr: false,
-})
-
-const TravelDealsSection = dynamic(() => import('@/components/TravelDealsSection'), {
-  loading: () => <div className="min-h-[180px]" />,
-  ssr: false,
-})
-
-const Footer = dynamic(() => import('@/components/Footer'), {
-  loading: () => <div className="min-h-[200px]" />,
-  ssr: false,
-})
-
-const EmailCapture = dynamic(() => import('@/components/EmailCapture'), {
-  loading: () => <div className="min-h-[400px]" />,
-  ssr: false,
-})
-
-const LegalModal = dynamic(() => import('@/components/LegalModal'), {
-  ssr: false,
-})
+const loadFeatureGrid = () => import('@/components/FeatureGrid')
+const loadToolsSection = () => import('@/components/ToolsSection')
+const loadTravelDealsSection = () => import('@/components/TravelDealsSection')
+const loadFooter = () => import('@/components/Footer')
+const loadEmailCapture = () => import('@/components/EmailCapture')
+const loadLegalModal = () => import('@/components/LegalModal')
 
 export default function Home() {
   // Use state to ensure verticals are only loaded on client side
@@ -110,19 +84,20 @@ export default function Home() {
     },
     {
       icon: 'PlaneDeparture',
-      title: 'Find the Cheapest Flights—Automatically',
-      description: 'We scan 500+ airlines in real-time to find you unbeatable prices. Get instant price drop alerts and never overpay for flights again.',
-      stat: '💰 Travelers save an average of $347 per trip',
-      cta: 'Start Saving Now',
+      title: 'Explore flight options with Aviasales',
+      description: 'Open a partner flight search, then confirm the airports, dates, and fare rules on the partner site before you book.',
+      stat: 'Fares are set by the partner and may change',
+      cta: 'Search Flights',
       color: 'from-[#32A8DD] to-[#00FFFF]',
       image: '/feature-flight.jpg.png',
     },
     {
       icon: 'Hotel',
-      title: 'Exclusive Hotel Deals Up to 50% Off',
-      description: 'Unlock member-only rates and secret deals from our premium partner hotels worldwide. Luxury stays at budget-friendly prices.',
-      stat: '🏨 Access to 15,000+ properties globally',
+      title: 'Compare hotel options with booking partners',
+      description: 'Open a partner stay search and confirm the property, dates, and total on the booking site.',
+      stat: 'Prices are set by the partner and may change',
       cta: 'Browse Hotel Deals',
+      href: AFFILIATE_LINKS.hotels.stay22.url,
       color: 'from-[#00FFFF] via-[#32A8DD] to-[#00FFFF]',
       image: '/feature-hotel.jpg.png',
     },
@@ -164,17 +139,13 @@ export default function Home() {
       />
       <ConnectionStatus />
       
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
+      <div>
         {/* Default Hero for Homepage */}
         <Hero
           title="Your Dream Trip, Planned by AI in 60 Seconds"
-          subtitle="Stop wasting hours on research. Get personalized itineraries, exclusive deals, and hidden local gems—all in one click."
+          subtitle="Plan a trip with a personalized itinerary, then compare partner options for the parts you want to book."
           placeholder="I want to go to Tokyo for 5 days, budget is $2k..."
-          description="Experience the future of travel planning. Our AI crafts your perfect itinerary, finds unbeatable flight deals, and reveals hidden gems you'd never discover alone."
+          description="TourWiseAI builds a trip plan and links you to partner sites. Fares and stay prices are set by those partners and may change."
           colors={defaultColors}
           backgroundImage="/header-banner.jpg.png"
         />
@@ -186,6 +157,7 @@ export default function Home() {
           </div>
         </section>
 
+        <div className="cv-auto">
         <section className="relative py-8 md:py-10 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-7 md:mb-8 max-w-3xl mx-auto">
@@ -348,13 +320,12 @@ export default function Home() {
                 <span className="text-gradient">One trip, every booking covered</span>
               </h2>
               <p className="text-white/75 text-sm md:text-base max-w-2xl mx-auto mb-8 leading-relaxed">
-                TourWise AI compares live prices across our trusted travel partners — flights, stays,
-                tours, transfers, and eSIMs — so you book each part of your trip at the
-                best available price, all in one place.
+                TourWiseAI links you to partner sites for flights, stays, tours, transfers, and eSIMs.
+                Each partner sets its own price. Confirm the total on the booking site.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 text-left">
                 {[
-                  { icon: '✈️', title: 'Flights', text: 'Live fares across hundreds of airlines', partner: 'Aviasales' },
+                  { icon: '✈️', title: 'Flights', text: 'Partner flight search. Confirm airports, dates, and fare rules there.', partner: 'Aviasales' },
                   ...(AFFILIATE_LINKS.hotels.bookingcom.url || AFFILIATE_LINKS.hotels.tripcom.url
                     ? [{ icon: '🏨', title: 'Stays', text: 'Hotels and apartments worldwide', partner: 'Booking.com · Trip.com' }]
                     : []),
@@ -449,7 +420,7 @@ export default function Home() {
                             style={{ 
                               backgroundColor: `${vertical.colors.primary}20`,
                               borderColor: vertical.colors.primary,
-                              color: vertical.colors.primary
+                              color: textOnDark(vertical.colors)
                             }}
                           >
                             Most Popular
@@ -484,7 +455,7 @@ export default function Home() {
                           target="_blank"
                           rel={AFFILIATE_LINK_REL}
                           className="cta-secondary w-full"
-                          aria-label={`Find cheap flights related to ${vertical.shortName}, opens in a new tab`}
+                          aria-label={`Find ${vertical.shortName.replace(' Tours', '').replace('Travel', '')} Deals, opens in a new tab`}
                           onClick={() => {
                             if (typeof window !== 'undefined' && window.gtag) {
                               window.gtag('event', 'cta_click', {
@@ -503,7 +474,7 @@ export default function Home() {
                             style={{
                               backgroundColor: 'transparent',
                               borderColor: `${vertical.colors.primary}40`,
-                              color: vertical.colors.primary
+                              color: textOnDark(vertical.colors)
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.backgroundColor = `${vertical.colors.primary}20`
@@ -544,34 +515,51 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Default Features Section */}
-        <FeatureGrid
-          features={defaultFeatures}
-          colors={defaultColors}
-          sectionTitle="POWERFUL FEATURES"
-          sectionDescription="Everything you need to plan the perfect trip, powered by cutting-edge AI"
+        <IdleMount
+          load={loadFeatureGrid}
+          fallback={<div className="min-h-[400px]" />}
+          componentProps={{
+            features: defaultFeatures,
+            colors: defaultColors,
+            sectionTitle: 'POWERFUL FEATURES',
+            sectionDescription: 'Everything you need to plan the perfect trip, powered by cutting-edge AI',
+          }}
         />
 
-        <TravelDealsSection />
+        <IdleMount
+          load={loadTravelDealsSection}
+          fallback={<div className="min-h-[180px]" />}
+        />
 
-        <ToolsSection />
-        
-        {/* Email Capture Section - Enhanced Newsletter Signup */}
-        <EmailCapture colors={defaultColors} />
-        
-        {/* Footer */}
-        <Footer />
+        <IdleMount
+          load={loadToolsSection}
+          fallback={<div className="min-h-[300px]" />}
+        />
+
+        <IdleMount
+          load={loadEmailCapture}
+          fallback={<div className="min-h-[400px]" />}
+          componentProps={{ colors: defaultColors }}
+        />
+
+        <IdleMount load={loadFooter} fallback={<div className="min-h-[200px]" />} />
         
         {/* Privacy Policy Modal */}
         {showPrivacyModal && (
-          <LegalModal
-            isOpen={showPrivacyModal}
-            onClose={() => setShowPrivacyModal(false)}
-            title="Privacy Policy"
-            content="TourWise AI values your privacy. We use cookies to track affiliate referrals and improve user experience. We do not sell your data."
+          <IdleMount
+            load={loadLegalModal}
+            fallback={null}
+            componentProps={{
+              isOpen: showPrivacyModal,
+              onClose: () => setShowPrivacyModal(false),
+              title: 'Privacy Policy',
+              content:
+                'TourWise AI values your privacy. We use cookies to track affiliate referrals and improve user experience. We do not sell your data.',
+            }}
           />
         )}
-      </motion.div>
+        </div>
+      </div>
     </main>
   )
 }

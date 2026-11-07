@@ -88,10 +88,9 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
   }
 
   const benefits = [
-    'Weekly mistake fares & flash sales',
-    'Insider tips from travel experts',
-    'Exclusive subscriber-only discounts',
-    'Free downloadable packing checklists',
+    'Notes on flights, stays, eSIMs, transfers, and insurance',
+    'Links to those pages on TourWiseAI',
+    'A link to the AI trip planner',
   ]
 
   return (
@@ -111,7 +110,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
           
           {/* Subtitle */}
           <p className="text-white/90 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
-            Unlock exclusive deals on flights, hotels, and tours — free travel hacks for smarter trips
+            Travel-hack notes by email on flights, stays, eSIMs, transfers, and insurance, with links to our TourWiseAI guides.
           </p>
 
           {/* Benefits List */}

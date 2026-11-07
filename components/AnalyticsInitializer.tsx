@@ -27,13 +27,13 @@
  */
 
 import { useEffect } from 'react'
-import Cookies from 'js-cookie'
+import { readConsent } from '@/lib/consent'
 import { initGA4, initScrollTracking } from '@/utils/analytics'
 
 export default function AnalyticsInitializer() {
   useEffect(() => {
     // Check cookie consent before initializing
-    const consent = Cookies.get('tourwise_consent')
+    const consent = readConsent()
     
     if (consent === 'accepted') {
       // Initialize GA4 (will use NEXT_PUBLIC_GA4_MEASUREMENT_ID from env)

@@ -13,17 +13,18 @@ import { generateMetadata as generateSEOMetadata, generateDestinationSchema, gen
 import DestinationTemplate from '@/components/templates/DestinationTemplate';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     vertical: string;
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { vertical, slug } = params;
   const verticalConfig = getVerticalBySlug(vertical);
   const destination = await getContentItem('destinations', slug, vertical);
-  
+
   if (!verticalConfig || !destination) {
     return { title: { absolute: 'Destination Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function DestinationPage({ params }: PageProps) {
+export default async function DestinationPage(props: PageProps) {
+  const params = await props.params;
   const { vertical, slug } = params;
   const verticalConfig = getVerticalBySlug(vertical);
   const destination = await getContentItem('destinations', slug, vertical);

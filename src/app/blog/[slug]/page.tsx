@@ -11,14 +11,15 @@ import {
 import Link from 'next/link'
 import { format } from 'date-fns'
 
-type PageProps = { params: { slug: string } }
+type PageProps = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
   const posts = await getAllContentItems('posts')
   return posts.map((p) => ({ slug: p.slug }))
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const post = await getContentItem('posts', params.slug)
   if (!post) {
     return { title: { absolute: 'Post Not Found | TourWiseAI' }, robots: { index: false, follow: false } }
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default async function SiteBlogPostPage({ params }: PageProps) {
+export default async function SiteBlogPostPage(props: PageProps) {
+  const params = await props.params;
   const post = await getContentItem('posts', params.slug)
   if (!post) {
     notFound()

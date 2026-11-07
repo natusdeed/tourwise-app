@@ -13,17 +13,18 @@ import { generateMetadata as generateSEOMetadata, generateArticleSchema, generat
 import BlogTemplate from '@/components/templates/BlogTemplate';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     vertical: string;
     slug: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { vertical, slug } = params;
   const verticalConfig = getVerticalBySlug(vertical);
   const post = await getContentItem('blog', slug, vertical);
-  
+
   if (!verticalConfig || !post) {
     return { title: { absolute: 'Post Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
@@ -42,7 +43,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage(props: PageProps) {
+  const params = await props.params;
   const { vertical, slug } = params;
   const verticalConfig = getVerticalBySlug(vertical);
   const post = await getContentItem('blog', slug, vertical);

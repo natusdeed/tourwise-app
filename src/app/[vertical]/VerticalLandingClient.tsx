@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, MapPin, BookOpen, Calendar } from 'lucide-react'
 import type { VerticalConfig } from '@/lib/verticals'
+import { textOnDark } from '@/lib/niche-config'
 import Hero from '@/components/Hero'
 import FeatureGrid from '@/components/FeatureGrid'
 import ToolsSection from '@/components/ToolsSection'
@@ -173,7 +174,7 @@ export default function VerticalLandingClient({ verticalConfig }: VerticalLandin
                           <p className="text-white/70 text-sm line-clamp-2 mb-4">
                             {dest.frontmatter.description}
                           </p>
-                          <div className="flex items-center gap-2 text-sm" style={{ color: verticalConfig.colors.primary }}>
+                          <div className="flex items-center gap-2 text-sm" style={{ color: textOnDark(verticalConfig.colors) }}>
                             <span>Explore</span>
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-[0.1px] transition-transform" />
                           </div>
@@ -266,7 +267,7 @@ export default function VerticalLandingClient({ verticalConfig }: VerticalLandin
                               className="inline-block px-3 py-1 rounded-full text-xs mb-3"
                               style={{ 
                                 backgroundColor: `${verticalConfig.colors.primary}20`,
-                                color: verticalConfig.colors.primary 
+                                color: textOnDark(verticalConfig.colors) 
                               }}
                             >
                               {post.frontmatter.category}
@@ -284,7 +285,7 @@ export default function VerticalLandingClient({ verticalConfig }: VerticalLandin
                               <time>{new Date(post.frontmatter.date).toLocaleDateString()}</time>
                             </div>
                           )}
-                          <div className="flex items-center gap-2 text-sm" style={{ color: verticalConfig.colors.primary }}>
+                          <div className="flex items-center gap-2 text-sm" style={{ color: textOnDark(verticalConfig.colors) }}>
                             <span>Read More</span>
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-[0.1px] transition-transform" />
                           </div>

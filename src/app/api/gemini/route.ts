@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { query, flightData, originCode, destinationCode, plannerInput } = body;
+    const { query, originCode, destinationCode, plannerInput } = body;
 
     // Validate input
     if (!query || typeof query !== 'string' || !query.trim()) {
@@ -61,8 +61,9 @@ export async function POST(request: NextRequest) {
     let systemInstruction = `You are a senior travel planning assistant for TourWiseAI.
 
 Write practical itineraries that are realistic, useful, and easy to scan.
-Never promise guaranteed cheapest prices.
-Do not fabricate exact live prices. Only mention exact prices if flightData exists.
+Never promise a lowest fare, a live fare, or a price for the traveler's exact dates.
+If a partner sample is provided, call it an indicative monthly sample. It is not a live fare and it is not the fare for the dates in the request.
+Do not tell the traveler to act fast. Do not invent a typical cost.
 Respect the user's budget strictly. Do not suggest luxury options for budget travelers unless clearly marked as optional splurges.
 
 Budget behavior:
@@ -75,22 +76,12 @@ Output format:
 - Budget notes
 - Optional booking checklist`
 
-    // Add real-time flight data to prompt if available
-    if (flightData && flightData.price) {
-      systemInstruction += `\n\nIMPORTANT: You have access to REAL-TIME flight pricing data. You MUST mention the exact price and airline found:
-- Price: $${flightData.price} ${flightData.currency || 'USD'}
-- Airline: ${flightData.airline || 'Multiple Airlines'}
-- Route: ${flightData.origin || 'Various'} → ${flightData.destination || 'Destination'}
-
-Start your response with: "🎉 I found a live deal for $${flightData.price}! ${flightData.airline || 'Multiple airlines'} are offering flights to your destination right now. This is a real-time price that may change, so act fast!"`;
-    }
-
     systemInstruction += `
 
 ${budgetContext}
 
 Money tip:
-${flightData && flightData.price ? `You may reference available live pricing context: $${flightData.price} (${flightData.currency || 'USD'}) from ${flightData.airline || 'available carrier data'}.` : 'If no live pricing is available, use broad ranges and clearly label them as estimates.'}
+Do not quote a fare for this trip. If no indicative monthly sample is available, say the fare has to be checked on the partner site.
 
 Format response with markdown headings and bullet points.`;
 
@@ -101,7 +92,7 @@ Format response with markdown headings and bullet points.`;
       functionDeclarations: [
         {
           name: 'searchFlightPrices',
-          description: 'Searches for real-time flight prices from Travelpayouts API. Use this when users ask about cheap flights, deals, prices, or costs. Returns the cheapest available flight price for a given route.',
+          description: 'Looks up an indicative monthly partner sample for a route. It is not a live fare and not a price for the user\'s exact dates. Do not call the result the lowest fare.',
           parameters: {
             type: 'object',
             properties: {
@@ -311,6 +302,8 @@ Format response with markdown headings and bullet points.`;
               const functionResponse = flightDeal
                 ? {
                     success: true,
+                    priceBasis: 'indicative_month',
+                    note: 'Indicative monthly sample from a partner cache. Not a live fare and not a price for the user\'s exact dates.',
                     price: flightDeal.price,
                     currency: flightDeal.currency || 'USD',
                     airline: flightDeal.airline || 'Multiple Airlines',
@@ -321,7 +314,7 @@ Format response with markdown headings and bullet points.`;
                   }
                 : {
                     success: false,
-                    message: 'No live pricing data found for this route at this time.',
+                    message: 'No indicative monthly sample was returned for this route. Check the partner site. This is not a fare for the requested dates.',
                   };
 
               // Send function result back to Gemini for final response
@@ -365,15 +358,15 @@ Format response with markdown headings and bullet points.`;
                 if (flightDeal) {
                   return NextResponse.json({
                     success: true,
-                    itinerary: `🎉 I found a live deal for $${flightDeal.price}! ${flightDeal.airline || 'Multiple airlines'} are offering flights to your destination right now. This is a real-time price that may change, so act fast!\n\n## Your Travel Itinerary\n\nI've found great flight deals for your trip. Scroll down to the Travel Toolkit below to book these specific flights and hotels through our partners!`,
-                    flightData: flightDeal,
+                    itinerary: `An indicative monthly sample was found for this route. It is not a live fare and not a price for your dates. Check the current itinerary, currency, and bag rules on the partner site.\n\n## Your Travel Itinerary\n\nUse the partner links below to search this trip. We do not show a verified fare for these exact dates.`,
+                    flightData: null,
                   });
                 }
                 
                 // Fallback: return itinerary without live data
                 return NextResponse.json({
                   success: true,
-                  itinerary: `I couldn't find a live price, but here is the typical cost for this route. ${systemInstruction.split('Daily Breakdown')[1] || ''}`,
+                  itinerary: `No indicative monthly sample was returned for this route. Check fares on the partner site. We do not show a verified fare for this exact trip.`,
                   flightData: null,
                 });
               }
@@ -387,7 +380,7 @@ Format response with markdown headings and bullet points.`;
                 return NextResponse.json({
                   success: true,
                   itinerary: finalItinerary,
-                  flightData: flightDeal,
+                  flightData: null,
                 });
               }
             }
@@ -403,7 +396,7 @@ Format response with markdown headings and bullet points.`;
             return NextResponse.json({
               success: true,
               itinerary: textPart.text,
-              flightData: flightData || null,
+              flightData: null,
             });
           }
         }

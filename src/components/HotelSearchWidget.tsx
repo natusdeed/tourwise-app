@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
+import { useConsent } from '@/components/useConsent'
 
 /**
  * Travelpayouts Hotelook hotel search widget for TourWiseAI.
@@ -23,6 +24,7 @@ type Props = {
 }
 
 export default function HotelSearchWidget({ className }: Props) {
+  const consent = useConsent()
   const [scriptLoaded, setScriptLoaded] = useState(false)
   const [widgetReady, setWidgetReady] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -79,7 +81,7 @@ export default function HotelSearchWidget({ className }: Props) {
     }
   }, [scriptLoaded])
 
-  if (!HOTEL_WIDGET_SRC) return null
+  if (!HOTEL_WIDGET_SRC || consent !== 'accepted') return null
 
   return (
     <div

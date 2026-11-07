@@ -63,7 +63,7 @@ export default function TermsPage() {
   ]
 
   return (
-    <main className="relative min-h-screen pt-20 md:pt-24">
+    <main className="relative min-h-screen pt-20 md:pt-24 overflow-x-clip">
       {/* Animated Grid Background */}
       <div className="fixed inset-0 grid-background opacity-30 pointer-events-none" />
       
@@ -122,13 +122,13 @@ export default function TermsPage() {
                 transition={{ duration: 0.6, delay: sectionIndex * 0.1 }}
                 className="glass-strong rounded-2xl p-6 md:p-10 border border-neon-cyan/30 border-glow-hover"
               >
-                <div className="flex items-start gap-4 mb-6">
+                <div className="flex items-start gap-4 mb-6 min-w-0">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/30 flex items-center justify-center">
                       <Icon className="w-6 h-6 text-neon-cyan" />
                     </div>
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <h2 className="text-2xl md:text-3xl font-bold heading-robotic mb-6 text-white">
                       <span className="text-gradient">{section.title}</span>
                     </h2>
@@ -136,7 +136,7 @@ export default function TermsPage() {
                       {section.content.map((item, itemIndex) => (
                         <motion.div
                           key={itemIndex}
-                          initial={{ opacity: 0, x: -20 }}
+                          initial={{ opacity: 0, y: 8 }}
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: sectionIndex * 0.1 + itemIndex * 0.1 }}

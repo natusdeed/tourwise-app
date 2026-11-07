@@ -18,7 +18,8 @@ export function generateStaticParams() {
   return Object.keys(HOUSTON_ROUTES).map((route) => ({ route }))
 }
 
-export function generateMetadata({ params }: { params: { route: string } }): Metadata {
+export async function generateMetadata(props: { params: Promise<{ route: string }> }): Promise<Metadata> {
+  const params = await props.params;
   const route = HOUSTON_ROUTES[params.route]
   if (!route) return { title: { absolute: 'Route Not Found | TourWiseAI' }, robots: { index: false, follow: false } }
   return houstonChecklistMetadata(route)
@@ -28,7 +29,8 @@ export function generateMetadata({ params }: { params: { route: string } }): Met
  * Booking-focused companion to the full route guide at /houston-to-X-flights.
  * Same data source, different job: a condensed checklist for travelers ready to book.
  */
-export default function HoustonRoutePage({ params }: { params: { route: string } }) {
+export default async function HoustonRoutePage(props: { params: Promise<{ route: string }> }) {
+  const params = await props.params;
   const route = HOUSTON_ROUTES[params.route]
   if (!route) return null
 

@@ -1,63 +1,107 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect, useEffect, useRef } from 'react'
 import Cookies from 'js-cookie'
+import {
+  CONSENT_COOKIE,
+  OPEN_CONSENT_EVENT,
+  clearNonEssentialFirstPartyCookies,
+  escapeDismissesSettings,
+  notifyConsent,
+  readConsent,
+} from '@/lib/consent'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, X } from 'lucide-react'
 
-export default function CookieBanner() {
-  const [showBanner, setShowBanner] = useState(false)
+const BANNER_TITLE_ID = 'cookie-banner-title'
+const SETTINGS_BUTTON_ID = 'cookie-settings'
 
-  useEffect(() => {
-    // Check if the user has already made a choice
-    const consent = Cookies.get('tourwise_consent')
-    if (!consent) {
-      // Defer cookie banner to avoid blocking initial render
-      // Use requestIdleCallback if available for better performance
-      const showBanner = () => setShowBanner(true)
-      let timeoutId: ReturnType<typeof setTimeout> | number | null = null
-      
-      if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-        timeoutId = requestIdleCallback(showBanner, { timeout: 3000 }) as unknown as number
-      } else {
-        timeoutId = setTimeout(showBanner, 2000)
-      }
-      
-      return () => {
-        if (timeoutId !== null) {
-          if (typeof window !== 'undefined' && 'cancelIdleCallback' in window) {
-            cancelIdleCallback(timeoutId as number)
-          } else {
-            clearTimeout(timeoutId as ReturnType<typeof setTimeout>)
-          }
-        }
-      }
-    }
+function focusCookieSettings() {
+  document.getElementById(SETTINGS_BUTTON_ID)?.focus()
+}
+
+export default function CookieBanner() {
+  // Present in the first HTML so a first visit paints it with the page.
+  // Returning visitors are hidden by the blocking head script before paint.
+  const [showBanner, setShowBanner] = useState(true)
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const shouldFocus = useRef(false)
+  const openedFromSettings = useRef(false)
+
+  useLayoutEffect(() => {
+    if (!readConsent()) return
+    document.documentElement.setAttribute('data-consent', '1')
+    setShowBanner(false)
   }, [])
 
+  useEffect(() => {
+    const open = () => {
+      shouldFocus.current = true
+      openedFromSettings.current = true
+      setShowBanner(true)
+    }
+    window.addEventListener(OPEN_CONSENT_EVENT, open)
+    return () => window.removeEventListener(OPEN_CONSENT_EVENT, open)
+  }, [])
+
+  useLayoutEffect(() => {
+    if (!showBanner || !shouldFocus.current) return
+    shouldFocus.current = false
+    const node = headingRef.current
+    if (!node) return
+    node.focus()
+    // The hide rule can still be display:none on the commit frame. Focus again after paint.
+    const frame = requestAnimationFrame(() => {
+      if (document.activeElement !== node) node.focus()
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [showBanner])
+
   const handleAccept = () => {
-    // Set a cookie for 365 days
-    Cookies.set('tourwise_consent', 'accepted', { expires: 365, sameSite: 'lax' })
+    Cookies.set(CONSENT_COOKIE, 'accepted', { expires: 365, sameSite: 'lax' })
+    document.documentElement.removeAttribute('data-consent-open')
+    notifyConsent()
     setShowBanner(false)
-    // 2026 Pro Tip: Refresh page or trigger script loading here
     window.location.reload()
   }
 
   const handleDecline = () => {
-    Cookies.set('tourwise_consent', 'declined', { expires: 365, sameSite: 'lax' })
+    clearNonEssentialFirstPartyCookies()
+    Cookies.set(CONSENT_COOKIE, 'declined', { expires: 365, sameSite: 'lax' })
+    document.documentElement.removeAttribute('data-consent-open')
+    notifyConsent()
     setShowBanner(false)
+    window.location.reload()
   }
 
+  const dismissWithoutChangingChoice = () => {
+    openedFromSettings.current = false
+    document.documentElement.removeAttribute('data-consent-open')
+    if (readConsent()) document.documentElement.setAttribute('data-consent', '1')
+    setShowBanner(false)
+    requestAnimationFrame(() => focusCookieSettings())
+  }
+
+  const handleEscape = () => {
+    if (escapeDismissesSettings(openedFromSettings.current, readConsent())) {
+      dismissWithoutChangingChoice()
+      return
+    }
+    handleDecline()
+  }
+
+  if (!showBanner) return null
+
   return (
-    <AnimatePresence>
-      {showBanner && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-2xl"
+        <div
+          role="dialog"
+          aria-labelledby={BANNER_TITLE_ID}
+          className="cookie-banner fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-2xl"
+          onKeyDown={(event) => {
+            if (event.key !== 'Escape') return
+            event.preventDefault()
+            handleEscape()
+          }}
         >
           <div className="glass-strong border border-neon-cyan/30 border-glow-hover rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-md relative">
             {/* Close Button */}
@@ -70,7 +114,7 @@ export default function CookieBanner() {
             </button>
 
             {/* Content */}
-            <div className="flex flex-col md:flex-row items-start gap-4 pr-8">
+            <div className="flex min-w-0 flex-col md:flex-row items-start gap-4 pr-8">
               {/* Icon */}
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-electric-blue/20 border border-neon-cyan/30 flex items-center justify-center">
@@ -79,8 +123,13 @@ export default function CookieBanner() {
               </div>
 
               {/* Text Content */}
-              <div className="flex-1 text-white">
-                <h3 className="text-base md:text-lg font-bold heading-robotic mb-2 text-gradient">
+              <div className="min-w-0 flex-1 text-white">
+                <h3
+                  id={BANNER_TITLE_ID}
+                  ref={headingRef}
+                  tabIndex={-1}
+                  className="text-base md:text-lg font-bold heading-robotic mb-2 text-gradient focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                >
                   🍪 We Value Your Travel Privacy
                 </h3>
                 <p className="text-sm md:text-base text-white/70 leading-relaxed mb-4">
@@ -90,7 +139,7 @@ export default function CookieBanner() {
                 </p>
 
                 {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex min-w-0 flex-col sm:flex-row gap-3">
                   <button
                     onClick={handleDecline}
                     className="px-6 py-2.5 text-sm font-semibold heading-robotic text-white/80 hover:text-white border border-neon-cyan/30 hover:border-neon-cyan/50 rounded-lg transition-all duration-300 glass hover:bg-white/5"
@@ -107,8 +156,6 @@ export default function CookieBanner() {
               </div>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
   )
 }

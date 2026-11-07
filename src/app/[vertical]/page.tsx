@@ -12,15 +12,16 @@ import VerticalLandingClient from './VerticalLandingClient';
 import Script from 'next/script';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     vertical: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
-  
+
   if (!verticalConfig) {
     return {
       title: { absolute: 'Page Not Found | TourWiseAI' },
@@ -47,7 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return generateSEOMetadata(seoData);
 }
 
-export default async function VerticalPage({ params }: PageProps) {
+export default async function VerticalPage(props: PageProps) {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
 

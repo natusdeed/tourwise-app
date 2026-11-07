@@ -30,7 +30,7 @@ const hubFaqs = [
   {
     question: 'Do these guides book flights directly?',
     answer:
-      'No. TourWiseAI is a planning guide \u2014 each route page explains who flies the route, when to book, and how to pay less, then links you to partner booking tools to compare live fares.',
+      'No. TourWiseAI is a planning guide — each route page explains who flies the route and when people often book, then links you to partner search tools. Those partners set the fares.',
   },
   {
     question: 'Why is Houston to Lagos so expensive in December?',
@@ -65,7 +65,7 @@ export default function CheapFlightsFromHoustonPage() {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-1">William P. Hobby (HOU)</h3>
-                <p className="leading-relaxed">Southwest\u2019s Houston stronghold plus Spirit and Frontier. Frequently the cheapest all-in option for domestic and short-haul international (Cancun, Orlando) once Southwest\u2019s two free checked bags are factored in. Smaller, faster to navigate, easier parking.</p>
+                <p className="leading-relaxed">Southwest&apos;s Houston stronghold plus Spirit and Frontier. Sometimes lower on domestic and short-haul international (Cancun, Orlando) after bag fees. Check the current bag rules and total. Smaller, faster to navigate, easier parking.</p>
               </div>
             </div>
             <p className="text-white/70 leading-relaxed">Rule of thumb: compare both airports on every trip. They have different airlines, different fee structures, and often meaningfully different total prices.</p>
@@ -91,7 +91,7 @@ export default function CheapFlightsFromHoustonPage() {
               <li className="leading-relaxed"><strong className="text-white">Compare connecting cities, not just dates.</strong> On long-haul routes like Houston\u2013Lagos, the connecting city (Istanbul vs London vs Doha) moves the fare more than shifting by a day.</li>
               <li className="leading-relaxed"><strong className="text-white">Tuesday/Wednesday departures price lower</strong> on average across nearly every route in these guides.</li>
               <li className="leading-relaxed"><strong className="text-white">Book peak travel absurdly early.</strong> Christmas, spring break, and Detty December reward 3\u20136 month advance booking; procrastination is the most expensive strategy.</li>
-              <li className="leading-relaxed"><strong className="text-white">Do the baggage math.</strong> Southwest\u2019s two free bags and ULCC bag fees flip the \u201Ccheapest fare\u201D ranking constantly \u2014 compare totals, not headlines.</li>
+              <li className="leading-relaxed"><strong className="text-white">Do the baggage math.</strong> Bag fees can change which fare costs less. Compare totals, and check the bag rules on each ticket.</li>
               <li className="leading-relaxed"><strong className="text-white">Set fare alerts 3+ months out</strong> on the routes you actually fly, and pounce when the price dips rather than trying to time the absolute bottom.</li>
             </ul>
           </section>

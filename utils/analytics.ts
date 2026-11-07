@@ -5,6 +5,8 @@
  * for analytics purposes. All tracking respects user cookie consent.
  */
 
+import { readConsent } from '@/lib/consent'
+
 // Extend Window interface to include gtag and dataLayer
 declare global {
   interface Window {
@@ -44,6 +46,7 @@ const loadGAScript = (measurementId: string): Promise<void> => {
  */
 export const initGA4 = async (measurementId?: string) => {
   if (typeof window === 'undefined') return
+  if (readConsent() !== 'accepted') return
 
   // Get measurement ID from parameter or environment variable
   const ga4Id = measurementId || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID

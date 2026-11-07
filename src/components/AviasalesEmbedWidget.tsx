@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Script from 'next/script'
+import { useConsent } from '@/components/useConsent'
 
 type Props = {
   src: string
@@ -17,6 +18,7 @@ type Props = {
  */
 export default function AviasalesEmbedWidget({ src, scriptId, className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const consent = useConsent()
   const [shouldLoad, setShouldLoad] = useState(false)
   const [scriptLoaded, setScriptLoaded] = useState(false)
   const [widgetReady, setWidgetReady] = useState(false)
@@ -28,7 +30,7 @@ export default function AviasalesEmbedWidget({ src, scriptId, className }: Props
 
   useEffect(() => {
     const node = containerRef.current
-    if (!node || shouldLoad) return
+    if (!node || shouldLoad || consent !== 'accepted') return
 
     if (typeof IntersectionObserver === 'undefined') {
       setShouldLoad(true)
@@ -46,7 +48,7 @@ export default function AviasalesEmbedWidget({ src, scriptId, className }: Props
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [shouldLoad])
+  }, [shouldLoad, consent])
 
   useEffect(() => {
     if (!scriptLoaded || !containerRef.current) return
@@ -93,7 +95,13 @@ export default function AviasalesEmbedWidget({ src, scriptId, className }: Props
       ref={containerRef}
       className={`relative w-full min-w-0 max-w-full overflow-x-hidden pb-8 ${className ?? ''}`}
     >
-      {!widgetReady && (
+      {consent !== 'accepted' ? (
+        <p className="text-sm text-white/60">
+          The Aviasales search form and route examples appear after you accept cookies and the page
+          reloads.
+        </p>
+      ) : null}
+      {consent === 'accepted' && !widgetReady && (
         <div className="h-28 w-full rounded-md bg-white/10 animate-pulse" aria-hidden="true" />
       )}
       {shouldLoad ? (

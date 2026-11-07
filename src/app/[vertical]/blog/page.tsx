@@ -14,15 +14,16 @@ import { BookOpen, Calendar, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     vertical: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
-  
+
   if (!verticalConfig) {
     return { title: { absolute: 'Page Not Found | TourWiseAI' }, robots: { index: false, follow: false } };
   }
@@ -35,7 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 }
 
-export default async function BlogPage({ params }: PageProps) {
+export default async function BlogPage(props: PageProps) {
+  const params = await props.params;
   const { vertical } = params;
   const verticalConfig = getVerticalBySlug(vertical);
 

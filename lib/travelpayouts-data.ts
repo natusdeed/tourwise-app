@@ -8,7 +8,7 @@
  */
 import 'server-only'
 
-import { HOUSTON_ORIGIN_IATA, buildAviasalesSearchUrl } from '@/lib/aviasales'
+import { HOUSTON_ORIGIN_IATA, buildExactAviasalesRoundTrip } from '@/lib/aviasales'
 import { getServerEnv } from '@/lib/server-env'
 
 const PRICES_FOR_DATES = 'https://api.travelpayouts.com/aviasales/v3/prices_for_dates'
@@ -26,6 +26,8 @@ export type HoustonFareDate = {
   price: number
   airline: string | null
   searchUrl: string
+  /** Calendar date the partner sample was captured, when the payload includes one. */
+  capturedOn: string | null
 }
 
 type RawFare = {
@@ -33,6 +35,7 @@ type RawFare = {
   returnDate: string | null
   price: number
   airline: string | null
+  capturedOn: string | null
 }
 
 /**
@@ -235,6 +238,7 @@ function fareFromRecord(record: Record<string, unknown> | null, fallbackDate?: s
     returnDate: returnRaw && returnRaw > departDate ? returnRaw : null,
     price,
     airline: airlineCode(record.airline),
+    capturedOn: dateOnly(record.found_at) || dateOnly(record.foundAt),
   }
 }
 
@@ -257,18 +261,28 @@ function rankFares(
   return [...cheapestByDeparture.values()]
     .sort((a, b) => a.price - b.price || a.departDate.localeCompare(b.departDate))
     .slice(0, MAX_DATES)
-    .map((fare) => ({
-      departDate: fare.departDate,
-      returnDate: fare.returnDate,
-      price: fare.price,
-      airline: fare.airline,
-      searchUrl: buildAviasalesSearchUrl({
+    .flatMap((fare) => {
+      if (!fare.returnDate) return []
+      const exact = buildExactAviasalesRoundTrip({
         origin: HOUSTON_ORIGIN_IATA,
         destination,
         departDate: fare.departDate,
         returnDate: fare.returnDate,
-      }),
-    }))
+        adults: 1,
+        tripClass: 'economy',
+      })
+      if (!exact.ok) return []
+      return [
+        {
+          departDate: fare.departDate,
+          returnDate: fare.returnDate,
+          price: fare.price,
+          airline: fare.airline,
+          searchUrl: exact.url,
+          capturedOn: fare.capturedOn,
+        },
+      ]
+    })
 }
 
 function isBetterFare(next: RawFare, current: RawFare): boolean {
