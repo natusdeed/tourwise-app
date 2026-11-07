@@ -7,6 +7,7 @@ import ConsentScripts from '@/components/ConsentScripts'
 import DeferredExitIntent from '@/components/DeferredExitIntent'
 import Script from 'next/script'
 import { SITE_ORIGIN, pageMeta } from '@/lib/site'
+import { CONSENT_BOOT_SCRIPT } from '@/lib/consent'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -162,12 +163,12 @@ export default function RootLayout({
             only queues work for the Next.js runtime, so a slow bundle still paints the banner. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(/(?:^|; )tourwise_consent=/.test(document.cookie)){document.documentElement.setAttribute("data-consent","1")}}catch(e){}})();`,
+            __html: CONSENT_BOOT_SCRIPT,
           }}
         />
         <style
           dangerouslySetInnerHTML={{
-            __html: `html[data-consent] .cookie-banner{display:none!important}`,
+            __html: `html[data-consent] .cookie-banner{display:none!important}html[data-consent-open] .cookie-banner{display:block!important}`,
           }}
         />
         {/* Preconnect to external APIs for performance - only critical ones */}

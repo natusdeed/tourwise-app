@@ -2,7 +2,7 @@
 
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
-import Cookies from 'js-cookie'
+import { readConsent } from '@/lib/consent'
 import { initScrollTracking } from '@/utils/analytics'
 
 interface GoogleAnalyticsProps {
@@ -31,7 +31,7 @@ export default function GoogleAnalytics({
 
   useEffect(() => {
     // Check cookie consent
-    const consent = Cookies.get('tourwise_consent')
+    const consent = readConsent()
     if (consent === 'accepted' && ga4Id) {
       setShouldLoad(true)
     }

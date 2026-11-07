@@ -1,8 +1,14 @@
 'use client'
 
-import { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect, useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { CONSENT_COOKIE, notifyConsent } from '@/lib/consent'
+import {
+  CONSENT_COOKIE,
+  OPEN_CONSENT_EVENT,
+  clearNonEssentialFirstPartyCookies,
+  notifyConsent,
+  readConsent,
+} from '@/lib/consent'
 import Link from 'next/link'
 import { Cookie, X } from 'lucide-react'
 
@@ -12,25 +18,32 @@ export default function CookieBanner() {
   const [showBanner, setShowBanner] = useState(true)
 
   useLayoutEffect(() => {
-    if (!Cookies.get(CONSENT_COOKIE)) return
+    if (!readConsent()) return
     document.documentElement.setAttribute('data-consent', '1')
     setShowBanner(false)
   }, [])
 
+  useEffect(() => {
+    const open = () => setShowBanner(true)
+    window.addEventListener(OPEN_CONSENT_EVENT, open)
+    return () => window.removeEventListener(OPEN_CONSENT_EVENT, open)
+  }, [])
+
   const handleAccept = () => {
-    // Set a cookie for 365 days
     Cookies.set(CONSENT_COOKIE, 'accepted', { expires: 365, sameSite: 'lax' })
-    document.documentElement.setAttribute('data-consent', '1')
+    document.documentElement.removeAttribute('data-consent-open')
     notifyConsent()
     setShowBanner(false)
     window.location.reload()
   }
 
   const handleDecline = () => {
+    clearNonEssentialFirstPartyCookies()
     Cookies.set(CONSENT_COOKIE, 'declined', { expires: 365, sameSite: 'lax' })
-    document.documentElement.setAttribute('data-consent', '1')
+    document.documentElement.removeAttribute('data-consent-open')
     notifyConsent()
     setShowBanner(false)
+    window.location.reload()
   }
 
   if (!showBanner) return null

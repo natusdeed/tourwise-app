@@ -1,5 +1,6 @@
 import { Youtube, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react'
 import Link from 'next/link'
+import CookieSettingsButton from '@/components/CookieSettingsButton'
 
 const social = [
   {
@@ -75,6 +76,9 @@ export default function Footer() {
                 <Link href="/affiliate-disclosure" className="text-white/60 hover:text-neon-cyan text-xs md:text-sm transition-colors duration-200">
                   Affiliate Disclosure
                 </Link>
+              </li>
+              <li>
+                <CookieSettingsButton />
               </li>
             </ul>
           </div>
