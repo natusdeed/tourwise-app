@@ -3,6 +3,7 @@ import test from 'node:test'
 import vm from 'node:vm'
 import {
   CONSENT_BOOT_SCRIPT,
+  escapeDismissesSettings,
   nonEssentialFirstPartyCookieNames,
   parseConsentCookieHeader,
   parseConsentValue,
@@ -56,6 +57,14 @@ test('the head script hides only a known choice and survives a stray percent', (
   assert.equal(boot('tourwise_consent=yes'), null)
   assert.equal(boot(''), null)
   assert.doesNotThrow(() => boot('tourwise_consent=%'))
+})
+
+test('escape dismisses a settings-opened banner and leaves a first visit alone', () => {
+  assert.equal(escapeDismissesSettings(true, 'accepted'), true)
+  assert.equal(escapeDismissesSettings(true, 'declined'), true)
+  assert.equal(escapeDismissesSettings(true, null), false)
+  assert.equal(escapeDismissesSettings(false, 'accepted'), false)
+  assert.equal(escapeDismissesSettings(false, null), false)
 })
 
 test('clearing non-essential cookies keeps the consent choice', () => {

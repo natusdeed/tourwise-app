@@ -73,6 +73,17 @@ export function notifyConsent(): void {
   window.dispatchEvent(new Event(CONSENT_EVENT))
 }
 
+/**
+ * Escape on a banner opened from Cookie settings dismisses it and keeps the
+ * stored choice. A first visit has no choice, so Escape is not that path.
+ */
+export function escapeDismissesSettings(
+  openedFromSettings: boolean,
+  choice: ConsentChoice | null,
+): boolean {
+  return openedFromSettings && choice !== null
+}
+
 /** Drop the pre-paint hide so the banner can show over an existing choice. */
 export function openConsentBanner(): void {
   if (typeof document === 'undefined') return

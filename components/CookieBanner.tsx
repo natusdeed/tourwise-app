@@ -1,21 +1,32 @@
 'use client'
 
-import { useState, useLayoutEffect, useEffect } from 'react'
+import { useState, useLayoutEffect, useEffect, useRef } from 'react'
 import Cookies from 'js-cookie'
 import {
   CONSENT_COOKIE,
   OPEN_CONSENT_EVENT,
   clearNonEssentialFirstPartyCookies,
+  escapeDismissesSettings,
   notifyConsent,
   readConsent,
 } from '@/lib/consent'
 import Link from 'next/link'
 import { Cookie, X } from 'lucide-react'
 
+const BANNER_TITLE_ID = 'cookie-banner-title'
+const SETTINGS_BUTTON_ID = 'cookie-settings'
+
+function focusCookieSettings() {
+  document.getElementById(SETTINGS_BUTTON_ID)?.focus()
+}
+
 export default function CookieBanner() {
   // Present in the first HTML so a first visit paints it with the page.
   // Returning visitors are hidden by the blocking head script before paint.
   const [showBanner, setShowBanner] = useState(true)
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const shouldFocus = useRef(false)
+  const openedFromSettings = useRef(false)
 
   useLayoutEffect(() => {
     if (!readConsent()) return
@@ -24,10 +35,27 @@ export default function CookieBanner() {
   }, [])
 
   useEffect(() => {
-    const open = () => setShowBanner(true)
+    const open = () => {
+      shouldFocus.current = true
+      openedFromSettings.current = true
+      setShowBanner(true)
+    }
     window.addEventListener(OPEN_CONSENT_EVENT, open)
     return () => window.removeEventListener(OPEN_CONSENT_EVENT, open)
   }, [])
+
+  useLayoutEffect(() => {
+    if (!showBanner || !shouldFocus.current) return
+    shouldFocus.current = false
+    const node = headingRef.current
+    if (!node) return
+    node.focus()
+    // The hide rule can still be display:none on the commit frame. Focus again after paint.
+    const frame = requestAnimationFrame(() => {
+      if (document.activeElement !== node) node.focus()
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [showBanner])
 
   const handleAccept = () => {
     Cookies.set(CONSENT_COOKIE, 'accepted', { expires: 365, sameSite: 'lax' })
@@ -46,11 +74,34 @@ export default function CookieBanner() {
     window.location.reload()
   }
 
+  const dismissWithoutChangingChoice = () => {
+    openedFromSettings.current = false
+    document.documentElement.removeAttribute('data-consent-open')
+    if (readConsent()) document.documentElement.setAttribute('data-consent', '1')
+    setShowBanner(false)
+    requestAnimationFrame(() => focusCookieSettings())
+  }
+
+  const handleEscape = () => {
+    if (escapeDismissesSettings(openedFromSettings.current, readConsent())) {
+      dismissWithoutChangingChoice()
+      return
+    }
+    handleDecline()
+  }
+
   if (!showBanner) return null
 
   return (
         <div
+          role="dialog"
+          aria-labelledby={BANNER_TITLE_ID}
           className="cookie-banner fixed bottom-4 left-4 right-4 z-50 md:left-auto md:right-4 md:max-w-2xl"
+          onKeyDown={(event) => {
+            if (event.key !== 'Escape') return
+            event.preventDefault()
+            handleEscape()
+          }}
         >
           <div className="glass-strong border border-neon-cyan/30 border-glow-hover rounded-2xl p-4 md:p-6 shadow-2xl backdrop-blur-md relative">
             {/* Close Button */}
@@ -73,7 +124,12 @@ export default function CookieBanner() {
 
               {/* Text Content */}
               <div className="min-w-0 flex-1 text-white">
-                <h3 className="text-base md:text-lg font-bold heading-robotic mb-2 text-gradient">
+                <h3
+                  id={BANNER_TITLE_ID}
+                  ref={headingRef}
+                  tabIndex={-1}
+                  className="text-base md:text-lg font-bold heading-robotic mb-2 text-gradient focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white"
+                >
                   🍪 We Value Your Travel Privacy
                 </h3>
                 <p className="text-sm md:text-base text-white/70 leading-relaxed mb-4">
