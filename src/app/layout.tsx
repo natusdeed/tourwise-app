@@ -156,8 +156,20 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
+        {/* Runs during HTML parsing, before first paint. next/script beforeInteractive
+            only queues work for the Next.js runtime, so a slow bundle still paints the banner. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(/(?:^|; )tourwise_consent=/.test(document.cookie)){document.documentElement.setAttribute("data-consent","1")}}catch(e){}})();`,
+          }}
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `html[data-consent] .cookie-banner{display:none!important}`,
+          }}
+        />
         {/* Preconnect to external APIs for performance - only critical ones */}
         <link rel="preconnect" href="https://generativelanguage.googleapis.com" />
         <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
@@ -165,13 +177,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://api.travelpayouts.com" />
         <link rel="dns-prefetch" href="https://api.resend.com" />
         <link rel="dns-prefetch" href="https://ipinfo.io" />
-        <Script id="consent-flag" strategy="beforeInteractive">{`
-          try {
-            if (/(?:^|; )tourwise_consent=/.test(document.cookie)) {
-              document.documentElement.setAttribute('data-consent', '1')
-            }
-          } catch (e) {}
-        `}</Script>
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <Script

@@ -1,23 +1,26 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import Cookies from 'js-cookie'
 import { CONSENT_COOKIE, notifyConsent } from '@/lib/consent'
 import Link from 'next/link'
 import { Cookie, X } from 'lucide-react'
 
 export default function CookieBanner() {
-  // Present in the first HTML so it paints with the page. A late idle reveal
-  // was becoming the largest contentful paint on shorter pages.
+  // Present in the first HTML so a first visit paints it with the page.
+  // Returning visitors are hidden by the blocking head script before paint.
   const [showBanner, setShowBanner] = useState(true)
 
-  useEffect(() => {
-    if (Cookies.get(CONSENT_COOKIE)) setShowBanner(false)
+  useLayoutEffect(() => {
+    if (!Cookies.get(CONSENT_COOKIE)) return
+    document.documentElement.setAttribute('data-consent', '1')
+    setShowBanner(false)
   }, [])
 
   const handleAccept = () => {
     // Set a cookie for 365 days
     Cookies.set(CONSENT_COOKIE, 'accepted', { expires: 365, sameSite: 'lax' })
+    document.documentElement.setAttribute('data-consent', '1')
     notifyConsent()
     setShowBanner(false)
     window.location.reload()
@@ -25,6 +28,7 @@ export default function CookieBanner() {
 
   const handleDecline = () => {
     Cookies.set(CONSENT_COOKIE, 'declined', { expires: 365, sameSite: 'lax' })
+    document.documentElement.setAttribute('data-consent', '1')
     notifyConsent()
     setShowBanner(false)
   }
