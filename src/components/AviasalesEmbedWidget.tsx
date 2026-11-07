@@ -96,7 +96,10 @@ export default function AviasalesEmbedWidget({ src, scriptId, className }: Props
       className={`relative w-full min-w-0 max-w-full overflow-x-hidden pb-8 ${className ?? ''}`}
     >
       {consent !== 'accepted' ? (
-        <p className="text-sm text-white/60">These partner examples load after you accept cookies.</p>
+        <p className="text-sm text-white/60">
+          The Aviasales search form and route examples appear after you accept cookies and the page
+          reloads.
+        </p>
       ) : null}
       {consent === 'accepted' && !widgetReady && (
         <div className="h-28 w-full rounded-md bg-white/10 animate-pulse" aria-hidden="true" />

@@ -100,7 +100,10 @@ export default function FlightSearchWidget({ className }: Props) {
           onLoad={() => setScriptLoaded(true)}
         />
       ) : (
-        <p className="text-sm text-white/60">The Aviasales form loads after you accept cookies.</p>
+        <p className="text-sm text-white/60">
+          The Aviasales search form and route examples appear after you accept cookies and the page
+          reloads. You can also search directly on Aviasales.
+        </p>
       )}
       </div>
     </div>

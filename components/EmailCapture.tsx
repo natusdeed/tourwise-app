@@ -110,7 +110,7 @@ export default function EmailCapture({ colors = { primary: '#00FFFF', secondary:
           
           {/* Subtitle */}
           <p className="text-white/90 text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed font-medium">
-            A travel-hacks email with notes on flights, stays, eSIMs, transfers, and insurance, plus links to those pages on TourWiseAI
+            Travel-hack notes by email on flights, stays, eSIMs, transfers, and insurance, with links to our TourWiseAI guides.
           </p>
 
           {/* Benefits List */}
